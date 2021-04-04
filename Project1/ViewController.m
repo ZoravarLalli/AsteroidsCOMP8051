@@ -23,12 +23,20 @@
     NSMutableArray *_projectiles; //Array for projectiles
     NSMutableArray *_asteroids; //Array for asteroids
     float timeSinceLastAsteroid;
+    
+    // For sound
+    AVAudioPlayer *_music;
+    AVAudioPlayer *_playerShot;
 }
 
 //Called when the view is loaded
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // Preload the in game sound effects
+    _playerShot = [self preloadSound:@"playerShotEdited.wav"];
+    
     
     //Set OpenGL view
     GLKView *view = (GLKView *)self.view;
@@ -68,6 +76,9 @@
 //Additional setup code
 - (void) setupScene
 {
+    // Start music
+    [self playBackgroundMusic:@"05_Chill.wav"];
+    
     //Initiate shader
     _shader = [[BaseEffect alloc] initWithVertexShader:@"VertexShader.glsl" fragmentShader:@"FragmentShader.glsl"];
     
@@ -163,6 +174,9 @@
 //Handler for fire button
 - (void) fireHandler : (id) sender
 {
+    // Play shot audio
+    [self playPlayerShot];
+    
     //Create new projectile model, set forward and position vectors, and add to array
     ProjectileModel *newProjectile = [[ProjectileModel alloc] initWithShader:_shader];
     newProjectile.forward = _ship.forward;
@@ -197,6 +211,26 @@
     double randY = ((double)arc4random_uniform(newAsteroid.yBound) - newAsteroid.yBound/2);
     newAsteroid.position = GLKVector3Make(randX, randY, 0);
     [_asteroids addObject:newAsteroid];
+}
+
+
+// SOUND
+- (void)playBackgroundMusic:(NSString *)filename{
+    _music = [self preloadSound:filename];
+    _music.numberOfLoops = 1;
+    _music.volume = 0.5;
+    [_music play];
+}
+- (AVAudioPlayer *)preloadSound:(NSString *)filename{
+    // Convert filename into NS URL
+    NSURL  *URL = [[NSBundle mainBundle] URLForResource:filename withExtension:nil];
+    // Create audio player using the url
+    AVAudioPlayer *prepPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:URL error:nil];
+    [prepPlayer prepareToPlay]; // Prepares and loads it to play
+    return prepPlayer;
+}
+- (void)playPlayerShot{
+    [_playerShot play];
 }
 
 @end
