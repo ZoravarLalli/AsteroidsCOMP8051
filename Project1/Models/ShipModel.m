@@ -6,6 +6,7 @@
 //
 
 #import "ShipModel.h"
+#import "AsteroidModel.h"
 
 @implementation ShipModel
 {
@@ -74,6 +75,7 @@ const static GLubyte indices[] =
         self.forward = GLKVector3Make(0, 1, 0);
         //Set initial velocity
         velocityPercent = 0.0;
+        self.lives = 5;
     }
     return self;
 }
@@ -114,12 +116,42 @@ const static GLubyte indices[] =
     {
         self.position = GLKVector3Make(self.position.x, _yBound, self.position.z);
     }
+    
+    
+    //Check for asteroid collision
+    for(AsteroidModel *ast in _asteroids)
+    {
+        if(self.position.x + 2 >= ast.position.x
+           && self.position.x - 2 <= ast.position.x
+           && self.position.y + 2 >= ast.position.y
+           && self.position.y - 2 <= ast.position.y)
+        {
+            [self asteroidHit];
+        }
+    }
 }
 
 //Function to toggle the thrust on or off from user input
 -(void) thrustToggle
 {
     self.thrust = !self.thrust;
+}
+
+//Function to call when colliding with an asteroid
+- (void) asteroidHit
+{
+    if(self.lives > 0)
+    {
+        self.lives -= 1;
+        self.position = GLKVector3Make(0, 0, 0);
+        self.forward = GLKVector3Make(0, 0, 0);
+        velocityPercent = 0;
+        self.thrust = false;
+    }
+    else
+    {
+        NSLog(@"ya ded");
+    }
 }
 
 //Rotate the model from user input.
