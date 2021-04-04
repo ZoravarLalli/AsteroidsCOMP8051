@@ -25,7 +25,6 @@
 		CC0677ED25EE207800A01200 /* green.png in Resources */ = {isa = PBXBuildFile; fileRef = CC0677EB25EE207800A01200 /* green.png */; };
 		CC0677F125EE212D00A01200 /* AsteroidModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CC0677F025EE212D00A01200 /* AsteroidModel.m */; };
 		CC2570C425EAFC1F00F6CB8C /* ShipModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CC2570C325EAFC1F00F6CB8C /* ShipModel.m */; };
-		CC576EFB261922B5006F8A71 /* CollisionHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = CC576EFA261922B5006F8A71 /* CollisionHandler.mm */; };
 		CC576EFF261931C3006F8A71 /* live.png in Resources */ = {isa = PBXBuildFile; fileRef = CC576EFE261931C3006F8A71 /* live.png */; };
 		CC576F0226193354006F8A71 /* ded.png in Resources */ = {isa = PBXBuildFile; fileRef = CC576F0126193354006F8A71 /* ded.png */; };
 		CCE6A69925E7286800E63FCC /* FragmentShader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = CCE6A69825E7286800E63FCC /* FragmentShader.glsl */; };
@@ -64,8 +63,6 @@
 		CC0677F025EE212D00A01200 /* AsteroidModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AsteroidModel.m; sourceTree = "<group>"; };
 		CC2570C225EAFC1F00F6CB8C /* ShipModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShipModel.h; sourceTree = "<group>"; };
 		CC2570C325EAFC1F00F6CB8C /* ShipModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShipModel.m; sourceTree = "<group>"; };
-		CC576EF9261922B5006F8A71 /* CollisionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CollisionHandler.h; sourceTree = "<group>"; };
-		CC576EFA261922B5006F8A71 /* CollisionHandler.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CollisionHandler.mm; sourceTree = "<group>"; };
 		CC576EFE261931C3006F8A71 /* live.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = live.png; sourceTree = "<group>"; };
 		CC576F0126193354006F8A71 /* ded.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ded.png; sourceTree = "<group>"; };
 		CCE6A69825E7286800E63FCC /* FragmentShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FragmentShader.glsl; sourceTree = "<group>"; };
@@ -128,8 +125,6 @@
 				CC057F9D25E71D37003331D2 /* SceneDelegate.h */,
 				CC057F9E25E71D37003331D2 /* SceneDelegate.m */,
 				CC057FA625E71D37003331D2 /* Assets.xcassets */,
-				CC576EF9261922B5006F8A71 /* CollisionHandler.h */,
-				CC576EFA261922B5006F8A71 /* CollisionHandler.mm */,
 			);
 			path = Project1;
 			sourceTree = "<group>";
@@ -262,7 +257,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CC576EFB261922B5006F8A71 /* CollisionHandler.mm in Sources */,
 				CC057FA225E71D37003331D2 /* ViewController.m in Sources */,
 				CC057F9C25E71D37003331D2 /* AppDelegate.m in Sources */,
 				CC0677F125EE212D00A01200 /* AsteroidModel.m in Sources */,
