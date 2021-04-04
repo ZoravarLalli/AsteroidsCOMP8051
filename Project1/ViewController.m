@@ -89,7 +89,7 @@ const double MIN_SPAWN_DISTANCE = 15;
 - (void) setupScene
 {
     // Start music
-    //[self playBackgroundMusic:@"05_Chill.wav"];
+    [self playBackgroundMusic:@"05_Chill.wav"];
     
     //Initiate shader
     _shader = [[BaseEffect alloc] initWithVertexShader:@"VertexShader.glsl" fragmentShader:@"FragmentShader.glsl"];
