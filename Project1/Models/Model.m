@@ -24,15 +24,12 @@
                       shader:(BaseEffect *)shader
                     vertices:(Vertex *)vertices
                  vertexCount:(unsigned int)vertexCount
-                     indices:(GLubyte *)indices
-                  indexCount:(unsigned int)indexCount
 {
     if(self == [super init])
     {
         //Set input variables
         _name = name;
         _vertexCount = vertexCount;
-        _indexCount = indexCount;
         _shader = shader;
         
         //Set initial transform values
@@ -50,11 +47,6 @@
         glGenBuffers(1, &_vertexBuffer);
         glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
         glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(Vertex), vertices, GL_STATIC_DRAW);
-        
-        //Generate index buffer
-        glGenBuffers(1, &_indexBuffer);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(GLubyte), indices, GL_STATIC_DRAW);
         
         //Enable vertex attributes
         glEnableVertexAttribArray(VertexAttribPosition);
@@ -104,7 +96,7 @@
     
     //Bind the vertex array object, draw the faces, unbind object.
     glBindVertexArrayOES(_vao);
-    glDrawElements(GL_TRIANGLES, _indexCount, GL_UNSIGNED_BYTE, 0);
+    glDrawArrays(GL_TRIANGLES, 0, _vertexCount);
     glBindVertexArrayOES(0);
 }
 
