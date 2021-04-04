@@ -36,7 +36,9 @@ const double MIN_SPAWN_DISTANCE = 15;
     AVAudioPlayer *_playerDeath;
     AVAudioPlayer *_rocketThrust;
 
-
+    UILabel *livesleft;
+    UILabel *gameOver;
+    UILabel *score;
 }
 
 //Called when the view is loaded
@@ -80,6 +82,28 @@ const double MIN_SPAWN_DISTANCE = 15;
     [thrustButton addTarget:self action:@selector(thrustCancel:) forControlEvents:UIControlEventTouchUpOutside];
     [thrustButton setEnabled:YES];
     [self.view addSubview:thrustButton];
+    
+    livesleft = [[UILabel alloc] initWithFrame:CGRectMake(5, 25, 100, 25)];
+    [livesleft setText:@"Lives: 5"];
+    [livesleft setBackgroundColor:[UIColor blackColor]];
+    [livesleft setTextColor:[UIColor whiteColor]];
+    [self.view addSubview:livesleft];
+    
+    gameOver = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 50, self.view.frame.size.height/2-25, 100, 25)];
+    [gameOver setText:@"Game Over"];
+    [gameOver setBackgroundColor:[UIColor blackColor]];
+    [gameOver setTextColor:[UIColor whiteColor]];
+    [gameOver setTextAlignment:NSTextAlignmentCenter];
+    [self.view addSubview:gameOver];
+    [gameOver setHidden:true];
+    
+    score = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 50, self.view.frame.size.height/2+25, 100, 25)];
+    [score setText:@"Score: 0"];
+    [score setBackgroundColor:[UIColor blackColor]];
+    [score setTextColor:[UIColor whiteColor]];
+    [score setTextAlignment:NSTextAlignmentCenter];
+    [self.view addSubview:score];
+    [score setHidden:true];
     
     [EAGLContext setCurrentContext:view.context];
     [self setupScene];
@@ -131,11 +155,22 @@ const double MIN_SPAWN_DISTANCE = 15;
     //Set camera perspective
     GLKMatrix4 viewMatrix = GLKMatrix4MakeTranslation(0, 0, -30);
     
-    //Set view matrix for ship to be drawn
-    [_ship renderWithParentModelViewMatrix:viewMatrix];
-    _ship.xBound = xBound;
-    _ship.yBound = yBound;
-        
+    if(_ship.lives > 0)
+    {
+        [livesleft setText:[NSString stringWithFormat:@"Lives: %d", _ship.lives]];
+        //Set view matrix for ship to be drawn
+        [_ship renderWithParentModelViewMatrix:viewMatrix];
+        _ship.xBound = xBound;
+        _ship.yBound = yBound;
+        _ship.asteroids = _asteroids;
+    }
+    else if(gameOver.isHidden)
+    {
+        [livesleft setText:[NSString stringWithFormat:@"Lives: %d", _ship.lives]];
+        [gameOver setHidden:false];
+        [score setHidden:false];
+    }
+            
     //Iterate for projectiles and draw each.
     for(id proj in _projectiles)
     {
@@ -178,6 +213,7 @@ const double MIN_SPAWN_DISTANCE = 15;
     
     //NSLog(@"proj: %d", [_projectiles count]);
     //NSLog(@"ship: %f , %f", _ship.position.x, _ship.position.y);
+    if(timeSinceLastAsteroid >= 5) [self spawnAsteroid];
 }
 
 //Pan handler for rotating the ship
