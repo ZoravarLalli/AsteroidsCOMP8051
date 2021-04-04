@@ -16,6 +16,11 @@
 
 @end
 
+
+// Constants
+const double MIN_SPAWN_DISTANCE = 15;
+
+
 @implementation ViewController
 {
     BaseEffect *_shader; //Shader controller
@@ -23,13 +28,15 @@
     NSMutableArray *_projectiles; //Array for projectiles
     NSMutableArray *_asteroids; //Array for asteroids
     float timeSinceLastAsteroid;
-    
+    float xBound, yBound;
     // For sound
     AVAudioPlayer *_music;
     AVAudioPlayer *_playerShot;
     AVAudioPlayer *_asteroidImpact;
     AVAudioPlayer *_playerDeath;
     AVAudioPlayer *_rocketThrust;
+
+
 }
 
 //Called when the view is loaded
@@ -99,8 +106,13 @@
     //Initialize asteroid array
     _asteroids = [[NSMutableArray alloc] initWithCapacity:10];
     
+    //Set Bounds for screen looping
+    xBound = self.view.frame.size.width/20;
+    yBound = self.view.frame.size.height/20;
+    
     //Initialize asteroid timer
     timeSinceLastAsteroid = 0.0;
+
 }
 
 //Called to draw on each frame
@@ -121,8 +133,8 @@
     
     //Set view matrix for ship to be drawn
     [_ship renderWithParentModelViewMatrix:viewMatrix];
-    _ship.xBound = self.view.frame.size.width/20;
-    _ship.yBound = self.view.frame.size.height/20;
+    _ship.xBound = xBound;
+    _ship.yBound = yBound;
         
     //Iterate for projectiles and draw each.
     for(id proj in _projectiles)
@@ -164,7 +176,8 @@
     timeSinceLastAsteroid += self.timeSinceLastUpdate;
     if(timeSinceLastAsteroid >= 5) [self spawnAsteroid];
     
-    NSLog(@"proj: %d", [_projectiles count]);
+    //NSLog(@"proj: %d", [_projectiles count]);
+    //NSLog(@"ship: %f , %f", _ship.position.x, _ship.position.y);
 }
 
 //Pan handler for rotating the ship
@@ -217,10 +230,37 @@
     timeSinceLastAsteroid = 0.0;
     if([_asteroids count] >= 10) return;
     AsteroidModel *newAsteroid = [[AsteroidModel alloc] initWithShader:_shader];
-    newAsteroid.xBound = self.view.frame.size.width/20;
-    newAsteroid.yBound = self.view.frame.size.height/20;
-    double randX = ((double)arc4random_uniform(newAsteroid.xBound) - newAsteroid.xBound/2);
-    double randY = ((double)arc4random_uniform(newAsteroid.yBound) - newAsteroid.yBound/2);
+    newAsteroid.xBound = xBound;
+    newAsteroid.yBound = yBound;
+    
+    
+    double randX, randY, distX, distY, distance;
+    
+    // loop until distance is far enough
+    do {
+        //get a random position
+        randX = ((double)arc4random_uniform(xBound) - xBound/2);
+        randY = ((double)arc4random_uniform(yBound) - yBound/2);
+        
+        // get distance between ship and new position
+        distX = fabs(randX - _ship.position.x);
+        distY = fabs(randY - _ship.position.y);
+        
+        // if distance is larger than half the screen,
+        // reduce the distance by the size of the entire screen to account for looping.
+        // no need to convert to abs again because it's squared after.
+        distX = distX < xBound ? distX : distX - (xBound * 2);
+        distY = distY < yBound ? distY : distY - (yBound * 2);
+    
+        // square both and root the result.
+        distance = sqrt(pow(distX, 2.0) + pow(distY, 2.0));
+        
+        NSLog(@"distance %f", distance);
+
+    } while (distance < MIN_SPAWN_DISTANCE);
+    
+    NSLog(@"asteroid: %f , %f", randX, randY);
+    
     newAsteroid.position = GLKVector3Make(randX, randY, 0);
     [_asteroids addObject:newAsteroid];
 }
