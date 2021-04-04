@@ -533,11 +533,8 @@
 			files = (
 				CC576F0226193354006F8A71 /* ded.png in Resources */,
 				CC057FAA25E71D37003331D2 /* LaunchScreen.storyboard in Resources */,
-<<<<<<< HEAD
 				AC906453261A63BE00B87F48 /* asteroidImpact.wav in Resources */,
-=======
 				CC576EFF261931C3006F8A71 /* live.png in Resources */,
->>>>>>> kris
 				CC057FA725E71D37003331D2 /* Assets.xcassets in Resources */,
 				AC906450261A611C00B87F48 /* playerShotEdited.wav in Resources */,
 				AC906459261A651F00B87F48 /* thrust.wav in Resources */,
