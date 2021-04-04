@@ -121,10 +121,10 @@ const static GLubyte indices[] =
     //Check for asteroid collision
     for(AsteroidModel *ast in _asteroids)
     {
-        if(self.position.x + 2 >= ast.position.x
-           && self.position.x - 2 <= ast.position.x
-           && self.position.y + 2 >= ast.position.y
-           && self.position.y - 2 <= ast.position.y)
+        if(self.position.x + (2 * ast.scale) >= ast.position.x
+           && self.position.x - (2 * ast.scale) <= ast.position.x
+           && self.position.y + (2 * ast.scale) >= ast.position.y
+           && self.position.y - (2 * ast.scale) <= ast.position.y)
         {
             [self asteroidHit];
         }
