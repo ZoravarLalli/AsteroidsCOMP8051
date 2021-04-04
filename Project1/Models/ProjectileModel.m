@@ -101,6 +101,7 @@ const static GLubyte indices[] = {
            && self.position.y - 2 <= ast.position.y)
         {
             ast.destroy = true;
+            self.destroy = true;
         }
     }
     

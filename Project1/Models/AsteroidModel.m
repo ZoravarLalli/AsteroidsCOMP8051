@@ -85,6 +85,31 @@ const static GLubyte indices[] = {
         double randY = ((double)arc4random_uniform(51) - 25)/25;
         self.forward = GLKVector3Make(randX, randY, 0);
         self.destroy = false;
+        self.size = 3;
+        [self scaleWithSize];
+    }
+    return self;
+}
+
+//Initiation method inherited from Model.m
+- (instancetype) initWithShader:(BaseEffect *) shader andSize:(int)size;
+{
+    //Initialize cube with shader and vertex data.
+    if(self = [super initWithName:"asteroid"
+                           shader:shader
+                         vertices:(Vertex *)vertices
+                      vertexCount:sizeof(vertices)/sizeof(vertices[0])
+                          indices:indices
+                       indexCount: sizeof(indices)/sizeof(indices[0])])
+    {
+        //Set texture from Resource folder
+        [self loadTexture:@"green.png"];
+        double randX = ((double)arc4random_uniform(51) - 25)/25;
+        double randY = ((double)arc4random_uniform(51) - 25)/25;
+        self.forward = GLKVector3Make(randX, randY, 0);
+        self.destroy = false;
+        self.size = size;
+        [self scaleWithSize];
     }
     return self;
 }
@@ -112,6 +137,20 @@ const static GLubyte indices[] = {
     else if (self.position.y < _yBound * -1)
     {
         self.position = GLKVector3Make(self.position.x, _yBound, self.position.z);
+    }
+}
+
+
+- (void) scaleWithSize
+{
+    if (self.size == 1) {
+        self.scale = 0.7f;
+    }
+    if (self.size == 2) {
+        self.scale = 1.0f;
+    }
+    if (self.size >= 3) {
+        self.scale = 1.5f;
     }
 }
 

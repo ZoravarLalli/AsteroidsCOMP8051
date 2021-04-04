@@ -13,7 +13,9 @@
 @property float xBound;
 @property float yBound;
 @property bool destroy;
+@property int size;
 
 - (instancetype) initWithShader :(BaseEffect *)shader;
+- (instancetype) initWithShader :(BaseEffect *)shader andSize:(int)size;
 
 @end
