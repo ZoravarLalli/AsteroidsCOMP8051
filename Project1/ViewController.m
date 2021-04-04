@@ -29,12 +29,26 @@ const double MIN_SPAWN_DISTANCE = 15;
     NSMutableArray *_asteroids; //Array for asteroids
     float timeSinceLastAsteroid;
     float xBound, yBound;
+    // For sound
+    AVAudioPlayer *_music;
+    AVAudioPlayer *_playerShot;
+    AVAudioPlayer *_asteroidImpact;
+    AVAudioPlayer *_playerDeath;
+    AVAudioPlayer *_rocketThrust;
+
+
 }
 
 //Called when the view is loaded
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // Preload the in game sound effects
+    _playerShot = [self preloadSound:@"playerShotEdited.wav"];
+    _playerDeath = [self preloadSound:@"playerDeath.wav"];
+    _asteroidImpact = [self preloadSound:@"asteroidImpact.wav"];
+    _rocketThrust = [self preloadSound:@"thrust.wav"];
     
     //Set OpenGL view
     GLKView *view = (GLKView *)self.view;
@@ -62,7 +76,7 @@ const double MIN_SPAWN_DISTANCE = 15;
     [thrustButton setBackgroundColor:[UIColor greenColor]];
     [thrustButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [thrustButton addTarget:self action:@selector(thrustTouch:) forControlEvents:UIControlEventTouchDown];
-    [thrustButton addTarget:self action:@selector(thrustTouch:) forControlEvents:UIControlEventTouchUpInside];
+    [thrustButton addTarget:self action:@selector(thrustCancel:) forControlEvents:UIControlEventTouchUpInside];
     [thrustButton addTarget:self action:@selector(thrustCancel:) forControlEvents:UIControlEventTouchUpOutside];
     [thrustButton setEnabled:YES];
     [self.view addSubview:thrustButton];
@@ -74,6 +88,9 @@ const double MIN_SPAWN_DISTANCE = 15;
 //Additional setup code
 - (void) setupScene
 {
+    // Start music
+    //[self playBackgroundMusic:@"05_Chill.wav"];
+    
     //Initiate shader
     _shader = [[BaseEffect alloc] initWithVertexShader:@"VertexShader.glsl" fragmentShader:@"FragmentShader.glsl"];
     
@@ -149,7 +166,10 @@ const double MIN_SPAWN_DISTANCE = 15;
     for(AsteroidModel *ast in [_asteroids reverseObjectEnumerator])
     {
         [ast updateWithDelta:self.timeSinceLastUpdate];
-        if(ast.destroy) [_asteroids removeObject:ast];
+        if(ast.destroy){
+            [self playShotImpact]; // Plays asteroid destruction sound
+            [_asteroids removeObject:ast];
+        }
     }
     
     //Increment asteroid timer and spawn
@@ -175,6 +195,9 @@ const double MIN_SPAWN_DISTANCE = 15;
 //Handler for fire button
 - (void) fireHandler : (id) sender
 {
+    // Play shot audio
+    [self playPlayerShot];
+    
     //Create new projectile model, set forward and position vectors, and add to array
     ProjectileModel *newProjectile = [[ProjectileModel alloc] initWithShader:_shader];
     newProjectile.forward = _ship.forward;
@@ -188,13 +211,17 @@ const double MIN_SPAWN_DISTANCE = 15;
 //Handler for touching thrust button
 - (void) thrustTouch : (id) sender
 {
+    [self playThrust]; // Start rocket sound player
     [_ship thrustToggle];
+    NSLog(@"START THRUST");
 }
 
 //Handler for canceling thrust
 - (void) thrustCancel : (id) sender
 {
+    [self pauseThrust]; // Pause rocket sound player
     _ship.thrust = false;
+    NSLog(@"PAUSE THRUST");
 }
 
 - (void) spawnAsteroid
@@ -236,6 +263,39 @@ const double MIN_SPAWN_DISTANCE = 15;
     
     newAsteroid.position = GLKVector3Make(randX, randY, 0);
     [_asteroids addObject:newAsteroid];
+}
+
+
+// SOUND
+- (void)playBackgroundMusic:(NSString *)filename{
+    _music = [self preloadSound:filename];
+    _music.numberOfLoops = 1;
+    _music.volume = 0.5;
+    [_music play];
+}
+- (AVAudioPlayer *)preloadSound:(NSString *)filename{
+    // Convert filename into NS URL
+    NSURL  *URL = [[NSBundle mainBundle] URLForResource:filename withExtension:nil];
+    // Create audio player using the url
+    AVAudioPlayer *prepPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:URL error:nil];
+    [prepPlayer prepareToPlay]; // Prepares and loads it to play
+    return prepPlayer;
+}
+- (void)playPlayerShot{
+    [_playerShot play];
+}
+- (void)playShotImpact{
+    [_asteroidImpact play];
+}
+- (void)playPlayerDeath{
+    [_playerDeath play];
+}
+- (void)playThrust{
+    _rocketThrust.numberOfLoops = -1;
+    [_rocketThrust play];
+}
+- (void)pauseThrust{
+    [_rocketThrust pause];
 }
 
 @end

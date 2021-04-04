@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC906446261A552800B87F48 /* playerShot.wav in Resources */ = {isa = PBXBuildFile; fileRef = AC906445261A552800B87F48 /* playerShot.wav */; };
+		AC90644D261A596300B87F48 /* 05_Chill.wav in Resources */ = {isa = PBXBuildFile; fileRef = AC90644C261A596200B87F48 /* 05_Chill.wav */; };
+		AC906450261A611C00B87F48 /* playerShotEdited.wav in Resources */ = {isa = PBXBuildFile; fileRef = AC90644F261A611C00B87F48 /* playerShotEdited.wav */; };
+		AC906453261A63BE00B87F48 /* asteroidImpact.wav in Resources */ = {isa = PBXBuildFile; fileRef = AC906452261A63BE00B87F48 /* asteroidImpact.wav */; };
+		AC906456261A64B700B87F48 /* playerDeath.wav in Resources */ = {isa = PBXBuildFile; fileRef = AC906455261A64B700B87F48 /* playerDeath.wav */; };
+		AC906459261A651F00B87F48 /* thrust.wav in Resources */ = {isa = PBXBuildFile; fileRef = AC906458261A651F00B87F48 /* thrust.wav */; };
 		CC057F9C25E71D37003331D2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CC057F9B25E71D37003331D2 /* AppDelegate.m */; };
 		CC057F9F25E71D37003331D2 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CC057F9E25E71D37003331D2 /* SceneDelegate.m */; };
 		CC057FA225E71D37003331D2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC057FA125E71D37003331D2 /* ViewController.m */; };
@@ -29,6 +35,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AC906445261A552800B87F48 /* playerShot.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = playerShot.wav; sourceTree = "<group>"; };
+		AC90644C261A596200B87F48 /* 05_Chill.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 05_Chill.wav; sourceTree = "<group>"; };
+		AC90644F261A611C00B87F48 /* playerShotEdited.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = playerShotEdited.wav; sourceTree = "<group>"; };
+		AC906452261A63BE00B87F48 /* asteroidImpact.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = asteroidImpact.wav; sourceTree = "<group>"; };
+		AC906455261A64B700B87F48 /* playerDeath.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = playerDeath.wav; sourceTree = "<group>"; };
+		AC906458261A651F00B87F48 /* thrust.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = thrust.wav; sourceTree = "<group>"; };
 		CC057F9725E71D37003331D2 /* Project1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC057F9A25E71D37003331D2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		CC057F9B25E71D37003331D2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -129,6 +141,12 @@
 				CC0677EA25EE207800A01200 /* red.png */,
 				CCE6A6B425E7967800E63FCC /* logo.png */,
 				CCE6A6B325E7967800E63FCC /* reboot.jpg */,
+				AC906445261A552800B87F48 /* playerShot.wav */,
+				AC90644F261A611C00B87F48 /* playerShotEdited.wav */,
+				AC90644C261A596200B87F48 /* 05_Chill.wav */,
+				AC906452261A63BE00B87F48 /* asteroidImpact.wav */,
+				AC906455261A64B700B87F48 /* playerDeath.wav */,
+				AC906458261A651F00B87F48 /* thrust.wav */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -207,14 +225,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC057FAA25E71D37003331D2 /* LaunchScreen.storyboard in Resources */,
+				AC906453261A63BE00B87F48 /* asteroidImpact.wav in Resources */,
 				CC057FA725E71D37003331D2 /* Assets.xcassets in Resources */,
+				AC906450261A611C00B87F48 /* playerShotEdited.wav in Resources */,
+				AC906459261A651F00B87F48 /* thrust.wav in Resources */,
 				CCE6A6B525E7967800E63FCC /* reboot.jpg in Resources */,
 				CC0677ED25EE207800A01200 /* green.png in Resources */,
+				AC906456261A64B700B87F48 /* playerDeath.wav in Resources */,
 				CCE6A69C25E7288200E63FCC /* VertexShader.glsl in Resources */,
 				CCE6A6B625E7967800E63FCC /* logo.png in Resources */,
 				CC0677EC25EE207800A01200 /* red.png in Resources */,
+				AC906446261A552800B87F48 /* playerShot.wav in Resources */,
 				CCE6A69925E7286800E63FCC /* FragmentShader.glsl in Resources */,
 				CC057FA525E71D37003331D2 /* Main.storyboard in Resources */,
+				AC90644D261A596300B87F48 /* 05_Chill.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

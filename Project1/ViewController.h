@@ -9,7 +9,12 @@
 #import <OpenGLES/ES2/glext.h>
 
 @import GLKit;
+@import AVFoundation;
 
 @interface ViewController : GLKViewController
+
+- (void)playBackgroundMusic:(NSString *)filename;
+- (AVAudioPlayer *)preloadSound:(NSString *)filename;
+- (void)playPlayerShot;
 
 @end
