@@ -13,6 +13,7 @@
 @property float xBound;
 @property float yBound;
 @property bool destroy;
+@property bool destroyWithChildren;
 @property int size;
 
 - (instancetype) initWithShader :(BaseEffect *)shader;
