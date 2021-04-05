@@ -244,6 +244,9 @@ const int ASTEROID_LIMIT = 25;
             
             [_asteroids removeObject:ast];
         }
+        if(ast.destroyWithChildren) {
+            [_asteroids removeObject:ast];
+        }
     }
     
     //Increment asteroid timer and spawn
@@ -301,6 +304,18 @@ const int ASTEROID_LIMIT = 25;
 - (void) resetGame : (id) sender
 {
     NSLog(@"reset game");
+    [_ship resetPos];
+    
+    for (AsteroidModel* o in _asteroids) {
+        o.destroyWithChildren = true;
+    }
+    [gameOver setHidden:true];
+    [score setHidden:true];
+    [resetbutton setHidden:true];
+    
+    timeSinceLastAsteroid = 0.0;
+    _ship.lives = 5;
+    
 }
 
 - (void) spawnAsteroid
