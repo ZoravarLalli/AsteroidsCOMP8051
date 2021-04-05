@@ -19,5 +19,6 @@
 - (instancetype) initWithShader :(BaseEffect *)shader;
 - (void) thrustToggle;
 - (void) rotate : (float) angle;
+- (void) resetPos;
 
 @end

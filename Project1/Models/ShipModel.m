@@ -143,21 +143,24 @@ const static GLubyte indices[] =
     if(self.lives > 0)
     {
         self.lives -= 1;
-        //Set  rotation
-        self.rotationX = M_PI/2;
-        self.rotationY = 0;
-        //Set  forward vector
-        self.forward = GLKVector3Make(0, 1, 0);
-        //Set  velocity
-        velocityPercent = 0.0;
-        self.position = GLKVector3Make(0, 0, 0);
-        self.thrust = false;
+        [self resetPos];
+
     }
     else
     {
         NSLog(@"ya ded");
     }
 }
+
+- (void) resetPos
+{
+    self.forward = GLKVector3Make(0, -1, 0);
+    velocityPercent = 0.0;
+    self.rotationY = 0;
+    self.position = GLKVector3Make(0, 0, 0);
+    self.thrust = false;
+}
+
 
 //Rotate the model from user input.
 -(void) rotate : (float) angle
