@@ -43,12 +43,18 @@ const double MIN_SPAWN_DISTANCE = 15;
     // For score keeping
     NSInteger _highScores[5];
     int currentScore;
+    
+    // For persisting data
+    NSUserDefaults *prefs;
 }
 
 //Called when the view is loaded
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // For saving between sessions
+    prefs = [NSUserDefaults standardUserDefaults];
     
     // Preload the in game sound effects
     _playerShot = [self preloadSound:@"playerShotEdited.wav"];
@@ -192,8 +198,11 @@ const double MIN_SPAWN_DISTANCE = 15;
         
         // Score adjustment
         [self addNewScore:currentScore];
-        //int highScore = _highScores[0];
+        // Print to UILabel
         [score setText:[NSString stringWithFormat:@"High Scores: %d\r%d\r%d\r%d\r%d", _highScores[0], _highScores[1], _highScores[2], _highScores[3], _highScores[4]]];
+        // Save to device
+        //[prefs setObject:_highScores forKey:@"highscores"];
+        
         [score setHidden:false];
     }
             
