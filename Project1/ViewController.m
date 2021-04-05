@@ -256,7 +256,8 @@ const int ASTEROID_LIMIT = 25;
         [ast updateWithDelta:self.timeSinceLastUpdate];
         if(ast.destroy){
             [self playShotImpact]; // Plays asteroid destruction sound
-            
+            currentScore += 1; // Increment score
+
             if (ast.size > 1) {
                 AsteroidModel *newAsteroid = [[AsteroidModel alloc] initWithShader:_shader andSize:ast.size-1];
                 newAsteroid.xBound = xBound;
@@ -278,10 +279,9 @@ const int ASTEROID_LIMIT = 25;
             
             [_asteroids removeObject:ast];
         }
-        if(ast.destroyWithChildren) {
+        else if(ast.destroyWithChildren) {
             [_asteroids removeObject:ast];
-            currentScore += 1; // Increment score
-        }
+                    }
     }
     
     //Increment asteroid timer and spawn
@@ -349,6 +349,7 @@ const int ASTEROID_LIMIT = 25;
     [resetbutton setHidden:true];
     
     timeSinceLastAsteroid = 0.0;
+    currentScore = 0;
     _ship.lives = 5;
     
 }
