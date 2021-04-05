@@ -46,6 +46,8 @@ const int ASTEROID_LIMIT = 25;
     UILabel *livesleft;
     UILabel *gameOver;
     UILabel *score;
+    
+    UIButton *resetbutton;
 }
 
 //Called when the view is loaded
@@ -112,6 +114,15 @@ const int ASTEROID_LIMIT = 25;
     [self.view addSubview:score];
     [score setHidden:true];
     
+    resetbutton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 50, self.view.frame.size.height/2, 100, 25)];
+    [resetbutton setTitle:@"Reset" forState:UIControlStateNormal];
+    [resetbutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [resetbutton setBackgroundColor:[UIColor blackColor]];
+    [resetbutton addTarget:self action:@selector(resetGame:) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:resetbutton];
+    [resetbutton setEnabled:true];
+    [resetbutton setHidden:true];
+    
     [EAGLContext setCurrentContext:view.context];
     [self setupScene];
 }
@@ -176,6 +187,7 @@ const int ASTEROID_LIMIT = 25;
         [livesleft setText:[NSString stringWithFormat:@"Lives: %d", _ship.lives]];
         [gameOver setHidden:false];
         [score setHidden:false];
+        [resetbutton setHidden:false];
     }
             
     //Iterate for projectiles and draw each.
@@ -218,8 +230,6 @@ const int ASTEROID_LIMIT = 25;
                 newAsteroid.position = ast.position;
                 newAsteroid.forward = GLKVector3MultiplyScalar(GLKVector3Make(ast.forward.y, ast.forward.x, 0), 1.2);
                 
-                
-                
                 [_asteroids addObject:newAsteroid];
                 
                 AsteroidModel *newAsteroid2 = [[AsteroidModel alloc] initWithShader:_shader andSize:ast.size-1];
@@ -227,8 +237,6 @@ const int ASTEROID_LIMIT = 25;
                 newAsteroid2.yBound = yBound;
                 newAsteroid2.position = ast.position;
                 newAsteroid2.forward = GLKVector3MultiplyScalar(GLKVector3Make(ast.forward.y, ast.forward.x, 0), -1.2);
-                
-                
                 
                 [_asteroids addObject:newAsteroid2];
             }
@@ -288,6 +296,11 @@ const int ASTEROID_LIMIT = 25;
     [self pauseThrust]; // Pause rocket sound player
     _ship.thrust = false;
     NSLog(@"PAUSE THRUST");
+}
+
+- (void) resetGame : (id) sender
+{
+    NSLog(@"reset game");
 }
 
 - (void) spawnAsteroid
