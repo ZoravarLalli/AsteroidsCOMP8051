@@ -33,12 +33,12 @@ const double MIN_SPAWN_DISTANCE = 15;
     AVAudioPlayer *_music;
     AVAudioPlayer *_playerShot;
     AVAudioPlayer *_asteroidImpact;
-    AVAudioPlayer *_playerDeath;
     AVAudioPlayer *_rocketThrust;
 
     UILabel *livesleft;
     UILabel *gameOver;
     UILabel *score;
+    UILabel *ingameScore;
 }
 
 //Called when the view is loaded
@@ -48,7 +48,6 @@ const double MIN_SPAWN_DISTANCE = 15;
     
     // Preload the in game sound effects
     _playerShot = [self preloadSound:@"playerShotEdited.wav"];
-    _playerDeath = [self preloadSound:@"playerDeath.wav"];
     _asteroidImpact = [self preloadSound:@"asteroidImpact.wav"];
     _rocketThrust = [self preloadSound:@"thrust.wav"];
     
@@ -88,6 +87,12 @@ const double MIN_SPAWN_DISTANCE = 15;
     [livesleft setBackgroundColor:[UIColor blackColor]];
     [livesleft setTextColor:[UIColor whiteColor]];
     [self.view addSubview:livesleft];
+    
+    ingameScore = [[UILabel alloc] initWithFrame:CGRectMake(5, 55, 100, 25)];
+    [ingameScore setText:@"Score: 0"];
+    [ingameScore setBackgroundColor:[UIColor blackColor]];
+    [ingameScore setTextColor:[UIColor whiteColor]];
+    [self.view addSubview:ingameScore];
     
     gameOver = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 50, self.view.frame.size.height/2-25, 100, 25)];
     [gameOver setText:@"Game Over"];
@@ -322,9 +327,6 @@ const double MIN_SPAWN_DISTANCE = 15;
 }
 - (void)playShotImpact{
     [_asteroidImpact play];
-}
-- (void)playPlayerDeath{
-    [_playerDeath play];
 }
 - (void)playThrust{
     _rocketThrust.numberOfLoops = -1;

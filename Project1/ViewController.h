@@ -16,5 +16,9 @@
 - (void)playBackgroundMusic:(NSString *)filename;
 - (AVAudioPlayer *)preloadSound:(NSString *)filename;
 - (void)playPlayerShot;
+- (void)playShotImpact;
+- (void)playPlayerDeath;
+- (void)playThrust;
+- (void)pauseThrust;
 
 @end

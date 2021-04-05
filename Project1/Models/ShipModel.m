@@ -7,10 +7,12 @@
 
 #import "ShipModel.h"
 #import "AsteroidModel.h"
+#import "ViewController.h"
 
 @implementation ShipModel
 {
     float velocityPercent;
+    AVAudioPlayer *_playerDeath;
 }
 
 //Each face is defined by distinct vertices, repeated vertices needed for corners.
@@ -59,6 +61,9 @@ const static GLubyte indices[] =
 //Initiation method inherited from Model.m
 - (instancetype) initWithShader:(BaseEffect *) shader
 {
+    // hacky
+    _playerDeath = [self preloadSound:@"playerDeath.wav"];
+    
     //Initialize cube with shader and vertex data.
     if(self = [super initWithName:"ship"
                            shader:shader
@@ -140,6 +145,8 @@ const static GLubyte indices[] =
 //Function to call when colliding with an asteroid
 - (void) asteroidHit
 {
+    [self playPlayerDeath];
+    
     if(self.lives > 0)
     {
         self.lives -= 1;
@@ -168,6 +175,19 @@ const static GLubyte indices[] =
     else self.rotationY += angle;
     //Set the forward vector based on rotation angle.
     self.forward = GLKVector3Make(sinf(self.rotationY) * -1, cosf(self.rotationY), 0);
+}
+
+- (AVAudioPlayer *)preloadSound:(NSString *)filename{
+    // Convert filename into NS URL
+    NSURL  *URL = [[NSBundle mainBundle] URLForResource:filename withExtension:nil];
+    // Create audio player using the url
+    AVAudioPlayer *prepPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:URL error:nil];
+    [prepPlayer prepareToPlay]; // Prepares and loads it to play
+    return prepPlayer;
+}
+
+- (void)playPlayerDeath{
+    [_playerDeath play];
 }
 
 @end
