@@ -20,5 +20,6 @@
 - (void)playPlayerDeath;
 - (void)playThrust;
 - (void)pauseThrust;
+- (void)addNewScore:(int) newScore;
 
 @end

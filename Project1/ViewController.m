@@ -39,6 +39,11 @@ const double MIN_SPAWN_DISTANCE = 15;
     UILabel *gameOver;
     UILabel *score;
     UILabel *ingameScore;
+    
+    // For score keeping
+    NSMutableArray *_highScores;
+    int currentScore;
+    
 }
 
 //Called when the view is loaded
@@ -103,7 +108,7 @@ const double MIN_SPAWN_DISTANCE = 15;
     [gameOver setHidden:true];
     
     score = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 50, self.view.frame.size.height/2+25, 100, 25)];
-    [score setText:@"Score: 0"];
+    [score setText:@"High Scores:"];
     [score setBackgroundColor:[UIColor blackColor]];
     [score setTextColor:[UIColor whiteColor]];
     [score setTextAlignment:NSTextAlignmentCenter];
@@ -135,6 +140,10 @@ const double MIN_SPAWN_DISTANCE = 15;
     //Initialize asteroid array
     _asteroids = [[NSMutableArray alloc] initWithCapacity:10];
     
+    //Initialize score array
+    _highScores = [[NSMutableArray alloc] initWithCapacity:5];
+    currentScore = 0;
+    
     //Set Bounds for screen looping
     xBound = self.view.frame.size.width/20;
     yBound = self.view.frame.size.height/20;
@@ -160,6 +169,10 @@ const double MIN_SPAWN_DISTANCE = 15;
     //Set camera perspective
     GLKMatrix4 viewMatrix = GLKMatrix4MakeTranslation(0, 0, -30);
     
+    // Update score label
+    [ingameScore setText:[NSString stringWithFormat:@"Score: %d", currentScore]];
+    
+    // Update lives label and listen for gameover
     if(_ship.lives > 0)
     {
         [livesleft setText:[NSString stringWithFormat:@"Lives: %d", _ship.lives]];
@@ -173,6 +186,10 @@ const double MIN_SPAWN_DISTANCE = 15;
     {
         [livesleft setText:[NSString stringWithFormat:@"Lives: %d", _ship.lives]];
         [gameOver setHidden:false];
+        
+        // Score adjustment
+        [self addNewScore:ingameScore];
+        [score setText:[NSString stringWithFormat:@"High Scores: /n%d", _highScores[0], _highScores[1], _highScores[2], _highScores[3], _highScores[4]]];
         [score setHidden:false];
     }
             
@@ -209,6 +226,7 @@ const double MIN_SPAWN_DISTANCE = 15;
         if(ast.destroy){
             [self playShotImpact]; // Plays asteroid destruction sound
             [_asteroids removeObject:ast];
+            currentScore += 1; // Increment score
         }
     }
     
@@ -334,6 +352,18 @@ const double MIN_SPAWN_DISTANCE = 15;
 }
 - (void)pauseThrust{
     [_rocketThrust pause];
+}
+
+// Adds current score to highscores
+- (void)addNewScore:(int) newScore{
+    NSNumber *currScore = [NSNumber numberWithInt:newScore];
+    
+    // If the current score is higher than any of the existing highscores, it will replace it.
+    for (int i = 0; i < _highScores.count; i++){
+        if(currScore > _highScores[i]){
+            [_highScores replaceObjectAtIndex:i withObject:currScore];
+        }
+    }
 }
 
 @end
