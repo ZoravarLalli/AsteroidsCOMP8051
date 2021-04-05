@@ -24,6 +24,29 @@
         double randY = ((double)arc4random_uniform(51) - 25)/25;
         self.forward = GLKVector3Make(randX, randY, 0);
         self.destroy = false;
+        self.size = 3;
+        [self scaleWithSize];
+    }
+    return self;
+}
+
+//Initiation method inherited from Model.m
+- (instancetype) initWithShader:(BaseEffect *) shader andSize:(int)size;
+{
+    //Initialize cube with shader and vertex data.
+    if(self = [super initWithName:"asteroid"
+                               shader:shader
+                             vertices:(Vertex *)vertices
+                          vertexCount:sizeof(vertices)/sizeof(vertices[0])])
+        {
+            //Set texture from Resource folder
+            [self loadTexture:@"reboot.jpg"];
+            double randX = ((double)arc4random_uniform(51) - 25)/25;
+            double randY = ((double)arc4random_uniform(51) - 25)/25;
+            self.forward = GLKVector3Make(randX, randY, 0);
+            self.destroy = false;
+        self.size = size;
+        [self scaleWithSize];
     }
     return self;
 }
@@ -635,5 +658,18 @@ const static Vertex vertices[] =
         {{0.628989, 0.981388, -0.078973}, {1, 1, 1, 1}, {0.625000, 0.625000}, {0.799800, 0.600100, -0.013600}},
         {{0.725202, 0.866805, 0.524231}, {1, 1, 1, 1}, {0.625000, 0.687500}, {0.799800, 0.600100, -0.013600}},
     };
+
+- (void) scaleWithSize
+{
+    if (self.size == 1) {
+        self.scale = 0.7f;
+    }
+    if (self.size == 2) {
+        self.scale = 1.0f;
+    }
+    if (self.size >= 3) {
+        self.scale = 1.5f;
+    }
+}
 
 @end

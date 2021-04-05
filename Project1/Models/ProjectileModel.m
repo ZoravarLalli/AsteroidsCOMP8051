@@ -84,28 +84,45 @@ const static Vertex vertices[] = {
 //Update method interited from Model.m
 -(void)updateWithDelta:(NSTimeInterval)delta
 {
+    self.timeAlive += delta;
+    if (self.timeAlive > .3)
+    {
+        self.destroy = true;
+    }
     //Send the projectile on a trajectory based on its forward vector.
-    self.position = GLKVector3Add(self.position, self.forward);
+    GLKVector3 velocity = GLKVector3MultiplyScalar(self.forward, 3);
+    self.position = GLKVector3Add(self.position, velocity);
     
     //Check for asteroid collision
     for(AsteroidModel *ast in _asteroids)
     {
-        if(self.position.x + 2 >= ast.position.x
-           && self.position.x - 2 <= ast.position.x
-           && self.position.y + 2 >= ast.position.y
-           && self.position.y - 2 <= ast.position.y)
+        
+        if(self.position.x + (2 * ast.scale) >= ast.position.x
+           && self.position.x - (2 * ast.scale) <= ast.position.x
+           && self.position.y + (2 * ast.scale) >= ast.position.y
+           && self.position.y - (2 * ast.scale) <= ast.position.y)
         {
             ast.destroy = true;
+            self.destroy = true;
         }
     }
     
     //Check if projectile is beyond bounds of the screen.
-    if(self.position.x > _xBound
-       || self.position.x < _xBound * -1
-       || self.position.y > _yBound
-       || self.position.y < _yBound * -1)
+    if(self.position.x > _xBound)
     {
-        self.destroy = true;
+        self.position = GLKVector3Make(_xBound * -1, self.position.y, self.position.z);
+    }
+    else if (self.position.x < _xBound * -1)
+    {
+        self.position = GLKVector3Make(_xBound, self.position.y, self.position.z);
+    }
+    else if (self.position.y > _yBound)
+    {
+        self.position = GLKVector3Make(self.position.x, _yBound * -1, self.position.z);
+    }
+    else if (self.position.y < _yBound * -1)
+    {
+        self.position = GLKVector3Make(self.position.x, _yBound, self.position.z);
     }
 }
 

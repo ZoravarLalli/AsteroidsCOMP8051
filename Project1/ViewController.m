@@ -17,9 +17,16 @@
 @end
 
 
-// Constants
+// Constants ----------------
 const double MIN_SPAWN_DISTANCE = 15;
 
+// Number of hits allowed on screen before spawning stops.
+// Size 3 = 7 hits
+// Size 2 = 3 hits
+// Size 1 = 1 hit
+const int ASTEROID_LIMIT = 25;
+
+// ---------------------
 
 @implementation ViewController
 {
@@ -203,6 +210,30 @@ const double MIN_SPAWN_DISTANCE = 15;
         [ast updateWithDelta:self.timeSinceLastUpdate];
         if(ast.destroy){
             [self playShotImpact]; // Plays asteroid destruction sound
+            
+            if (ast.size > 1) {
+                AsteroidModel *newAsteroid = [[AsteroidModel alloc] initWithShader:_shader andSize:ast.size-1];
+                newAsteroid.xBound = xBound;
+                newAsteroid.yBound = yBound;
+                newAsteroid.position = ast.position;
+                newAsteroid.forward = GLKVector3MultiplyScalar(GLKVector3Make(ast.forward.y, ast.forward.x, 0), 1.2);
+                
+                
+                
+                [_asteroids addObject:newAsteroid];
+                
+                AsteroidModel *newAsteroid2 = [[AsteroidModel alloc] initWithShader:_shader andSize:ast.size-1];
+                newAsteroid2.xBound = xBound;
+                newAsteroid2.yBound = yBound;
+                newAsteroid2.position = ast.position;
+                newAsteroid2.forward = GLKVector3MultiplyScalar(GLKVector3Make(ast.forward.y, ast.forward.x, 0), -1.2);
+                
+                
+                
+                [_asteroids addObject:newAsteroid2];
+            }
+            
+            
             [_asteroids removeObject:ast];
         }
     }
@@ -213,7 +244,6 @@ const double MIN_SPAWN_DISTANCE = 15;
     
     //NSLog(@"proj: %d", [_projectiles count]);
     //NSLog(@"ship: %f , %f", _ship.position.x, _ship.position.y);
-    if(timeSinceLastAsteroid >= 5) [self spawnAsteroid];
 }
 
 //Pan handler for rotating the ship
@@ -264,7 +294,14 @@ const double MIN_SPAWN_DISTANCE = 15;
 {
     //Reset timer, create new asteroid, set data and add to array
     timeSinceLastAsteroid = 0.0;
-    if([_asteroids count] >= 10) return;
+    int asteroidCount = 0;
+    for (AsteroidModel* o in _asteroids) {
+        asteroidCount += pow(2, o.size) - 1;
+    }
+    
+    
+    if(asteroidCount >= ASTEROID_LIMIT) return;
+    NSLog(@"%i",asteroidCount);
     AsteroidModel *newAsteroid = [[AsteroidModel alloc] initWithShader:_shader];
     newAsteroid.xBound = xBound;
     newAsteroid.yBound = yBound;
@@ -291,11 +328,11 @@ const double MIN_SPAWN_DISTANCE = 15;
         // square both and root the result.
         distance = sqrt(pow(distX, 2.0) + pow(distY, 2.0));
         
-        NSLog(@"distance %f", distance);
+        //NSLog(@"distance %f", distance);
 
     } while (distance < MIN_SPAWN_DISTANCE);
     
-    NSLog(@"asteroid: %f , %f", randX, randY);
+    //NSLog(@"asteroid: %f , %f", randX, randY);
     
     newAsteroid.position = GLKVector3Make(randX, randY, 0);
     [_asteroids addObject:newAsteroid];

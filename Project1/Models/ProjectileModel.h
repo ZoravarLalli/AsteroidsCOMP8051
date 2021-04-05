@@ -14,6 +14,7 @@
 @property float xBound;
 @property float yBound;
 @property bool destroy;
+@property NSTimeInterval timeAlive;
 
 - (instancetype) initWithShader :(BaseEffect *)shader;
 
