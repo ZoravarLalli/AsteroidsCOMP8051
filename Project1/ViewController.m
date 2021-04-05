@@ -24,7 +24,7 @@ const double MIN_SPAWN_DISTANCE = 15;
 // Size 3 = 7 hits
 // Size 2 = 3 hits
 // Size 1 = 1 hit
-const int ASTEROID_LIMIT = 25
+const int ASTEROID_LIMIT = 25;
 
 // ---------------------
 
