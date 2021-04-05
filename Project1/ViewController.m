@@ -40,14 +40,20 @@ const int ASTEROID_LIMIT = 25;
     AVAudioPlayer *_music;
     AVAudioPlayer *_playerShot;
     AVAudioPlayer *_asteroidImpact;
-    AVAudioPlayer *_playerDeath;
     AVAudioPlayer *_rocketThrust;
 
     UILabel *livesleft;
     UILabel *gameOver;
     UILabel *score;
-    
     UIButton *resetbutton;
+    UILabel *ingameScore;
+    
+    // For score keeping
+    NSInteger _highScores[5];
+    int currentScore;
+    
+    // For persisting data
+    NSUserDefaults *prefs;
 }
 
 //Called when the view is loaded
@@ -55,9 +61,11 @@ const int ASTEROID_LIMIT = 25;
 {
     [super viewDidLoad];
     
+    // For saving between sessions
+    prefs = [NSUserDefaults standardUserDefaults];
+    
     // Preload the in game sound effects
     _playerShot = [self preloadSound:@"playerShotEdited.wav"];
-    _playerDeath = [self preloadSound:@"playerDeath.wav"];
     _asteroidImpact = [self preloadSound:@"asteroidImpact.wav"];
     _rocketThrust = [self preloadSound:@"thrust.wav"];
     
@@ -98,6 +106,12 @@ const int ASTEROID_LIMIT = 25;
     [livesleft setTextColor:[UIColor whiteColor]];
     [self.view addSubview:livesleft];
     
+    ingameScore = [[UILabel alloc] initWithFrame:CGRectMake(5, 55, 100, 25)];
+    [ingameScore setText:@"Score: 0"];
+    [ingameScore setBackgroundColor:[UIColor blackColor]];
+    [ingameScore setTextColor:[UIColor whiteColor]];
+    [self.view addSubview:ingameScore];
+    
     gameOver = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 50, self.view.frame.size.height/2-25, 100, 25)];
     [gameOver setText:@"Game Over"];
     [gameOver setBackgroundColor:[UIColor blackColor]];
@@ -106,11 +120,12 @@ const int ASTEROID_LIMIT = 25;
     [self.view addSubview:gameOver];
     [gameOver setHidden:true];
     
-    score = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 50, self.view.frame.size.height/2+25, 100, 25)];
-    [score setText:@"Score: 0"];
+    score = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 50, self.view.frame.size.height/2+25, 125, 125)];
+    [score setText:@"High Scores:"];
     [score setBackgroundColor:[UIColor blackColor]];
     [score setTextColor:[UIColor whiteColor]];
-    [score setTextAlignment:NSTextAlignmentCenter];
+    [score setTextAlignment:NSTextAlignmentRight];
+    [score setNumberOfLines:0];
     [self.view addSubview:score];
     [score setHidden:true];
     
@@ -148,6 +163,13 @@ const int ASTEROID_LIMIT = 25;
     //Initialize asteroid array
     _asteroids = [[NSMutableArray alloc] initWithCapacity:10];
     
+    //Initialize score array
+    for(int i = 0; i < 5; i++){
+        _highScores[i] = 0;
+    }
+    
+    currentScore = 0;
+    
     //Set Bounds for screen looping
     xBound = self.view.frame.size.width/20;
     yBound = self.view.frame.size.height/20;
@@ -173,6 +195,10 @@ const int ASTEROID_LIMIT = 25;
     //Set camera perspective
     GLKMatrix4 viewMatrix = GLKMatrix4MakeTranslation(0, 0, -30);
     
+    // Update score label
+    [ingameScore setText:[NSString stringWithFormat:@"Score: %d", currentScore]];
+    
+    // Update lives label and listen for gameover
     if(_ship.lives > 0)
     {
         [livesleft setText:[NSString stringWithFormat:@"Lives: %d", _ship.lives]];
@@ -186,6 +212,14 @@ const int ASTEROID_LIMIT = 25;
     {
         [livesleft setText:[NSString stringWithFormat:@"Lives: %d", _ship.lives]];
         [gameOver setHidden:false];
+        
+        // Score adjustment
+        [self addNewScore:currentScore];
+        // Print to UILabel
+        [score setText:[NSString stringWithFormat:@"High Scores: %d\r%d\r%d\r%d\r%d", _highScores[0], _highScores[1], _highScores[2], _highScores[3], _highScores[4]]];
+        // Save to device
+        //[prefs setObject:_highScores forKey:@"highscores"];
+        
         [score setHidden:false];
         [resetbutton setHidden:false];
     }
@@ -222,7 +256,8 @@ const int ASTEROID_LIMIT = 25;
         [ast updateWithDelta:self.timeSinceLastUpdate];
         if(ast.destroy){
             [self playShotImpact]; // Plays asteroid destruction sound
-            
+            currentScore += 1; // Increment score
+
             if (ast.size > 1) {
                 AsteroidModel *newAsteroid = [[AsteroidModel alloc] initWithShader:_shader andSize:ast.size-1];
                 newAsteroid.xBound = xBound;
@@ -244,9 +279,9 @@ const int ASTEROID_LIMIT = 25;
             
             [_asteroids removeObject:ast];
         }
-        if(ast.destroyWithChildren) {
+        else if(ast.destroyWithChildren) {
             [_asteroids removeObject:ast];
-        }
+                    }
     }
     
     //Increment asteroid timer and spawn
@@ -314,6 +349,7 @@ const int ASTEROID_LIMIT = 25;
     [resetbutton setHidden:true];
     
     timeSinceLastAsteroid = 0.0;
+    currentScore = 0;
     _ship.lives = 5;
     
 }
@@ -388,15 +424,23 @@ const int ASTEROID_LIMIT = 25;
 - (void)playShotImpact{
     [_asteroidImpact play];
 }
-- (void)playPlayerDeath{
-    [_playerDeath play];
-}
 - (void)playThrust{
     _rocketThrust.numberOfLoops = -1;
     [_rocketThrust play];
 }
 - (void)pauseThrust{
     [_rocketThrust pause];
+}
+
+// Adds current score to highscores
+- (void)addNewScore:(int) newScore{
+    // If the current score is higher than any of the existing highscores, it will replace it.
+    for (int i = 0; i < 5; i++){
+        if(newScore > _highScores[i]){
+            _highScores[i] = newScore;
+            break; // break because only want to add it once.
+        }
+    }
 }
 
 @end

@@ -7,6 +7,8 @@
 
 #import "Model.h"
 
+@import AVFoundation;
+
 @interface ShipModel : Model
 
 @property GLKVector3 forward;
