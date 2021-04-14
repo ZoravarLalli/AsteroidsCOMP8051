@@ -43,14 +43,14 @@ const int ASTEROID_LIMIT = 25;
     AVAudioPlayer *_rocketThrust;
 
     UILabel *livesleft;
-    UILabel *gameOver;
     UILabel *score;
-    UIButton *resetbutton;
     UILabel *ingameScore;
+    UIView *gameOverContainer;
     
     // For score keeping
-    NSInteger _highScores[5];
+    int _highScores[5];
     int currentScore;
+    int _hs[5];
     
     // For persisting data
     NSUserDefaults *prefs;
@@ -83,60 +83,71 @@ const int ASTEROID_LIMIT = 25;
     //Setup for buttons
     UIButton *fireButton = [UIButton buttonWithType:UIButtonTypeCustom];
     fireButton.frame = CGRectMake(10, view.frame.size.height-60,50,50);
-    [fireButton setTitle:@"F" forState:UIControlStateNormal];
-    [fireButton setBackgroundColor:[UIColor redColor]];
+    [fireButton setImage:[UIImage imageNamed:@"attack_icon.png"] forState:UIControlStateNormal];
     [fireButton addTarget:self action:@selector(fireHandler:) forControlEvents:UIControlEventTouchDown];
     [fireButton setEnabled:YES];
     [self.view addSubview:fireButton];
     
     UIButton *thrustButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    thrustButton.frame = CGRectMake(10,view.frame.size.height-120,50,50);
-    [thrustButton setTitle:@"T" forState:UIControlStateNormal];
-    [thrustButton setBackgroundColor:[UIColor greenColor]];
-    [thrustButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    thrustButton.frame = CGRectMake(10,view.frame.size.height-130,50,50);
     [thrustButton addTarget:self action:@selector(thrustTouch:) forControlEvents:UIControlEventTouchDown];
     [thrustButton addTarget:self action:@selector(thrustCancel:) forControlEvents:UIControlEventTouchUpInside];
     [thrustButton addTarget:self action:@selector(thrustCancel:) forControlEvents:UIControlEventTouchUpOutside];
+    [thrustButton setImage:[UIImage imageNamed:@"thrust_icon.png"] forState:UIControlStateNormal];
     [thrustButton setEnabled:YES];
     [self.view addSubview:thrustButton];
     
-    livesleft = [[UILabel alloc] initWithFrame:CGRectMake(5, 25, 100, 25)];
+    UIImageView *livesBacking = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"text_backing.png"]];
+    [livesBacking setFrame:CGRectMake(5, 25, 100, 25)];
+    livesleft = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, 100, 25)];
     [livesleft setText:@"Lives: 5"];
-    [livesleft setBackgroundColor:[UIColor blackColor]];
+    livesleft.font = [UIFont fontWithName:@"Copperplate" size:18];
     [livesleft setTextColor:[UIColor whiteColor]];
-    [self.view addSubview:livesleft];
+    [livesBacking addSubview:livesleft];
+    [self.view addSubview:livesBacking];
     
-    ingameScore = [[UILabel alloc] initWithFrame:CGRectMake(5, 55, 100, 25)];
+    UIImageView *scoreBacking = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"text_backing"]];
+    [scoreBacking setFrame:CGRectMake(5, 55, 100, 25)];
+    ingameScore = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, 100, 25)];
     [ingameScore setText:@"Score: 0"];
-    [ingameScore setBackgroundColor:[UIColor blackColor]];
+    ingameScore.font = [UIFont fontWithName:@"Copperplate" size:18];
+
     [ingameScore setTextColor:[UIColor whiteColor]];
-    [self.view addSubview:ingameScore];
+    [scoreBacking addSubview:ingameScore];
+    [self.view addSubview:scoreBacking];
     
-    gameOver = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 50, self.view.frame.size.height/2-25, 100, 25)];
-    [gameOver setText:@"Game Over"];
-    [gameOver setBackgroundColor:[UIColor blackColor]];
-    [gameOver setTextColor:[UIColor whiteColor]];
-    [gameOver setTextAlignment:NSTextAlignmentCenter];
-    [self.view addSubview:gameOver];
-    [gameOver setHidden:true];
+    float height = self.view.frame.size.height;
+    float width = self.view.frame.size.width;
     
-    score = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 50, self.view.frame.size.height/2+25, 125, 125)];
-    [score setText:@"High Scores:"];
-    [score setBackgroundColor:[UIColor blackColor]];
+    gameOverContainer = [[UIView alloc]initWithFrame:CGRectMake(width/5, height/5, width - width/2.5, height * 0.4)];
+    
+    UIImageView *gameOverBG = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"window.png"]];
+    [gameOverBG setFrame:CGRectMake(0, 0, gameOverContainer.frame.size.width, gameOverContainer.frame.size.height)];
+    [gameOverContainer addSubview:gameOverBG];
+    
+    UILabel *gameOverHeader = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, gameOverContainer.frame.size.width, 20)];
+    [gameOverHeader setText:@"Game Over!"];
+    [gameOverHeader setTextAlignment:NSTextAlignmentCenter];
+    gameOverHeader.font = [UIFont fontWithName:@"Copperplate" size:26];
+    [gameOverHeader setTextColor:[UIColor whiteColor]];
+    [gameOverContainer addSubview:gameOverHeader];
+    
+    UIButton *replayButton = [[UIButton alloc]initWithFrame:CGRectMake(gameOverContainer.frame.size.width/2-25,gameOverContainer.frame.size.height-65,50,50)];
+    [replayButton setImage:[UIImage imageNamed:@"replay_icon.png"] forState:UIControlStateNormal];
+    [replayButton addTarget:self action:@selector(resetGame:) forControlEvents:UIControlEventTouchDown];
+    [replayButton setEnabled:true];
+    [gameOverContainer addSubview:replayButton];
+    
+    score = [[UILabel alloc] initWithFrame:CGRectMake(10, gameOverHeader.frame.size.height + 20, gameOverContainer.frame.size.width - 20, gameOverContainer.frame.size.height/2)];
+    [score setText:@"High Scores:\r0\r0\r0\r0\r0"];
     [score setTextColor:[UIColor whiteColor]];
-    [score setTextAlignment:NSTextAlignmentRight];
-    [score setNumberOfLines:0];
-    [self.view addSubview:score];
-    [score setHidden:true];
+    score.font = [UIFont fontWithName:@"Copperplate" size:18];
+    [score setNumberOfLines:6];
+    [score setTextAlignment:NSTextAlignmentCenter];
+    [gameOverContainer addSubview:score];
     
-    resetbutton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 50, self.view.frame.size.height/2, 100, 25)];
-    [resetbutton setTitle:@"Reset" forState:UIControlStateNormal];
-    [resetbutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [resetbutton setBackgroundColor:[UIColor blackColor]];
-    [resetbutton addTarget:self action:@selector(resetGame:) forControlEvents:UIControlEventTouchDown];
-    [self.view addSubview:resetbutton];
-    [resetbutton setEnabled:true];
-    [resetbutton setHidden:true];
+    [gameOverContainer setHidden:true];
+    [self.view addSubview:gameOverContainer];
     
     [EAGLContext setCurrentContext:view.context];
     [self setupScene];
@@ -208,20 +219,18 @@ const int ASTEROID_LIMIT = 25;
         _ship.yBound = yBound;
         _ship.asteroids = _asteroids;
     }
-    else if(gameOver.isHidden)
+    else if(gameOverContainer.isHidden)
     {
         [livesleft setText:[NSString stringWithFormat:@"Lives: %d", _ship.lives]];
-        [gameOver setHidden:false];
+        [gameOverContainer setHidden:false];
         
         // Score adjustment
         [self addNewScore:currentScore];
+        NSLog(@"%d", _highScores[0]);
         // Print to UILabel
-        [score setText:[NSString stringWithFormat:@"High Scores: %d\r%d\r%d\r%d\r%d", _highScores[0], _highScores[1], _highScores[2], _highScores[3], _highScores[4]]];
+        [score setText:[NSString stringWithFormat:@"High Scores: \r1st:%d\r2nd:%d\r3rd:%d\r4th:%d\r5th:%d", _highScores[0], _highScores[1], _highScores[2], _highScores[3], _highScores[4]]];
         // Save to device
         //[prefs setObject:_highScores forKey:@"highscores"];
-        
-        [score setHidden:false];
-        [resetbutton setHidden:false];
     }
             
     //Iterate for projectiles and draw each.
@@ -344,9 +353,7 @@ const int ASTEROID_LIMIT = 25;
     for (AsteroidModel* o in _asteroids) {
         o.destroyWithChildren = true;
     }
-    [gameOver setHidden:true];
-    [score setHidden:true];
-    [resetbutton setHidden:true];
+    [gameOverContainer setHidden:true];
     
     timeSinceLastAsteroid = 0.0;
     currentScore = 0;
