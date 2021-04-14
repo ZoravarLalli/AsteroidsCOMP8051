@@ -107,12 +107,6 @@
     {
         self.lives -= 1;
         [self resetPos];
-
-
-    }
-    else
-    {
-        NSLog(@"ya ded");
     }
 }
 

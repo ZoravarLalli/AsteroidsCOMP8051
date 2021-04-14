@@ -36,4 +36,5 @@ void main(void)
     
     //Apply lighting and texture
     gl_FragColor = texture2D(u_Texture, frag_TexCoord) * vec4((AmbientColor + DiffuseColor + SpecularColor), 1.0);
+
 }

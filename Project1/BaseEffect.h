@@ -15,7 +15,6 @@
 @property (nonatomic, assign) GLKMatrix4 projectionMatrix; //Matrix for camera transform.
 @property (assign) GLuint texture; //Texture applied to the model
 
-
 - (id)initWithVertexShader:(NSString *)vertextShader
             fragmentShader:(NSString *)fragmentShader;
 

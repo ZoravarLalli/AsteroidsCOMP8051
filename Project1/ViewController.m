@@ -11,6 +11,7 @@
 #import "ShipModel.h"
 #import "ProjectileModel.h"
 #import "AsteroidModel.h"
+#import "BackgroundModel.h"
 
 @interface ViewController ()
 
@@ -32,6 +33,7 @@ const int ASTEROID_LIMIT = 25;
 {
     BaseEffect *_shader; //Shader controller
     ShipModel *_ship; //Ship model
+    BackgroundModel *_background;
     NSMutableArray *_projectiles; //Array for projectiles
     NSMutableArray *_asteroids; //Array for asteroids
     float timeSinceLastAsteroid;
@@ -187,7 +189,9 @@ const int ASTEROID_LIMIT = 25;
     
     //Initialize asteroid timer
     timeSinceLastAsteroid = 0.0;
-
+    
+    _background = [[BackgroundModel alloc] initWithShader:_shader];
+    _background.scale = 20;
 }
 
 //Called to draw on each frame
@@ -205,6 +209,9 @@ const int ASTEROID_LIMIT = 25;
     
     //Set camera perspective
     GLKMatrix4 viewMatrix = GLKMatrix4MakeTranslation(0, 0, -30);
+    
+    [_background renderWithParentModelViewMatrix:viewMatrix];
+    glClear(GL_DEPTH_BUFFER_BIT);
     
     // Update score label
     [ingameScore setText:[NSString stringWithFormat:@"Score: %d", currentScore]];
