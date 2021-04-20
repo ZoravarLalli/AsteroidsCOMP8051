@@ -177,9 +177,12 @@ const int ASTEROID_LIMIT = 25;
     //Initialize asteroid array
     _asteroids = [[NSMutableArray alloc] initWithCapacity:10];
     
-    //Initialize score array
+    // get highscores NSMutableArray from defaults
+    NSMutableArray* savedScores = [prefs objectForKey:@"NSMutableHighscores"];
+    
+    //Initialize score array with values pulled from NSUserDefaults
     for(int i = 0; i < 5; i++){
-        _highScores[i] = 0;
+        _highScores[i] = [[savedScores objectAtIndex:i] intValue];
     }
     
     currentScore = 0;
@@ -237,8 +240,30 @@ const int ASTEROID_LIMIT = 25;
         NSLog(@"%d", _highScores[0]);
         // Print to UILabel
         [score setText:[NSString stringWithFormat:@"High Scores: \r1st:%d\r2nd:%d\r3rd:%d\r4th:%d\r5th:%d", _highScores[0], _highScores[1], _highScores[2], _highScores[3], _highScores[4]]];
-        // Save to device
-        //[prefs setObject:_highScores forKey:@"highscores"];
+        
+        
+        // Save highscores to the device to persist between play sessions
+        // NSMutableArray can be used to save to NSUserDefaults
+        NSMutableArray* saveObj = [[NSMutableArray alloc] initWithCapacity:5];
+        // Use NSNumbers to wrap int values
+        NSNumber* wScore1 = [NSNumber numberWithInt:_highScores[0]];
+        NSNumber* wScore2 = [NSNumber numberWithInt:_highScores[1]];
+        NSNumber* wScore3 = [NSNumber numberWithInt:_highScores[2]];
+        NSNumber* wScore4 = [NSNumber numberWithInt:_highScores[3]];
+        NSNumber* wScore5 = [NSNumber numberWithInt:_highScores[4]];
+//        NSNumber* wScore1 = [NSNumber numberWithInt:0];
+//        NSNumber* wScore2 = [NSNumber numberWithInt:0];
+//        NSNumber* wScore3 = [NSNumber numberWithInt:0];
+//        NSNumber* wScore4 = [NSNumber numberWithInt:0];
+//        NSNumber* wScore5 = [NSNumber numberWithInt:0];
+        // add nsNums to the saveObj
+        [saveObj addObject:wScore1];
+        [saveObj addObject:wScore2];
+        [saveObj addObject:wScore3];
+        [saveObj addObject:wScore4];
+        [saveObj addObject:wScore5];
+        // Save the saveObj in NSuserDefaults
+        [prefs setObject:saveObj forKey:@"NSMutableHighscores"];
     }
             
     //Iterate for projectiles and draw each.
@@ -451,8 +476,12 @@ const int ASTEROID_LIMIT = 25;
 - (void)addNewScore:(int) newScore{
     // If the current score is higher than any of the existing highscores, it will replace it.
     for (int i = 0; i < 5; i++){
+        // Beat highscore
         if(newScore > _highScores[i]){
             _highScores[i] = newScore;
+            for(int j = i; j < 5; j++){
+                
+            }
             break; // break because only want to add it once.
         }
     }
