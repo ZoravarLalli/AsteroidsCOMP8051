@@ -17,6 +17,7 @@
 @property float xBound;
 @property float yBound;
 @property int lives;
+@property NSTimeInterval invincible;
 
 - (instancetype) initWithShader :(BaseEffect *)shader;
 - (void) thrustToggle;
