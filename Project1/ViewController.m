@@ -84,14 +84,14 @@ const int ASTEROID_LIMIT = 25;
     
     //Setup for buttons
     UIButton *fireButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    fireButton.frame = CGRectMake(10, view.frame.size.height-60,50,50);
+    fireButton.frame = CGRectMake(view.frame.size.width - 85, view.frame.size.height-85,75,75);
     [fireButton setImage:[UIImage imageNamed:@"attack_icon.png"] forState:UIControlStateNormal];
     [fireButton addTarget:self action:@selector(fireHandler:) forControlEvents:UIControlEventTouchDown];
     [fireButton setEnabled:YES];
     [self.view addSubview:fireButton];
     
     UIButton *thrustButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    thrustButton.frame = CGRectMake(10,view.frame.size.height-130,50,50);
+    thrustButton.frame = CGRectMake(10,view.frame.size.height-85,75,75);
     [thrustButton addTarget:self action:@selector(thrustTouch:) forControlEvents:UIControlEventTouchDown];
     [thrustButton addTarget:self action:@selector(thrustCancel:) forControlEvents:UIControlEventTouchUpInside];
     [thrustButton addTarget:self action:@selector(thrustCancel:) forControlEvents:UIControlEventTouchUpOutside];
