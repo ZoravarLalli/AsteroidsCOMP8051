@@ -44,9 +44,7 @@
 //Update method interited from Model.m
 -(void)updateWithDelta:(NSTimeInterval)delta
 {
-    // invinincibility
-    
-    
+    // invincibility
     if(_invincible > 0) {
         _invincible -= delta;
         if ((int)round(_invincible * 20.0) % 3 == 0) {
@@ -124,7 +122,7 @@
     {
         self.lives -= 1;
         [self resetPos];
-        _invincible = 1;
+        _invincible = 1.5;
     }
 }
 
