@@ -44,6 +44,21 @@
 //Update method interited from Model.m
 -(void)updateWithDelta:(NSTimeInterval)delta
 {
+    // invinincibility
+    
+    
+    if(_invincible > 0) {
+        _invincible -= delta;
+        if ((int)round(_invincible * 20.0) % 3 == 0) {
+            self.scale = 0;
+        } else {
+            self.scale = 0.25;
+        }
+    } else {
+        self.scale = 0.25;
+    }
+    
+    
     //If the thrust button is active, increase velocity, else decrease it
     if(self.thrust)
     {
@@ -79,15 +94,17 @@
     }
     
     
-    //Check for asteroid collision
-    for(AsteroidModel *ast in _asteroids)
-    {
-        if(self.position.x + (2 * ast.scale) >= ast.position.x
-           && self.position.x - (2 * ast.scale) <= ast.position.x
-           && self.position.y + (2 * ast.scale) >= ast.position.y
-           && self.position.y - (2 * ast.scale) <= ast.position.y)
+    if (_invincible <= 0) {
+        //Check for asteroid collision
+        for(AsteroidModel *ast in _asteroids)
         {
-            [self asteroidHit];
+            if(self.position.x + (2 * ast.scale) >= ast.position.x
+               && self.position.x - (2 * ast.scale) <= ast.position.x
+               && self.position.y + (2 * ast.scale) >= ast.position.y
+               && self.position.y - (2 * ast.scale) <= ast.position.y)
+            {
+                [self asteroidHit];
+            }
         }
     }
 }
@@ -107,6 +124,7 @@
     {
         self.lives -= 1;
         [self resetPos];
+        _invincible = 1;
     }
 }
 
