@@ -95,6 +95,7 @@ const int ASTEROID_LIMIT = 25;
     [thrustButton addTarget:self action:@selector(thrustTouch:) forControlEvents:UIControlEventTouchDown];
     [thrustButton addTarget:self action:@selector(thrustCancel:) forControlEvents:UIControlEventTouchUpInside];
     [thrustButton addTarget:self action:@selector(thrustCancel:) forControlEvents:UIControlEventTouchUpOutside];
+    [thrustButton addTarget:self action:@selector(thrustCancel:) forControlEvents:UIControlEventTouchCancel];
     [thrustButton setImage:[UIImage imageNamed:@"thrust_icon.png"] forState:UIControlStateNormal];
     [thrustButton setEnabled:YES];
     [self.view addSubview:thrustButton];
