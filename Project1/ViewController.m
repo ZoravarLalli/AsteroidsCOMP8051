@@ -268,7 +268,7 @@ const int ASTEROID_LIMIT = 25;
         
         // Score adjustment
         [self addNewScore:currentScore];
-        NSLog(@"%d", _highScores[0]);
+        //NSLog(@"%d", _highScores[0]);
         // Print to UILabel
         [score setText:[NSString stringWithFormat:@"High Scores: \r1st:%d\r2nd:%d\r3rd:%d\r4th:%d\r5th:%d", _highScores[0], _highScores[1], _highScores[2], _highScores[3], _highScores[4]]];
         
@@ -428,7 +428,7 @@ const int ASTEROID_LIMIT = 25;
 {
     [self playThrust]; // Start rocket sound player
     [_ship thrustToggle];
-    NSLog(@"START THRUST");
+    //NSLog(@"START THRUST");
 }
 
 //Handler for canceling thrust
@@ -436,35 +436,35 @@ const int ASTEROID_LIMIT = 25;
 {
     [self pauseThrust]; // Pause rocket sound player
     _ship.thrust = false;
-    NSLog(@"PAUSE THRUST");
+    //NSLog(@"PAUSE THRUST");
 }
 
 // Handler for tocuhing left button
 - (void) leftTouch : (id) sender
 {
     [_ship setRotateLeft:true];
-    NSLog(@"START LEFT");
+    //NSLog(@"START LEFT");
 }
 
 //Handler for canceling left turn
 - (void) leftCancel : (id) sender
 {
     [_ship setRotateLeft:false];
-    NSLog(@"PAUSE LEFT");
+    //NSLog(@"PAUSE LEFT");
 }
 
 // Handler for tocuhing left button
 - (void) rightTouch : (id) sender
 {
     [_ship setRotateRight:true];
-    NSLog(@"START RIGHT");
+    //NSLog(@"START RIGHT");
 }
 
 //Handler for canceling left turn
 - (void) rightCancel : (id) sender
 {
     [_ship setRotateRight:false];
-    NSLog(@"PAUSE RIGHT");
+    //NSLog(@"PAUSE RIGHT");
 }
 
 
@@ -472,7 +472,7 @@ const int ASTEROID_LIMIT = 25;
 
 - (void) resetGame : (id) sender
 {
-    NSLog(@"reset game");
+    //NSLog(@"reset game");
     [_ship resetPos];
     
     for (AsteroidModel* o in _asteroids) {
@@ -503,7 +503,7 @@ const int ASTEROID_LIMIT = 25;
     
     
     if(asteroidCount >= ASTEROID_LIMIT) return;
-    NSLog(@"%i",asteroidCount);
+    //NSLog(@"%i",asteroidCount);
     AsteroidModel *newAsteroid = [[AsteroidModel alloc] initWithShader:_shader];
     newAsteroid.xBound = xBound;
     newAsteroid.yBound = yBound;
