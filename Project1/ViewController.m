@@ -20,7 +20,9 @@
 
 
 // Constants ----------------
+//Don't set spawn distacne to more than 16. Not enough space exists
 const double MIN_SPAWN_DISTANCE = 15;
+const double MIN_ENEMY_SPAWN_DISTANCE = 15.5;
 
 // Number of hits allowed on screen before spawning stops.
 // Size 3 = 7 hits
@@ -60,6 +62,7 @@ const int ASTEROID_LIMIT = 25;
     
     
     EnemyModel *enemy;
+    NSTimeInterval enemyTimer;
 }
 
 //Called when the view is loaded
@@ -201,7 +204,8 @@ const int ASTEROID_LIMIT = 25;
     _background = [[BackgroundModel alloc] initWithShader:_shader];
     _background.scale = 20;
     
-    enemy = [[EnemyModel alloc] initWithShader:_shader];
+    enemyTimer = 10 + arc4random_uniform(20) * 0.1;
+    
 }
 
 //Called to draw on each frame
@@ -235,6 +239,7 @@ const int ASTEROID_LIMIT = 25;
         _ship.xBound = xBound;
         _ship.yBound = yBound;
         _ship.asteroids = _asteroids;
+        _ship.enemy = enemy;
     }
     else if(gameOverContainer.isHidden)
     {
@@ -341,7 +346,31 @@ const int ASTEROID_LIMIT = 25;
     //NSLog(@"proj: %d", [_projectiles count]);
     //NSLog(@"ship: %f , %f", _ship.position.x, _ship.position.y);
     
-    [enemy updateWithDelta:self.timeSinceLastUpdate];
+    if (enemy == nil) {
+        enemyTimer -= self.timeSinceLastUpdate;
+        if (enemyTimer <= 0) {
+            [self spawnEnemy];
+        }
+    }
+    
+    if (enemy != nil) {
+        [enemy updateWithDelta:self.timeSinceLastUpdate];
+        
+        if (enemy.destroy) {
+            [self playShotImpact]; // Plays asteroid destruction sound
+            currentScore += 3; // Increment score
+            
+            enemy = nil;
+            enemyTimer = 8 + arc4random_uniform(30) * 0.1;
+        }
+    }
+    
+    
+    
+
+
+    
+    
 }
 
 //Pan handler for rotating the ship
@@ -367,6 +396,7 @@ const int ASTEROID_LIMIT = 25;
     newProjectile.forward = _ship.forward;
     newProjectile.position = _ship.position;
     newProjectile.asteroids = _asteroids;
+    newProjectile.enemy = enemy;
     newProjectile.xBound = self.view.frame.size.width/20;
     newProjectile.yBound = self.view.frame.size.height/20;
     [_projectiles addObject:newProjectile];
@@ -396,8 +426,14 @@ const int ASTEROID_LIMIT = 25;
     for (AsteroidModel* o in _asteroids) {
         o.destroyWithChildren = true;
     }
+    if (enemy!= nil) {
+        enemy.destroy = true;
+    }
+    
     [gameOverContainer setHidden:true];
     
+    
+    enemyTimer = 10 + arc4random_uniform(20) * 0.1;
     timeSinceLastAsteroid = 0.0;
     currentScore = 0;
     _ship.lives = 5;
@@ -450,6 +486,42 @@ const int ASTEROID_LIMIT = 25;
     
     newAsteroid.position = GLKVector3Make(randX, randY, 0);
     [_asteroids addObject:newAsteroid];
+}
+
+- (void) spawnEnemy {
+    double randX, randY, distX, distY, distance;
+    
+    // loop until distance is far enough
+    do {
+        //get a random position
+        randX = ((double)arc4random_uniform(xBound) - xBound/2);
+        randY = ((double)arc4random_uniform(yBound) - yBound/2);
+        
+        // get distance between ship and new position
+        distX = fabs(randX - _ship.position.x);
+        distY = fabs(randY - _ship.position.y);
+        
+        // if distance is larger than half the screen,
+        // reduce the distance by the size of the entire screen to account for looping.
+        // no need to convert to abs again because it's squared after.
+        distX = distX < xBound ? distX : distX - (xBound * 2);
+        distY = distY < yBound ? distY : distY - (yBound * 2);
+    
+        // square both and root the result.
+        distance = sqrt(pow(distX, 2.0) + pow(distY, 2.0));
+        
+        //NSLog(@"distance %f", distance);
+
+    } while (distance < MIN_ENEMY_SPAWN_DISTANCE);
+    
+    //NSLog(@"asteroid: %f , %f", randX, randY);
+    
+    enemy = [[EnemyModel alloc] initWithShader:_shader];
+    enemy.position = GLKVector3Make(randX, randY, 0);
+    enemy.xBound = xBound;
+    enemy.yBound = yBound;
+    
+    
 }
 
 

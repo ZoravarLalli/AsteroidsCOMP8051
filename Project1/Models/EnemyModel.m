@@ -20,6 +20,11 @@
     {
         //Set texture from Resource folder
         [self loadTexture:@"EnemyTex.png"];
+        _timeToChange = arc4random_uniform(20) * 0.1 + 5;
+        double randX = ((double)arc4random_uniform(51) - 25)/25;
+        double randY = ((double)arc4random_uniform(51) - 25)/25;
+        self.forward = GLKVector3Make(randX, randY, 0);
+        self.destroy = false;
         self.rotationX = GLKMathDegreesToRadians(45);
         self.scale = 0.5f;
     }
@@ -29,7 +34,40 @@
 //Update method interited from Model.m
 -(void)updateWithDelta:(NSTimeInterval)delta
 {
+    _timeToChange -= delta;
+    if (_timeToChange <= 0) {
+        _timeToChange = arc4random_uniform(20) * 0.1 + 5;
+        double randX = ((double)arc4random_uniform(51) - 25)/25;
+        double randY = ((double)arc4random_uniform(51) - 25)/25;
+        self.forward = GLKVector3Make(randX, randY, 0);
+    }
+    
     self.rotationY += GLKMathDegreesToRadians(5);
+    
+    //Set velocity and translate position.
+    GLKVector3 velocity = GLKVector3MultiplyScalar(_forward, 0.4);
+    self.position = GLKVector3Add(self.position, velocity);
+    
+    NSLog(@"%f %f", self.position.x, self.position.y);
+    
+    //Check if asteroid is beyond bounds of the screen.
+    if(self.position.x > _xBound)
+    {
+        self.position = GLKVector3Make(_xBound * -1, self.position.y, self.position.z);
+    }
+    else if (self.position.x < _xBound * -1)
+    {
+        self.position = GLKVector3Make(_xBound, self.position.y, self.position.z);
+    }
+    else if (self.position.y > _yBound)
+    {
+        self.position = GLKVector3Make(self.position.x, _yBound * -1, self.position.z);
+    }
+    else if (self.position.y < _yBound * -1)
+    {
+        self.position = GLKVector3Make(self.position.x, _yBound, self.position.z);
+    }
+    
 }
 
 //Each face is defined by distinct vertices, repeated vertices needed for corners.
