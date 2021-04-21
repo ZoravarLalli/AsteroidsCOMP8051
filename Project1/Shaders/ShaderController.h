@@ -1,9 +1,3 @@
-//
-//  BaseEffect.h
-//  Project1
-//
-//  Created by Kris Olsson on 2021-02-24.
-
 #import <Foundation/Foundation.h>
 
 @import GLKit;

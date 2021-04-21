@@ -1,9 +1,3 @@
-//
-//  CubeModel.m
-//  Project1
-//
-//  Created by Kris Olsson on 2021-02-24.
-//
 
 #import "ProjectileModel.h"
 #import "AsteroidModel.h"
@@ -21,6 +15,7 @@
     {
         //Set texture from Resource folder
         [self loadTexture:@"ProjectileTexture.png"];
+        //Initial rotation need to orient model
         self.rotationX = M_PI/2;
     }
     return self;
@@ -29,11 +24,10 @@
 //Update method interited from Model.m
 -(void)updateWithDelta:(NSTimeInterval)delta
 {
+    //Track time alive to despawn ofter 0.3 seconds
     self.timeAlive += delta;
-    if (self.timeAlive > .5)
-    {
-        self.destroy = true;
-    }
+    if (self.timeAlive > .3) self.destroy = true;
+
     //Send the projectile on a trajectory based on its forward vector.
     GLKVector3 velocity = GLKVector3MultiplyScalar(self.forward, 3);
     self.position = GLKVector3Add(self.position, velocity);
@@ -41,7 +35,6 @@
     //Check for asteroid collision
     for(AsteroidModel *ast in _asteroids)
     {
-        
         if(self.position.x + (2 * ast.scale) >= ast.position.x
            && self.position.x - (2 * ast.scale) <= ast.position.x
            && self.position.y + (2 * ast.scale) >= ast.position.y
@@ -53,7 +46,6 @@
     }
     
     //Check for enemy collision
-
     if(_enemy != nil
        && self.position.x + (3.2) >= _enemy.position.x
        && self.position.x - (3.2) <= _enemy.position.x
@@ -64,8 +56,6 @@
         self.destroy = true;
     }
 
-    
-    
     //Check if projectile is beyond bounds of the screen.
     if(self.position.x > _xBound)
     {

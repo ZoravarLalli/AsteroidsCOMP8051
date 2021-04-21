@@ -1,9 +1,3 @@
-//
-//  CubeModel.h
-//  Project1
-//
-//  Created by Kris Olsson on 2021-02-24.
-//
 
 #import "Model.h"
 #import "EnemyModel.h"

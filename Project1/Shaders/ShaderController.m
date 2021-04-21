@@ -2,6 +2,7 @@
 #import "Vertex.h"
 
 @implementation ShaderController {
+    //Program handle and uniforms for the shader
     GLuint _programHandle;
     GLuint _modelViewMatrixUniform;
     GLuint _projectionMatrixUniform;
@@ -70,7 +71,6 @@
     glBindAttribLocation(_programHandle, VertexAttribColor, "a_Color");
     glBindAttribLocation(_programHandle, VertexAttribTexCoord, "a_TexCoord");
     glBindAttribLocation(_programHandle, VertexAttribNormal, "a_Normal");
-    
     glLinkProgram(_programHandle);
     
     //Set uniforms from shader data
@@ -129,10 +129,7 @@
 - (instancetype)initWithVertexShader:(NSString *)vertexShader
                       fragmentShader:(NSString *)fragmentShader
 {
-    if (self = [super init])
-    {
-        [self compileVertexShader:vertexShader fragmentShader:fragmentShader];
-    }
+    if (self = [super init]) [self compileVertexShader:vertexShader fragmentShader:fragmentShader];
     return self;
 }
 

@@ -1,9 +1,3 @@
-//
-//  Vertext.h
-//  Project1
-//
-//  Created by Kris Olsson on 2021-02-24.
-//
 
 //Attributes of each vertex defined in Models
 typedef enum

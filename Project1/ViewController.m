@@ -31,7 +31,6 @@ typedef enum
     view.context = [[EAGLContext alloc]initWithAPI:kEAGLRenderingAPIOpenGLES2];
     view.drawableDepthFormat = GLKViewDrawableDepthFormat16;
     [EAGLContext setCurrentContext:view.context];
-    
     menuScene = [[MenuScene alloc] init];
     gameScene = [[GameScene alloc] init];
     [self.view addSubview:[menuScene createUI:view controller:self]];
@@ -49,6 +48,60 @@ typedef enum
 - (void) update
 {
     if(state == GAME) [gameScene updateScene:self.timeSinceLastUpdate];
+}
+
+//Pan handler for rotating the ship
+//- (void) handleSinglePanGesture:(UIPanGestureRecognizer *) sender
+//{
+//    if(sender.state == UIGestureRecognizerStateChanged)
+//    {
+//        CGPoint velocity = [sender velocityInView:sender.view];
+//        float x = velocity.x/sender.view.frame.size.width;
+//        float y = velocity.y/sender.view.frame.size.height;
+//        [_ship rotate:(y + x)/10];
+//    }
+//}
+
+//Handler for fire button
+- (void) fireHandler : (id) sender
+{
+    // Play shot audio
+    [self playPlayerShot];
+    
+    //Create new projectile model, set forward and position vectors, and add to array
+    ProjectileModel *newProjectile = [[ProjectileModel alloc] initWithShader:_shader];
+    newProjectile.forward = _ship.forward;
+    newProjectile.position = _ship.position;
+    newProjectile.asteroids = _asteroids;
+    newProjectile.enemy = enemy;
+    newProjectile.xBound = self.view.frame.size.width/20;
+    newProjectile.yBound = self.view.frame.size.height/20;
+    newProjectile.rotationY = _ship.rotationY;
+    [_projectiles addObject:newProjectile];
+}
+
+//Handler for touching thrust button
+- (void) thrustTouch : (id) sender
+{
+    [self playThrust]; // Start rocket sound player
+    [_ship thrustToggle];
+    //NSLog(@"START THRUST");
+}
+
+//Handler for canceling thrust
+- (void) thrustCancel : (id) sender
+{
+    [self pauseThrust]; // Pause rocket sound player
+    _ship.thrust = false;
+    //NSLog(@"PAUSE THRUST");
+}
+
+// Handler for tocuhing left button
+- (void) leftTouch : (id) sender
+{
+    [_ship setRotateLeft:true];
+    //NSLog(@"START LEFT");
+>>>>>>> master
 }
 
 //Change the scene state, called from game scenes

@@ -1,9 +1,3 @@
-//
-//  CubeModel.m
-//  Project1
-//
-//  Created by Kris Olsson on 2021-02-24.
-//
 
 #import "EnemyModel.h"
 
@@ -12,7 +6,7 @@
 //Initiation method inherited from Model.m
 - (instancetype) initWithShader:(ShaderController *) shader
 {
-    //Initialize cube with shader and vertex data.
+    //Initialize model with shader and vertex data.
     if(self = [super initWithName:"asteroid"
                            shader:shader
                          vertices:(Vertex *)vertices
@@ -20,11 +14,14 @@
     {
         //Set texture from Resource folder
         [self loadTexture:@"EnemyTex.png"];
+        //Set time till next movement change
         _timeToChange = arc4random_uniform(20) * 0.1 + 5;
+        //Set random initial forward vector
         double randX = ((double)arc4random_uniform(51) - 25)/25;
         double randY = ((double)arc4random_uniform(51) - 25)/25;
         self.forward = GLKVector3Make(randX, randY, 0);
         self.destroy = false;
+        //Some initial translation to get the model looking right
         self.rotationX = GLKMathDegreesToRadians(45);
         self.scale = 0.5f;
     }
@@ -34,22 +31,24 @@
 //Update method interited from Model.m
 -(void)updateWithDelta:(NSTimeInterval)delta
 {
+    //Track time to next movement change
     _timeToChange -= delta;
     if (_timeToChange <= 0) {
+        //Set a new course, reset timer
         _timeToChange = arc4random_uniform(20) * 0.1 + 5;
         double randX = ((double)arc4random_uniform(51) - 25)/25;
         double randY = ((double)arc4random_uniform(51) - 25)/25;
         self.forward = GLKVector3Make(randX, randY, 0);
     }
     
+    //Rotating animation
     self.rotationY += GLKMathDegreesToRadians(5);
     
     //Set velocity and translate position.
     GLKVector3 velocity = GLKVector3MultiplyScalar(_forward, 0.4);
     self.position = GLKVector3Add(self.position, velocity);
     
-    
-    //Check if asteroid is beyond bounds of the screen.
+    //Check if model is beyond bounds of the screen.
     if(self.position.x > _xBound)
     {
         self.position = GLKVector3Make(_xBound * -1, self.position.y, self.position.z);
@@ -66,7 +65,6 @@
     {
         self.position = GLKVector3Make(self.position.x, _yBound, self.position.z);
     }
-    
 }
 
 //Each face is defined by distinct vertices, repeated vertices needed for corners.
@@ -478,7 +476,6 @@ const static Vertex vertices[] =
     {{-3.496831, 1.000000, 4.812978}, {1, 1, 1, 1}, {0.300822, 0.842093}, {-0.809000, -0.000000, 0.587800}},
     {{-3.496838, 1.575065, 4.812978}, {1, 1, 1, 1}, {0.320369, 0.842093}, {-0.809000, -0.000000, 0.587800}},
     {{-5.658006, 1.575065, 1.838369}, {1, 1, 1, 1}, {0.321353, 0.948398}, {-0.809000, -0.000000, 0.587800}},
-         
 };
 
 @end

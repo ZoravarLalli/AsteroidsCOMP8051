@@ -1,9 +1,3 @@
-//
-//  BackgroundModel.h
-//  Project1
-//
-//  Created by Kris Olsson on 2021-04-14.
-//
 
 #import "Model.h"
 
