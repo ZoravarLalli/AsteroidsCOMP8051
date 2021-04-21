@@ -13,6 +13,8 @@
 #import "AsteroidModel.h"
 #import "BackgroundModel.h"
 #import "EnemyModel.h"
+#import "PowerupModel.h"
+#import "PowerupModel.h"
 
 @interface ViewController ()
 
@@ -63,6 +65,9 @@ const int ASTEROID_LIMIT = 25;
     
     EnemyModel *enemy;
     NSTimeInterval enemyTimer;
+    
+    PowerupModel *powerup;
+    float powerupTimer;
 }
 
 //Called when the view is loaded
@@ -226,6 +231,7 @@ const int ASTEROID_LIMIT = 25;
     
     enemyTimer = 10 + arc4random_uniform(20) * 0.1;
     
+    powerupTimer = 5.0f;
 }
 
 //Called to draw on each frame
@@ -310,6 +316,11 @@ const int ASTEROID_LIMIT = 25;
     }
     
     [enemy renderWithParentModelViewMatrix:viewMatrix];
+    
+    if(powerupTimer < 0.0f && powerup != nil && _ship.lives > 0)
+    {
+        [powerup renderWithParentModelViewMatrix:viewMatrix];
+    }
 }
 
 //Open GL update function
@@ -332,7 +343,7 @@ const int ASTEROID_LIMIT = 25;
             [self playShotImpact]; // Plays asteroid destruction sound
             currentScore += 1; // Increment score
 
-            if (ast.size > 1) {
+            if (!_ship.powered && ast.size > 1) {
                 AsteroidModel *newAsteroid = [[AsteroidModel alloc] initWithShader:_shader andSize:ast.size-1];
                 newAsteroid.xBound = xBound;
                 newAsteroid.yBound = yBound;
@@ -349,8 +360,6 @@ const int ASTEROID_LIMIT = 25;
                 
                 [_asteroids addObject:newAsteroid2];
             }
-            
-            
             [_asteroids removeObject:ast];
         }
         else if(ast.destroyWithChildren) {
@@ -387,13 +396,24 @@ const int ASTEROID_LIMIT = 25;
         }
     }
     
-    
     //Call ship's update
     [_ship updateWithDelta:self.timeSinceLastUpdate];
 
-
-    
-    
+    powerupTimer -= self.timeSinceLastUpdate;
+    if(powerup != nil)
+    {
+        [powerup updateWithDelta:self.timeSinceLastUpdate];
+        if(powerup.destroy)
+        {
+            powerup = nil;
+            powerupTimer = 10.0f;
+        }
+    }
+    else if(powerup == nil && powerupTimer <= 0.0f)
+    {
+        [self spawnPowerup];
+        
+    }
 }
 
 //Pan handler for rotating the ship
@@ -578,6 +598,39 @@ const int ASTEROID_LIMIT = 25;
     
     
 }
+
+
+- (void) spawnPowerup {
+    double randX, randY, distX, distY, distance;
+    
+    // loop until distance is far enough
+    do {
+        //get a random position
+        randX = ((double)arc4random_uniform(xBound) - xBound/2);
+        randY = ((double)arc4random_uniform(yBound) - yBound/2);
+        
+        // get distance between ship and new position
+        distX = fabs(randX - _ship.position.x);
+        distY = fabs(randY - _ship.position.y);
+        
+        // if distance is larger than half the screen,
+        // reduce the distance by the size of the entire screen to account for looping.
+        // no need to convert to abs again because it's squared after.
+        distX = distX < xBound ? distX : distX - (xBound * 2);
+        distY = distY < yBound ? distY : distY - (yBound * 2);
+    
+        // square both and root the result.
+        distance = sqrt(pow(distX, 2.0) + pow(distY, 2.0));
+    } while (distance < MIN_ENEMY_SPAWN_DISTANCE);
+    
+    powerup = [[PowerupModel alloc] initWithShader:_shader ship:_ship];
+    powerup.position = GLKVector3Make(randX, randY, 0);
+    powerup.xBound = xBound;
+    powerup.yBound = yBound;
+    
+    
+}
+
 
 
 // SOUND

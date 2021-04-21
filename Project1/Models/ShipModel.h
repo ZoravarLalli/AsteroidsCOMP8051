@@ -22,6 +22,7 @@
 @property NSTimeInterval invincible;
 @property bool turningLeft;
 @property bool turningRight;
+@property bool powered;
 
 - (instancetype) initWithShader :(ShaderController *)shader;
 - (void) thrustToggle;

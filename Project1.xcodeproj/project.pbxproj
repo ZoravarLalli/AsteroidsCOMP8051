@@ -38,6 +38,8 @@
 		CC47E1EB262FAF6200D1F689 /* AsteroidTex.png in Resources */ = {isa = PBXBuildFile; fileRef = CC47E1E9262FAF6200D1F689 /* AsteroidTex.png */; };
 		CC47E218262FC2E200D1F689 /* ProjectileTexture.png in Resources */ = {isa = PBXBuildFile; fileRef = CC47E216262FC2E200D1F689 /* ProjectileTexture.png */; };
 		CC47E219262FC2E200D1F689 /* EnemyProjectileTex.png in Resources */ = {isa = PBXBuildFile; fileRef = CC47E217262FC2E200D1F689 /* EnemyProjectileTex.png */; };
+		CC47E24C2630205B00D1F689 /* PowerupModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CC47E24B2630205B00D1F689 /* PowerupModel.m */; };
+		CC47E250263020BA00D1F689 /* Star_03.png in Resources */ = {isa = PBXBuildFile; fileRef = CC47E24F263020BA00D1F689 /* Star_03.png */; };
 		CCE6A69925E7286800E63FCC /* FragmentShader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = CCE6A69825E7286800E63FCC /* FragmentShader.glsl */; };
 		CCE6A69C25E7288200E63FCC /* VertexShader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = CCE6A69B25E7288200E63FCC /* VertexShader.glsl */; };
 		CCE6A6A125E760A600E63FCC /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE6A6A025E760A600E63FCC /* Model.m */; };
@@ -86,6 +88,9 @@
 		CC47E1E9262FAF6200D1F689 /* AsteroidTex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AsteroidTex.png; sourceTree = "<group>"; };
 		CC47E216262FC2E200D1F689 /* ProjectileTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ProjectileTexture.png; sourceTree = "<group>"; };
 		CC47E217262FC2E200D1F689 /* EnemyProjectileTex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EnemyProjectileTex.png; sourceTree = "<group>"; };
+		CC47E24A2630205B00D1F689 /* PowerupModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PowerupModel.h; sourceTree = "<group>"; };
+		CC47E24B2630205B00D1F689 /* PowerupModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PowerupModel.m; sourceTree = "<group>"; };
+		CC47E24F263020BA00D1F689 /* Star_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Star_03.png; sourceTree = "<group>"; };
 		CCE6A69825E7286800E63FCC /* FragmentShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FragmentShader.glsl; sourceTree = "<group>"; };
 		CCE6A69B25E7288200E63FCC /* VertexShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = VertexShader.glsl; sourceTree = "<group>"; };
 		CCE6A69E25E728F000E63FCC /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
@@ -151,6 +156,7 @@
 				CC47E216262FC2E200D1F689 /* ProjectileTexture.png */,
 				CC47E1E9262FAF6200D1F689 /* AsteroidTex.png */,
 				CC47E1E8262FAF6200D1F689 /* ShipTex.png */,
+				CC47E24F263020BA00D1F689 /* Star_03.png */,
 				CC47E1E0262F9F4400D1F689 /* EnemyTex.png */,
 			);
 			path = Textures;
@@ -220,6 +226,8 @@
 				CC11E0372626D9F900BB75DB /* BackgroundModel.m */,
 				CC47E1DC262F9EFA00D1F689 /* EnemyModel.h */,
 				CC47E1DD262F9EFA00D1F689 /* EnemyModel.m */,
+				CC47E24A2630205B00D1F689 /* PowerupModel.h */,
+				CC47E24B2630205B00D1F689 /* PowerupModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -280,6 +288,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC47E250263020BA00D1F689 /* Star_03.png in Resources */,
 				CC057FAA25E71D37003331D2 /* LaunchScreen.storyboard in Resources */,
 				CC11E0342626B8D600BB75DB /* text_backing.png in Resources */,
 				CC47E1EB262FAF6200D1F689 /* AsteroidTex.png in Resources */,
@@ -318,6 +327,7 @@
 				CC057FA225E71D37003331D2 /* ViewController.m in Sources */,
 				CC057F9C25E71D37003331D2 /* AppDelegate.m in Sources */,
 				CC0677F125EE212D00A01200 /* AsteroidModel.m in Sources */,
+				CC47E24C2630205B00D1F689 /* PowerupModel.m in Sources */,
 				CC057FAD25E71D37003331D2 /* main.m in Sources */,
 				CCE6A6A125E760A600E63FCC /* Model.m in Sources */,
 				CC47E1DE262F9EFA00D1F689 /* EnemyModel.m in Sources */,
