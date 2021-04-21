@@ -1,4 +1,3 @@
-
 //Attributes of each vertex defined in Models
 typedef enum
 {

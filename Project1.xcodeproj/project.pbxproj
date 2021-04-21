@@ -22,7 +22,6 @@
 		CC057FA725E71D37003331D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC057FA625E71D37003331D2 /* Assets.xcassets */; };
 		CC057FAA25E71D37003331D2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC057FA825E71D37003331D2 /* LaunchScreen.storyboard */; };
 		CC057FAD25E71D37003331D2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CC057FAC25E71D37003331D2 /* main.m */; };
-		CC057FBC25E72667003331D2 /* ShaderController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC057FBB25E72667003331D2 /* ShaderController.m */; };
 		CC0677F125EE212D00A01200 /* AsteroidModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CC0677F025EE212D00A01200 /* AsteroidModel.m */; };
 		CC11E01C2626B44500BB75DB /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CC11E0192626B44500BB75DB /* bg.jpg */; };
 		CC11E0272626B65300BB75DB /* thrust_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CC11E0202626B65300BB75DB /* thrust_icon.png */; };
@@ -44,8 +43,9 @@
 		CC47E23A26300C4600D1F689 /* menu_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = CC47E23926300C4600D1F689 /* menu_bg.png */; };
 		CC47E24126300F8E00D1F689 /* bg2.png in Resources */ = {isa = PBXBuildFile; fileRef = CC47E24026300F8E00D1F689 /* bg2.png */; };
 		CCE668F22630995A00E0E4E2 /* PowerupModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE668F02630995A00E0E4E2 /* PowerupModel.m */; };
-		CCE668F926309B0900E0E4E2 /* Star_03.png in Resources */ = {isa = PBXBuildFile; fileRef = CCE668F826309B0900E0E4E2 /* Star_03.png */; };
 		CCE668FC26309C2A00E0E4E2 /* Close_BTN.png in Resources */ = {isa = PBXBuildFile; fileRef = CCE668FB26309C2A00E0E4E2 /* Close_BTN.png */; };
+		CCE67DBA2630C984002557A9 /* ShaderController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE67DB92630C984002557A9 /* ShaderController.m */; };
+		CCE67DBE2630CA1E002557A9 /* Star_03.png in Resources */ = {isa = PBXBuildFile; fileRef = CCE67DBD2630CA1E002557A9 /* Star_03.png */; };
 		CCE6A69925E7286800E63FCC /* FragmentShader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = CCE6A69825E7286800E63FCC /* FragmentShader.glsl */; };
 		CCE6A69C25E7288200E63FCC /* VertexShader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = CCE6A69B25E7288200E63FCC /* VertexShader.glsl */; };
 		CCE6A6A125E760A600E63FCC /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE6A6A025E760A600E63FCC /* Model.m */; };
@@ -73,8 +73,6 @@
 		CC057FA925E71D37003331D2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CC057FAB25E71D37003331D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC057FAC25E71D37003331D2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		CC057FBB25E72667003331D2 /* ShaderController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShaderController.m; sourceTree = "<group>"; };
-		CC057FBF25E72751003331D2 /* ShaderController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderController.h; sourceTree = "<group>"; };
 		CC0677EF25EE212D00A01200 /* AsteroidModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AsteroidModel.h; sourceTree = "<group>"; };
 		CC0677F025EE212D00A01200 /* AsteroidModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AsteroidModel.m; sourceTree = "<group>"; };
 		CC11E0192626B44500BB75DB /* bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpg; sourceTree = "<group>"; };
@@ -106,9 +104,12 @@
 		CCE668F12630995A00E0E4E2 /* PowerupModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerupModel.h; sourceTree = "<group>"; };
 		CCE668F826309B0900E0E4E2 /* Star_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Star_03.png; sourceTree = "<group>"; };
 		CCE668FB26309C2A00E0E4E2 /* Close_BTN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Close_BTN.png; sourceTree = "<group>"; };
+		CCE67DB72630C949002557A9 /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
+		CCE67DB82630C984002557A9 /* ShaderController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderController.h; sourceTree = "<group>"; };
+		CCE67DB92630C984002557A9 /* ShaderController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShaderController.m; sourceTree = "<group>"; };
+		CCE67DBD2630CA1E002557A9 /* Star_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Star_03.png; sourceTree = "<group>"; };
 		CCE6A69825E7286800E63FCC /* FragmentShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FragmentShader.glsl; sourceTree = "<group>"; };
 		CCE6A69B25E7288200E63FCC /* VertexShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = VertexShader.glsl; sourceTree = "<group>"; };
-		CCE6A69E25E728F000E63FCC /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
 		CCE6A6A025E760A600E63FCC /* Model.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Model.m; sourceTree = "<group>"; };
 		CCE6A6A325E760B100E63FCC /* Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
 		CCFA782A25ECB7E8002EFAD1 /* ProjectileModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProjectileModel.h; sourceTree = "<group>"; };
@@ -151,9 +152,6 @@
 				CCFA783025ECC6A5002EFAD1 /* Models */,
 				CC057FA025E71D37003331D2 /* ViewController.h */,
 				CC057FA125E71D37003331D2 /* ViewController.m */,
-				CC057FBF25E72751003331D2 /* ShaderController.h */,
-				CC057FBB25E72667003331D2 /* ShaderController.m */,
-				CCE6A69E25E728F000E63FCC /* Vertex.h */,
 				CC057FA325E71D37003331D2 /* Main.storyboard */,
 				CC057FA825E71D37003331D2 /* LaunchScreen.storyboard */,
 				CC057FAC25E71D37003331D2 /* main.m */,
@@ -170,13 +168,12 @@
 		CC47E220262FF55E00D1F689 /* Textures */ = {
 			isa = PBXGroup;
 			children = (
-				CC11E0192626B44500BB75DB /* bg.jpg */,
+				CCE67DBD2630CA1E002557A9 /* Star_03.png */,
 				CC47E217262FC2E200D1F689 /* EnemyProjectileTex.png */,
 				CCE668F826309B0900E0E4E2 /* Star_03.png */,
 				CC47E216262FC2E200D1F689 /* ProjectileTexture.png */,
 				CC47E1E9262FAF6200D1F689 /* AsteroidTex.png */,
 				CC47E1E8262FAF6200D1F689 /* ShipTex.png */,
-				CC47E24F263020BA00D1F689 /* Star_03.png */,
 				CC47E1E0262F9F4400D1F689 /* EnemyTex.png */,
 				CC47E23926300C4600D1F689 /* menu_bg.png */,
 				CC11E0192626B44500BB75DB /* bg.jpg */,
@@ -226,14 +223,13 @@
 			path = Scenes;
 			sourceTree = "<group>";
 		};
-
 		CCE0E7A025ED875500A34D97 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				CC057FBF25E72751003331D2 /* ShaderController.h */,
-				CC057FBB25E72667003331D2 /* ShaderController.m */,
 				CCE6A69B25E7288200E63FCC /* VertexShader.glsl */,
 				CCE6A69825E7286800E63FCC /* FragmentShader.glsl */,
+				CCE67DB82630C984002557A9 /* ShaderController.h */,
+				CCE67DB92630C984002557A9 /* ShaderController.m */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -265,8 +261,7 @@
 				CC11E0372626D9F900BB75DB /* BackgroundModel.m */,
 				CC47E1DC262F9EFA00D1F689 /* EnemyModel.h */,
 				CC47E1DD262F9EFA00D1F689 /* EnemyModel.m */,
-				CC47E24A2630205B00D1F689 /* PowerupModel.h */,
-				CC47E24B2630205B00D1F689 /* PowerupModel.m */,
+				CCE67DB72630C949002557A9 /* Vertex.h */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -327,13 +322,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CC47E250263020BA00D1F689 /* Star_03.png in Resources */,
 				CC057FAA25E71D37003331D2 /* LaunchScreen.storyboard in Resources */,
 				CC11E0342626B8D600BB75DB /* text_backing.png in Resources */,
 				CC47E1EB262FAF6200D1F689 /* AsteroidTex.png in Resources */,
 				AC906453261A63BE00B87F48 /* asteroidImpact.wav in Resources */,
 				CC057FA725E71D37003331D2 /* Assets.xcassets in Resources */,
 				AC906450261A611C00B87F48 /* playerShotEdited.wav in Resources */,
+				CCE67DBE2630CA1E002557A9 /* Star_03.png in Resources */,
 				AC906459261A651F00B87F48 /* thrust.wav in Resources */,
 				CC11E02B2626B65300BB75DB /* replay_icon.png in Resources */,
 				AC90649A262FBD9A00B87F48 /* right_icon.png in Resources */,
@@ -369,18 +364,17 @@
 				CC057FA225E71D37003331D2 /* ViewController.m in Sources */,
 				CC057F9C25E71D37003331D2 /* AppDelegate.m in Sources */,
 				CC0677F125EE212D00A01200 /* AsteroidModel.m in Sources */,
-				CC47E24C2630205B00D1F689 /* PowerupModel.m in Sources */,
 				CC057FAD25E71D37003331D2 /* main.m in Sources */,
 				CCE6A6A125E760A600E63FCC /* Model.m in Sources */,
 				CC47E1DE262F9EFA00D1F689 /* EnemyModel.m in Sources */,
 				CCFA782C25ECB7E8002EFAD1 /* ProjectileModel.m in Sources */,
+				CCE67DBA2630C984002557A9 /* ShaderController.m in Sources */,
 				CC057F9F25E71D37003331D2 /* SceneDelegate.m in Sources */,
 				CC2570C425EAFC1F00F6CB8C /* ShipModel.m in Sources */,
 				CCE668F22630995A00E0E4E2 /* PowerupModel.m in Sources */,
 				CC47E22E262FF92100D1F689 /* GameScene.m in Sources */,
 				CC47E233262FF92D00D1F689 /* MenuScene.m in Sources */,
 				CC47E237262FF9EF00D1F689 /* Scene.m in Sources */,
-				CC057FBC25E72667003331D2 /* ShaderController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
