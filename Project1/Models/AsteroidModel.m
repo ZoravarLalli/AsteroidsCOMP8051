@@ -1,18 +1,12 @@
-//
-//  CubeModel.m
-//  Project1
-//
-//  Created by Kris Olsson on 2021-02-24.
-//
 
 #import "AsteroidModel.h"
 
 @implementation AsteroidModel
 
 //Initiation method inherited from Model.m
-- (instancetype) initWithShader:(BaseEffect *) shader
+- (instancetype) initWithShader:(ShaderController *) shader
 {
-    //Initialize cube with shader and vertex data.
+    //Initialize model with shader and vertex data.
     if(self = [super initWithName:"asteroid"
                            shader:shader
                          vertices:(Vertex *)vertices
@@ -20,6 +14,7 @@
     {
         //Set texture from Resource folder
         [self loadTexture:@"AsteroidTex.png"];
+        //Set random forward vector
         double randX = ((double)arc4random_uniform(51) - 25)/25;
         double randY = ((double)arc4random_uniform(51) - 25)/25;
         self.forward = GLKVector3Make(randX, randY, 0);
@@ -31,9 +26,10 @@
 }
 
 //Initiation method inherited from Model.m
-- (instancetype) initWithShader:(BaseEffect *) shader andSize:(int)size;
+//This initiation method takes in a size for smaller asteroids after destuction
+- (instancetype) initWithShader:(ShaderController *) shader andSize:(int)size;
 {
-    //Initialize cube with shader and vertex data.
+    //Initialize model with shader and vertex data.
     if(self = [super initWithName:"asteroid"
                                shader:shader
                              vertices:(Vertex *)vertices
@@ -41,6 +37,7 @@
         {
             //Set texture from Resource folder
             [self loadTexture:@"AsteroidTex.png"];
+            //Set random forward vector
             double randX = ((double)arc4random_uniform(51) - 25)/25;
             double randY = ((double)arc4random_uniform(51) - 25)/25;
             self.forward = GLKVector3Make(randX, randY, 0);
@@ -77,10 +74,18 @@
     }
 }
 
+//Scale asteroids down as they are destroyed and spawn smaller ones
+- (void) scaleWithSize
+{
+    if (self.size == 1) self.scale = 0.7f;
+    if (self.size == 2) self.scale = 1.0f;
+    if (self.size >= 3) self.scale = 1.5f;
+}
+
 //Each face is defined by distinct vertices, repeated vertices needed for corners.
 //Attributes orderd according to Vertex.h (position, color, tex coor, normal)
 const static Vertex vertices[] =
-    {
+{
         {{-0.836681, 0.493151, -0.320275}, {1, 1, 1, 1}, {0.562500, 0.187500}, {-0.830400, 0.480600, -0.281900}},
         {{-0.691941, 0.836608, -0.161111}, {1, 1, 1, 1}, {0.625000, 0.187500}, {-0.830400, 0.480600, -0.281900}},
         {{-0.563407, 0.814846, -0.576915}, {1, 1, 1, 1}, {0.625000, 0.250000}, {-0.830400, 0.480600, -0.281900}},
@@ -657,19 +662,6 @@ const static Vertex vertices[] =
         {{0.903787, 0.614583, -0.103204}, {1, 1, 1, 1}, {0.562500, 0.625000}, {0.799800, 0.600100, -0.013600}},
         {{0.628989, 0.981388, -0.078973}, {1, 1, 1, 1}, {0.625000, 0.625000}, {0.799800, 0.600100, -0.013600}},
         {{0.725202, 0.866805, 0.524231}, {1, 1, 1, 1}, {0.625000, 0.687500}, {0.799800, 0.600100, -0.013600}},
-    };
-
-- (void) scaleWithSize
-{
-    if (self.size == 1) {
-        self.scale = 0.7f;
-    }
-    if (self.size == 2) {
-        self.scale = 1.0f;
-    }
-    if (self.size >= 3) {
-        self.scale = 1.5f;
-    }
-}
+};
 
 @end

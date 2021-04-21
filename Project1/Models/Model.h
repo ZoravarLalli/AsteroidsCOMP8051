@@ -11,11 +11,11 @@
 
 @import GLKit;
 
-@class BaseEffect;
+@class ShaderController;
 
 @interface Model : NSObject
 
-@property (nonatomic, strong) BaseEffect *shader;
+@property (nonatomic, strong) ShaderController *shader;
 @property (nonatomic, assign) GLKVector3 position;
 @property (nonatomic) float rotationX;
 @property (nonatomic) float rotationY;
@@ -24,7 +24,7 @@
 @property (nonatomic) GLuint texture;
 
 - (instancetype)initWithName:(char *)name
-                      shader:(BaseEffect *)shader
+                      shader:(ShaderController *)shader
                     vertices:(Vertex *)vertices
                  vertexCount:(unsigned int)vertexCount;
 - (void) renderWithParentModelViewMatrix:(GLKMatrix4)parentModelViewMatrix;

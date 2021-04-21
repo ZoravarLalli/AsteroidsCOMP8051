@@ -1,9 +1,3 @@
-//
-//  CubeModel.m
-//  Project1
-//
-//  Created by Kris Olsson on 2021-02-24.
-//
 
 #import "ShipModel.h"
 #import "AsteroidModel.h"
@@ -13,11 +7,10 @@
 {
     float velocityPercent;
     AVAudioPlayer *_playerDeath;
-
 }
 
 //Initiation method inherited from Model.m
-- (instancetype) initWithShader:(BaseEffect *) shader
+- (instancetype) initWithShader:(ShaderController *) shader
 {
     // hacky
     _playerDeath = [self preloadSound:@"playerDeath.wav"];

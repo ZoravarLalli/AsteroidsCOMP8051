@@ -23,7 +23,7 @@
 @property bool turningLeft;
 @property bool turningRight;
 
-- (instancetype) initWithShader :(BaseEffect *)shader;
+- (instancetype) initWithShader :(ShaderController *)shader;
 - (void) thrustToggle;
 - (void) rotate : (float) angle;
 - (void) resetPos;

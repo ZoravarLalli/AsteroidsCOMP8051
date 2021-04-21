@@ -7,7 +7,7 @@
 
 #import "ViewController.h"
 #import "Vertex.h"
-#import "BaseEffect.h"
+#import "ShaderController.h"
 #import "ShipModel.h"
 #import "ProjectileModel.h"
 #import "AsteroidModel.h"
@@ -34,7 +34,7 @@ const int ASTEROID_LIMIT = 25;
 
 @implementation ViewController
 {
-    BaseEffect *_shader; //Shader controller
+    ShaderController *_shader; //Shader controller
     ShipModel *_ship; //Ship model
     BackgroundModel *_background;
     NSMutableArray *_projectiles; //Array for projectiles
@@ -190,7 +190,7 @@ const int ASTEROID_LIMIT = 25;
     [self playBackgroundMusic:@"05_Chill.wav"];
     
     //Initiate shader
-    _shader = [[BaseEffect alloc] initWithVertexShader:@"VertexShader.glsl" fragmentShader:@"FragmentShader.glsl"];
+    _shader = [[ShaderController alloc] initWithVertexShader:@"VertexShader.glsl" fragmentShader:@"FragmentShader.glsl"];
     
     //Initiate ship model
     _ship = [[ShipModel alloc] initWithShader:_shader];

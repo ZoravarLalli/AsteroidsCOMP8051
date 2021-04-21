@@ -6,7 +6,7 @@
 //
 
 #import "Model.h"
-#import "BaseEffect.h"
+#import "ShaderController.h"
 
 @implementation Model
 {
@@ -16,12 +16,12 @@
     GLuint _indexBuffer;
     unsigned int _vertexCount;
     unsigned int _indexCount;
-    BaseEffect *_shader;
+    ShaderController *_shader;
 }
 
 //Initiation function
 - (instancetype)initWithName:(char *)name
-                      shader:(BaseEffect *)shader
+                      shader:(ShaderController *)shader
                     vertices:(Vertex *)vertices
                  vertexCount:(unsigned int)vertexCount
 {

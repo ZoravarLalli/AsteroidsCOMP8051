@@ -16,6 +16,6 @@
 @property bool gameOverDestroy;
 @property NSTimeInterval timeToChange;
 
-- (instancetype) initWithShader :(BaseEffect *)shader;
+- (instancetype) initWithShader :(ShaderController *)shader;
 
 @end
