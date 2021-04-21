@@ -101,8 +101,19 @@
                && self.position.y + (2 * ast.scale) >= ast.position.y
                && self.position.y - (2 * ast.scale) <= ast.position.y)
             {
+                ast.destroy = true;
                 [self asteroidHit];
             }
+        }
+        //check for enemy collision
+        if(_enemy != nil
+           && self.position.x + (3.2) >= _enemy.position.x
+           && self.position.x - (3.2) <= _enemy.position.x
+           && self.position.y + (3) >= _enemy.position.y
+           && self.position.y - (3) <= _enemy.position.y)
+        {
+            _enemy.destroy = true;
+            [self asteroidHit];
         }
     }
 }
@@ -125,6 +136,8 @@
         _invincible = 1.5;
     }
 }
+
+
 
 - (void) resetPos
 {

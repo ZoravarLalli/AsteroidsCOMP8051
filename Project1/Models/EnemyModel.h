@@ -12,6 +12,8 @@
 @property GLKVector3 forward;
 @property float xBound;
 @property float yBound;
+@property bool destroy;
+@property NSTimeInterval timeToChange;
 
 - (instancetype) initWithShader :(BaseEffect *)shader;
 

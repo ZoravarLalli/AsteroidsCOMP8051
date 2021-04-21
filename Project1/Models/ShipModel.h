@@ -7,12 +7,14 @@
 
 #import "Model.h"
 
+#import "EnemyModel.h"
 @import AVFoundation;
 
 @interface ShipModel : Model
 
 @property GLKVector3 forward;
 @property NSMutableArray *asteroids;
+@property EnemyModel *enemy;
 @property bool thrust;
 @property float xBound;
 @property float yBound;

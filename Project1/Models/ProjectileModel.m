@@ -107,6 +107,19 @@ const static Vertex vertices[] = {
         }
     }
     
+    //Check for enemy collision
+
+    if(self.position.x + (3.2) >= _enemy.position.x
+       && self.position.x - (3.2) <= _enemy.position.x
+       && self.position.y + (3) >= _enemy.position.y
+       && self.position.y - (3) <= _enemy.position.y)
+    {
+        _enemy.destroy = true;
+        self.destroy = true;
+    }
+
+    
+    
     //Check if projectile is beyond bounds of the screen.
     if(self.position.x > _xBound)
     {
