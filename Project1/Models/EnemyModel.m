@@ -48,7 +48,6 @@
     GLKVector3 velocity = GLKVector3MultiplyScalar(_forward, 0.4);
     self.position = GLKVector3Add(self.position, velocity);
     
-    NSLog(@"%f %f", self.position.x, self.position.y);
     
     //Check if asteroid is beyond bounds of the screen.
     if(self.position.x > _xBound)
