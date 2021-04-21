@@ -39,7 +39,6 @@
 		CC47E219262FC2E200D1F689 /* EnemyProjectileTex.png in Resources */ = {isa = PBXBuildFile; fileRef = CC47E217262FC2E200D1F689 /* EnemyProjectileTex.png */; };
 		CC47E22E262FF92100D1F689 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CC47E22D262FF92100D1F689 /* GameScene.m */; };
 		CC47E233262FF92D00D1F689 /* MenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CC47E232262FF92D00D1F689 /* MenuScene.m */; };
-		CC47E237262FF9EF00D1F689 /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = CC47E236262FF9EF00D1F689 /* Scene.m */; };
 		CC47E23A26300C4600D1F689 /* menu_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = CC47E23926300C4600D1F689 /* menu_bg.png */; };
 		CC47E24126300F8E00D1F689 /* bg2.png in Resources */ = {isa = PBXBuildFile; fileRef = CC47E24026300F8E00D1F689 /* bg2.png */; };
 		CCE668F22630995A00E0E4E2 /* PowerupModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE668F02630995A00E0E4E2 /* PowerupModel.m */; };
@@ -96,8 +95,6 @@
 		CC47E22D262FF92100D1F689 /* GameScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameScene.m; sourceTree = "<group>"; };
 		CC47E231262FF92D00D1F689 /* MenuScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MenuScene.h; sourceTree = "<group>"; };
 		CC47E232262FF92D00D1F689 /* MenuScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MenuScene.m; sourceTree = "<group>"; };
-		CC47E235262FF9EF00D1F689 /* Scene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
-		CC47E236262FF9EF00D1F689 /* Scene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Scene.m; sourceTree = "<group>"; };
 		CC47E23926300C4600D1F689 /* menu_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_bg.png; sourceTree = "<group>"; };
 		CC47E24026300F8E00D1F689 /* bg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg2.png; sourceTree = "<group>"; };
 		CCE668F02630995A00E0E4E2 /* PowerupModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerupModel.m; sourceTree = "<group>"; };
@@ -217,8 +214,6 @@
 				CC47E22D262FF92100D1F689 /* GameScene.m */,
 				CC47E231262FF92D00D1F689 /* MenuScene.h */,
 				CC47E232262FF92D00D1F689 /* MenuScene.m */,
-				CC47E235262FF9EF00D1F689 /* Scene.h */,
-				CC47E236262FF9EF00D1F689 /* Scene.m */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -374,7 +369,6 @@
 				CCE668F22630995A00E0E4E2 /* PowerupModel.m in Sources */,
 				CC47E22E262FF92100D1F689 /* GameScene.m in Sources */,
 				CC47E233262FF92D00D1F689 /* MenuScene.m in Sources */,
-				CC47E237262FF9EF00D1F689 /* Scene.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

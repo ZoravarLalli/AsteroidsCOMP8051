@@ -1,5 +1,6 @@
-
-#import "Scene.h"
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "ViewController.h"
 
 @import AVFoundation;
 
@@ -16,10 +17,6 @@
 - (void)playPlayerDeath;
 - (void)playThrust;
 - (void)pauseThrust;
-- (void)leftTouch;
-- (void)leftCancel;
-- (void)rightTouch;
-- (void)rightCancel;
 - (void)addNewScore:(int) newScore;
 
 @end
