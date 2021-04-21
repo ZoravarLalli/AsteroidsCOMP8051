@@ -399,6 +399,7 @@ const int ASTEROID_LIMIT = 25;
     newProjectile.enemy = enemy;
     newProjectile.xBound = self.view.frame.size.width/20;
     newProjectile.yBound = self.view.frame.size.height/20;
+    newProjectile.rotationY = _ship.rotationY;
     [_projectiles addObject:newProjectile];
 }
 
