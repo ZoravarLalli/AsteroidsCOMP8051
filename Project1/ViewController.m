@@ -20,7 +20,9 @@
 
 
 // Constants ----------------
+//Don't set spawn distacne to more than 16. Not enough space exists
 const double MIN_SPAWN_DISTANCE = 15;
+const double MIN_ENEMY_SPAWN_DISTANCE = 15.5;
 
 // Number of hits allowed on screen before spawning stops.
 // Size 3 = 7 hits
@@ -60,6 +62,7 @@ const int ASTEROID_LIMIT = 25;
     
     
     EnemyModel *enemy;
+    NSTimeInterval enemyTimer;
 }
 
 //Called when the view is loaded
@@ -181,9 +184,12 @@ const int ASTEROID_LIMIT = 25;
     //Initialize asteroid array
     _asteroids = [[NSMutableArray alloc] initWithCapacity:10];
     
-    //Initialize score array
+    // get highscores NSMutableArray from defaults
+    NSMutableArray* savedScores = [prefs objectForKey:@"NSMutableHighscores"];
+    
+    //Initialize score array with values pulled from NSUserDefaults
     for(int i = 0; i < 5; i++){
-        _highScores[i] = 0;
+        _highScores[i] = [[savedScores objectAtIndex:i] intValue];
     }
     
     currentScore = 0;
@@ -198,7 +204,8 @@ const int ASTEROID_LIMIT = 25;
     _background = [[BackgroundModel alloc] initWithShader:_shader];
     _background.scale = 20;
     
-    enemy = [[EnemyModel alloc] initWithShader:_shader];
+    enemyTimer = 10 + arc4random_uniform(20) * 0.1;
+    
 }
 
 //Called to draw on each frame
@@ -232,6 +239,7 @@ const int ASTEROID_LIMIT = 25;
         _ship.xBound = xBound;
         _ship.yBound = yBound;
         _ship.asteroids = _asteroids;
+        _ship.enemy = enemy;
     }
     else if(gameOverContainer.isHidden)
     {
@@ -243,8 +251,30 @@ const int ASTEROID_LIMIT = 25;
         NSLog(@"%d", _highScores[0]);
         // Print to UILabel
         [score setText:[NSString stringWithFormat:@"High Scores: \r1st:%d\r2nd:%d\r3rd:%d\r4th:%d\r5th:%d", _highScores[0], _highScores[1], _highScores[2], _highScores[3], _highScores[4]]];
-        // Save to device
-        //[prefs setObject:_highScores forKey:@"highscores"];
+        
+        
+        // Save highscores to the device to persist between play sessions
+        // NSMutableArray can be used to save to NSUserDefaults
+        NSMutableArray* saveObj = [[NSMutableArray alloc] initWithCapacity:5];
+        // Use NSNumbers to wrap int values
+        NSNumber* wScore1 = [NSNumber numberWithInt:_highScores[0]];
+        NSNumber* wScore2 = [NSNumber numberWithInt:_highScores[1]];
+        NSNumber* wScore3 = [NSNumber numberWithInt:_highScores[2]];
+        NSNumber* wScore4 = [NSNumber numberWithInt:_highScores[3]];
+        NSNumber* wScore5 = [NSNumber numberWithInt:_highScores[4]];
+//        NSNumber* wScore1 = [NSNumber numberWithInt:0];
+//        NSNumber* wScore2 = [NSNumber numberWithInt:0];
+//        NSNumber* wScore3 = [NSNumber numberWithInt:0];
+//        NSNumber* wScore4 = [NSNumber numberWithInt:0];
+//        NSNumber* wScore5 = [NSNumber numberWithInt:0];
+        // add nsNums to the saveObj
+        [saveObj addObject:wScore1];
+        [saveObj addObject:wScore2];
+        [saveObj addObject:wScore3];
+        [saveObj addObject:wScore4];
+        [saveObj addObject:wScore5];
+        // Save the saveObj in NSuserDefaults
+        [prefs setObject:saveObj forKey:@"NSMutableHighscores"];
     }
             
     //Iterate for projectiles and draw each.
@@ -316,7 +346,31 @@ const int ASTEROID_LIMIT = 25;
     //NSLog(@"proj: %d", [_projectiles count]);
     //NSLog(@"ship: %f , %f", _ship.position.x, _ship.position.y);
     
-    [enemy updateWithDelta:self.timeSinceLastUpdate];
+    if (enemy == nil) {
+        enemyTimer -= self.timeSinceLastUpdate;
+        if (enemyTimer <= 0) {
+            [self spawnEnemy];
+        }
+    }
+    
+    if (enemy != nil) {
+        [enemy updateWithDelta:self.timeSinceLastUpdate];
+        
+        if (enemy.destroy) {
+            [self playShotImpact]; // Plays asteroid destruction sound
+            currentScore += 3; // Increment score
+            
+            enemy = nil;
+            enemyTimer = 8 + arc4random_uniform(30) * 0.1;
+        }
+    }
+    
+    
+    
+
+
+    
+    
 }
 
 //Pan handler for rotating the ship
@@ -342,6 +396,7 @@ const int ASTEROID_LIMIT = 25;
     newProjectile.forward = _ship.forward;
     newProjectile.position = _ship.position;
     newProjectile.asteroids = _asteroids;
+    newProjectile.enemy = enemy;
     newProjectile.xBound = self.view.frame.size.width/20;
     newProjectile.yBound = self.view.frame.size.height/20;
     [_projectiles addObject:newProjectile];
@@ -371,8 +426,14 @@ const int ASTEROID_LIMIT = 25;
     for (AsteroidModel* o in _asteroids) {
         o.destroyWithChildren = true;
     }
+    if (enemy!= nil) {
+        enemy.destroy = true;
+    }
+    
     [gameOverContainer setHidden:true];
     
+    
+    enemyTimer = 10 + arc4random_uniform(20) * 0.1;
     timeSinceLastAsteroid = 0.0;
     currentScore = 0;
     _ship.lives = 5;
@@ -427,6 +488,42 @@ const int ASTEROID_LIMIT = 25;
     [_asteroids addObject:newAsteroid];
 }
 
+- (void) spawnEnemy {
+    double randX, randY, distX, distY, distance;
+    
+    // loop until distance is far enough
+    do {
+        //get a random position
+        randX = ((double)arc4random_uniform(xBound) - xBound/2);
+        randY = ((double)arc4random_uniform(yBound) - yBound/2);
+        
+        // get distance between ship and new position
+        distX = fabs(randX - _ship.position.x);
+        distY = fabs(randY - _ship.position.y);
+        
+        // if distance is larger than half the screen,
+        // reduce the distance by the size of the entire screen to account for looping.
+        // no need to convert to abs again because it's squared after.
+        distX = distX < xBound ? distX : distX - (xBound * 2);
+        distY = distY < yBound ? distY : distY - (yBound * 2);
+    
+        // square both and root the result.
+        distance = sqrt(pow(distX, 2.0) + pow(distY, 2.0));
+        
+        //NSLog(@"distance %f", distance);
+
+    } while (distance < MIN_ENEMY_SPAWN_DISTANCE);
+    
+    //NSLog(@"asteroid: %f , %f", randX, randY);
+    
+    enemy = [[EnemyModel alloc] initWithShader:_shader];
+    enemy.position = GLKVector3Make(randX, randY, 0);
+    enemy.xBound = xBound;
+    enemy.yBound = yBound;
+    
+    
+}
+
 
 // SOUND
 - (void)playBackgroundMusic:(NSString *)filename{
@@ -462,8 +559,20 @@ const int ASTEROID_LIMIT = 25;
     // If the current score is higher than any of the existing highscores, it will replace it.
     for (int i = 0; i < 5; i++){
         if(newScore > _highScores[i]){
-            _highScores[i] = newScore;
-            break; // break because only want to add it once.
+            _highScores[4] = newScore;
+            break;
+        }
+    }
+    
+    // Sort
+    for(int i = 1; i < 5; i++){
+        for(int j = i; j > 0; j--){
+            int before = _highScores[j-1];
+            int curr = _highScores[j];
+            if(before < curr){
+                _highScores[j] = before;
+                _highScores[j-1] = curr;
+            }
         }
     }
 }
