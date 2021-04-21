@@ -24,7 +24,7 @@ const static Vertex vertices[] = {
 };
 
 //Initiation method inherited from Model.m
-- (instancetype) initWithShader:(BaseEffect *) shader
+- (instancetype) initWithShader:(ShaderController *) shader
 {
     //Initialize cube with shader and vertex data.
     if(self = [super initWithName:"bg"

@@ -16,7 +16,7 @@
 @property bool destroyWithChildren;
 @property int size;
 
-- (instancetype) initWithShader :(BaseEffect *)shader;
-- (instancetype) initWithShader :(BaseEffect *)shader andSize:(int)size;
+- (instancetype) initWithShader :(ShaderController *)shader;
+- (instancetype) initWithShader :(ShaderController *)shader andSize:(int)size;
 
 @end

@@ -10,7 +10,7 @@
 @implementation AsteroidModel
 
 //Initiation method inherited from Model.m
-- (instancetype) initWithShader:(BaseEffect *) shader
+- (instancetype) initWithShader:(ShaderController *) shader
 {
     //Initialize cube with shader and vertex data.
     if(self = [super initWithName:"asteroid"
@@ -31,7 +31,7 @@
 }
 
 //Initiation method inherited from Model.m
-- (instancetype) initWithShader:(BaseEffect *) shader andSize:(int)size;
+- (instancetype) initWithShader:(ShaderController *) shader andSize:(int)size;
 {
     //Initialize cube with shader and vertex data.
     if(self = [super initWithName:"asteroid"

@@ -9,7 +9,7 @@
 
 @interface BackgroundModel : Model
 
-- (instancetype) initWithShader :(BaseEffect *)shader;
+- (instancetype) initWithShader :(ShaderController *)shader;
 
 @end
 

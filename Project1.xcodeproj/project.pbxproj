@@ -22,13 +22,9 @@
 		CC057FA725E71D37003331D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC057FA625E71D37003331D2 /* Assets.xcassets */; };
 		CC057FAA25E71D37003331D2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC057FA825E71D37003331D2 /* LaunchScreen.storyboard */; };
 		CC057FAD25E71D37003331D2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CC057FAC25E71D37003331D2 /* main.m */; };
-		CC057FBC25E72667003331D2 /* BaseEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = CC057FBB25E72667003331D2 /* BaseEffect.m */; };
-		CC0677EC25EE207800A01200 /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = CC0677EA25EE207800A01200 /* red.png */; };
-		CC0677ED25EE207800A01200 /* green.png in Resources */ = {isa = PBXBuildFile; fileRef = CC0677EB25EE207800A01200 /* green.png */; };
+		CC057FBC25E72667003331D2 /* ShaderController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC057FBB25E72667003331D2 /* ShaderController.m */; };
 		CC0677F125EE212D00A01200 /* AsteroidModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CC0677F025EE212D00A01200 /* AsteroidModel.m */; };
-		CC11E01B2626B44500BB75DB /* Plate.png in Resources */ = {isa = PBXBuildFile; fileRef = CC11E0182626B44500BB75DB /* Plate.png */; };
 		CC11E01C2626B44500BB75DB /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CC11E0192626B44500BB75DB /* bg.jpg */; };
-		CC11E01D2626B44500BB75DB /* slice37.png in Resources */ = {isa = PBXBuildFile; fileRef = CC11E01A2626B44500BB75DB /* slice37.png */; };
 		CC11E0272626B65300BB75DB /* thrust_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CC11E0202626B65300BB75DB /* thrust_icon.png */; };
 		CC11E02B2626B65300BB75DB /* replay_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CC11E0242626B65300BB75DB /* replay_icon.png */; };
 		CC11E02C2626B65300BB75DB /* attack_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CC11E0252626B65300BB75DB /* attack_icon.png */; };
@@ -42,12 +38,14 @@
 		CC47E1EB262FAF6200D1F689 /* AsteroidTex.png in Resources */ = {isa = PBXBuildFile; fileRef = CC47E1E9262FAF6200D1F689 /* AsteroidTex.png */; };
 		CC47E218262FC2E200D1F689 /* ProjectileTexture.png in Resources */ = {isa = PBXBuildFile; fileRef = CC47E216262FC2E200D1F689 /* ProjectileTexture.png */; };
 		CC47E219262FC2E200D1F689 /* EnemyProjectileTex.png in Resources */ = {isa = PBXBuildFile; fileRef = CC47E217262FC2E200D1F689 /* EnemyProjectileTex.png */; };
+		CC47E22E262FF92100D1F689 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CC47E22D262FF92100D1F689 /* GameScene.m */; };
+		CC47E233262FF92D00D1F689 /* MenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CC47E232262FF92D00D1F689 /* MenuScene.m */; };
+		CC47E237262FF9EF00D1F689 /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = CC47E236262FF9EF00D1F689 /* Scene.m */; };
+		CC47E23A26300C4600D1F689 /* menu_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = CC47E23926300C4600D1F689 /* menu_bg.png */; };
+		CC47E24126300F8E00D1F689 /* bg2.png in Resources */ = {isa = PBXBuildFile; fileRef = CC47E24026300F8E00D1F689 /* bg2.png */; };
 		CCE6A69925E7286800E63FCC /* FragmentShader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = CCE6A69825E7286800E63FCC /* FragmentShader.glsl */; };
 		CCE6A69C25E7288200E63FCC /* VertexShader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = CCE6A69B25E7288200E63FCC /* VertexShader.glsl */; };
 		CCE6A6A125E760A600E63FCC /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE6A6A025E760A600E63FCC /* Model.m */; };
-		CCE6A6AC25E7864D00E63FCC /* CubeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE6A6AB25E7864D00E63FCC /* CubeModel.m */; };
-		CCE6A6B525E7967800E63FCC /* reboot.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CCE6A6B325E7967800E63FCC /* reboot.jpg */; };
-		CCE6A6B625E7967800E63FCC /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = CCE6A6B425E7967800E63FCC /* logo.png */; };
 		CCFA782C25ECB7E8002EFAD1 /* ProjectileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CCFA782B25ECB7E8002EFAD1 /* ProjectileModel.m */; };
 /* End PBXBuildFile section */
 
@@ -72,15 +70,11 @@
 		CC057FA925E71D37003331D2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CC057FAB25E71D37003331D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC057FAC25E71D37003331D2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		CC057FBB25E72667003331D2 /* BaseEffect.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseEffect.m; sourceTree = "<group>"; };
-		CC057FBF25E72751003331D2 /* BaseEffect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseEffect.h; sourceTree = "<group>"; };
-		CC0677EA25EE207800A01200 /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red.png; sourceTree = "<group>"; };
-		CC0677EB25EE207800A01200 /* green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green.png; sourceTree = "<group>"; };
+		CC057FBB25E72667003331D2 /* ShaderController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShaderController.m; sourceTree = "<group>"; };
+		CC057FBF25E72751003331D2 /* ShaderController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderController.h; sourceTree = "<group>"; };
 		CC0677EF25EE212D00A01200 /* AsteroidModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AsteroidModel.h; sourceTree = "<group>"; };
 		CC0677F025EE212D00A01200 /* AsteroidModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AsteroidModel.m; sourceTree = "<group>"; };
-		CC11E0182626B44500BB75DB /* Plate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Plate.png; sourceTree = "<group>"; };
 		CC11E0192626B44500BB75DB /* bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpg; sourceTree = "<group>"; };
-		CC11E01A2626B44500BB75DB /* slice37.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slice37.png; sourceTree = "<group>"; };
 		CC11E0202626B65300BB75DB /* thrust_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thrust_icon.png; sourceTree = "<group>"; };
 		CC11E0242626B65300BB75DB /* replay_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = replay_icon.png; sourceTree = "<group>"; };
 		CC11E0252626B65300BB75DB /* attack_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = attack_icon.png; sourceTree = "<group>"; };
@@ -97,15 +91,19 @@
 		CC47E1E9262FAF6200D1F689 /* AsteroidTex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AsteroidTex.png; sourceTree = "<group>"; };
 		CC47E216262FC2E200D1F689 /* ProjectileTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ProjectileTexture.png; sourceTree = "<group>"; };
 		CC47E217262FC2E200D1F689 /* EnemyProjectileTex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EnemyProjectileTex.png; sourceTree = "<group>"; };
+		CC47E22C262FF92100D1F689 /* GameScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
+		CC47E22D262FF92100D1F689 /* GameScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameScene.m; sourceTree = "<group>"; };
+		CC47E231262FF92D00D1F689 /* MenuScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MenuScene.h; sourceTree = "<group>"; };
+		CC47E232262FF92D00D1F689 /* MenuScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MenuScene.m; sourceTree = "<group>"; };
+		CC47E235262FF9EF00D1F689 /* Scene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
+		CC47E236262FF9EF00D1F689 /* Scene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Scene.m; sourceTree = "<group>"; };
+		CC47E23926300C4600D1F689 /* menu_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_bg.png; sourceTree = "<group>"; };
+		CC47E24026300F8E00D1F689 /* bg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg2.png; sourceTree = "<group>"; };
 		CCE6A69825E7286800E63FCC /* FragmentShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FragmentShader.glsl; sourceTree = "<group>"; };
 		CCE6A69B25E7288200E63FCC /* VertexShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = VertexShader.glsl; sourceTree = "<group>"; };
 		CCE6A69E25E728F000E63FCC /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
 		CCE6A6A025E760A600E63FCC /* Model.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Model.m; sourceTree = "<group>"; };
 		CCE6A6A325E760B100E63FCC /* Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
-		CCE6A6AA25E7864D00E63FCC /* CubeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CubeModel.h; sourceTree = "<group>"; };
-		CCE6A6AB25E7864D00E63FCC /* CubeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CubeModel.m; sourceTree = "<group>"; };
-		CCE6A6B325E7967800E63FCC /* reboot.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = reboot.jpg; sourceTree = "<group>"; };
-		CCE6A6B425E7967800E63FCC /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		CCFA782A25ECB7E8002EFAD1 /* ProjectileModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProjectileModel.h; sourceTree = "<group>"; };
 		CCFA782B25ECB7E8002EFAD1 /* ProjectileModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProjectileModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -140,13 +138,14 @@
 		CC057F9925E71D37003331D2 /* Project1 */ = {
 			isa = PBXGroup;
 			children = (
+				CC47E22B262FF63F00D1F689 /* Scenes */,
 				CCE0E7A125ED878E00A34D97 /* Resources */,
 				CCE0E7A025ED875500A34D97 /* Shaders */,
 				CCFA783025ECC6A5002EFAD1 /* Models */,
 				CC057FA025E71D37003331D2 /* ViewController.h */,
 				CC057FA125E71D37003331D2 /* ViewController.m */,
-				CC057FBF25E72751003331D2 /* BaseEffect.h */,
-				CC057FBB25E72667003331D2 /* BaseEffect.m */,
+				CC057FBF25E72751003331D2 /* ShaderController.h */,
+				CC057FBB25E72667003331D2 /* ShaderController.m */,
 				CCE6A69E25E728F000E63FCC /* Vertex.h */,
 				CC057FA325E71D37003331D2 /* Main.storyboard */,
 				CC057FA825E71D37003331D2 /* LaunchScreen.storyboard */,
@@ -161,6 +160,61 @@
 			path = Project1;
 			sourceTree = "<group>";
 		};
+		CC47E220262FF55E00D1F689 /* Textures */ = {
+			isa = PBXGroup;
+			children = (
+				CC47E217262FC2E200D1F689 /* EnemyProjectileTex.png */,
+				CC47E216262FC2E200D1F689 /* ProjectileTexture.png */,
+				CC47E1E9262FAF6200D1F689 /* AsteroidTex.png */,
+				CC47E1E8262FAF6200D1F689 /* ShipTex.png */,
+				CC47E1E0262F9F4400D1F689 /* EnemyTex.png */,
+				CC47E23926300C4600D1F689 /* menu_bg.png */,
+				CC11E0192626B44500BB75DB /* bg.jpg */,
+				CC47E24026300F8E00D1F689 /* bg2.png */,
+			);
+			path = Textures;
+			sourceTree = "<group>";
+		};
+		CC47E221262FF56800D1F689 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				CC11E02E2626B79900BB75DB /* window.png */,
+				CC11E0252626B65300BB75DB /* attack_icon.png */,
+				CC11E0332626B8D600BB75DB /* text_backing.png */,
+				CC11E0242626B65300BB75DB /* replay_icon.png */,
+				CC11E0202626B65300BB75DB /* thrust_icon.png */,
+				AC906496262FBD9300B87F48 /* left_icon.png */,
+				AC906499262FBD9A00B87F48 /* right_icon.png */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		CC47E222262FF57000D1F689 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				AC906445261A552800B87F48 /* playerShot.wav */,
+				AC90644F261A611C00B87F48 /* playerShotEdited.wav */,
+				AC90644C261A596200B87F48 /* 05_Chill.wav */,
+				AC906452261A63BE00B87F48 /* asteroidImpact.wav */,
+				AC906455261A64B700B87F48 /* playerDeath.wav */,
+				AC906458261A651F00B87F48 /* thrust.wav */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		CC47E22B262FF63F00D1F689 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				CC47E22C262FF92100D1F689 /* GameScene.h */,
+				CC47E22D262FF92100D1F689 /* GameScene.m */,
+				CC47E231262FF92D00D1F689 /* MenuScene.h */,
+				CC47E232262FF92D00D1F689 /* MenuScene.m */,
+				CC47E235262FF9EF00D1F689 /* Scene.h */,
+				CC47E236262FF9EF00D1F689 /* Scene.m */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
 		CCE0E7A025ED875500A34D97 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
@@ -173,31 +227,9 @@
 		CCE0E7A125ED878E00A34D97 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				CC47E217262FC2E200D1F689 /* EnemyProjectileTex.png */,
-				CC47E216262FC2E200D1F689 /* ProjectileTexture.png */,
-				CC47E1E9262FAF6200D1F689 /* AsteroidTex.png */,
-				CC47E1E8262FAF6200D1F689 /* ShipTex.png */,
-				CC47E1E0262F9F4400D1F689 /* EnemyTex.png */,
-				CC11E02E2626B79900BB75DB /* window.png */,
-				CC11E0252626B65300BB75DB /* attack_icon.png */,
-				CC11E0332626B8D600BB75DB /* text_backing.png */,
-				CC11E0242626B65300BB75DB /* replay_icon.png */,
-				CC11E0202626B65300BB75DB /* thrust_icon.png */,
-				AC906496262FBD9300B87F48 /* left_icon.png */,
-				AC906499262FBD9A00B87F48 /* right_icon.png */,
-				CC11E0192626B44500BB75DB /* bg.jpg */,
-				CC11E0182626B44500BB75DB /* Plate.png */,
-				CC11E01A2626B44500BB75DB /* slice37.png */,
-				CC0677EB25EE207800A01200 /* green.png */,
-				CC0677EA25EE207800A01200 /* red.png */,
-				CCE6A6B425E7967800E63FCC /* logo.png */,
-				CCE6A6B325E7967800E63FCC /* reboot.jpg */,
-				AC906445261A552800B87F48 /* playerShot.wav */,
-				AC90644F261A611C00B87F48 /* playerShotEdited.wav */,
-				AC90644C261A596200B87F48 /* 05_Chill.wav */,
-				AC906452261A63BE00B87F48 /* asteroidImpact.wav */,
-				AC906455261A64B700B87F48 /* playerDeath.wav */,
-				AC906458261A651F00B87F48 /* thrust.wav */,
+				CC47E222262FF57000D1F689 /* Audio */,
+				CC47E221262FF56800D1F689 /* UI */,
+				CC47E220262FF55E00D1F689 /* Textures */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -207,8 +239,6 @@
 			children = (
 				CCE6A6A325E760B100E63FCC /* Model.h */,
 				CCE6A6A025E760A600E63FCC /* Model.m */,
-				CCE6A6AA25E7864D00E63FCC /* CubeModel.h */,
-				CCE6A6AB25E7864D00E63FCC /* CubeModel.m */,
 				CC2570C225EAFC1F00F6CB8C /* ShipModel.h */,
 				CC2570C325EAFC1F00F6CB8C /* ShipModel.m */,
 				CCFA782A25ECB7E8002EFAD1 /* ProjectileModel.h */,
@@ -287,27 +317,23 @@
 				AC906450261A611C00B87F48 /* playerShotEdited.wav in Resources */,
 				AC906459261A651F00B87F48 /* thrust.wav in Resources */,
 				CC11E02B2626B65300BB75DB /* replay_icon.png in Resources */,
-				CCE6A6B525E7967800E63FCC /* reboot.jpg in Resources */,
-				CC0677ED25EE207800A01200 /* green.png in Resources */,
 				AC90649A262FBD9A00B87F48 /* right_icon.png in Resources */,
 				AC906456261A64B700B87F48 /* playerDeath.wav in Resources */,
 				CC11E01C2626B44500BB75DB /* bg.jpg in Resources */,
 				AC906497262FBD9300B87F48 /* left_icon.png in Resources */,
 				CCE6A69C25E7288200E63FCC /* VertexShader.glsl in Resources */,
-				CC11E01D2626B44500BB75DB /* slice37.png in Resources */,
-				CCE6A6B625E7967800E63FCC /* logo.png in Resources */,
 				CC47E218262FC2E200D1F689 /* ProjectileTexture.png in Resources */,
 				CC47E1E1262F9F4400D1F689 /* EnemyTex.png in Resources */,
 				CC47E219262FC2E200D1F689 /* EnemyProjectileTex.png in Resources */,
 				CC47E1EA262FAF6200D1F689 /* ShipTex.png in Resources */,
 				CC11E02C2626B65300BB75DB /* attack_icon.png in Resources */,
-				CC11E01B2626B44500BB75DB /* Plate.png in Resources */,
-				CC0677EC25EE207800A01200 /* red.png in Resources */,
 				AC906446261A552800B87F48 /* playerShot.wav in Resources */,
+				CC47E24126300F8E00D1F689 /* bg2.png in Resources */,
 				CC11E0272626B65300BB75DB /* thrust_icon.png in Resources */,
 				CCE6A69925E7286800E63FCC /* FragmentShader.glsl in Resources */,
 				CC11E0302626B79900BB75DB /* window.png in Resources */,
 				CC057FA525E71D37003331D2 /* Main.storyboard in Resources */,
+				CC47E23A26300C4600D1F689 /* menu_bg.png in Resources */,
 				AC90644D261A596300B87F48 /* 05_Chill.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -328,9 +354,11 @@
 				CC47E1DE262F9EFA00D1F689 /* EnemyModel.m in Sources */,
 				CCFA782C25ECB7E8002EFAD1 /* ProjectileModel.m in Sources */,
 				CC057F9F25E71D37003331D2 /* SceneDelegate.m in Sources */,
-				CCE6A6AC25E7864D00E63FCC /* CubeModel.m in Sources */,
 				CC2570C425EAFC1F00F6CB8C /* ShipModel.m in Sources */,
-				CC057FBC25E72667003331D2 /* BaseEffect.m in Sources */,
+				CC47E22E262FF92100D1F689 /* GameScene.m in Sources */,
+				CC47E233262FF92D00D1F689 /* MenuScene.m in Sources */,
+				CC47E237262FF9EF00D1F689 /* Scene.m in Sources */,
+				CC057FBC25E72667003331D2 /* ShaderController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

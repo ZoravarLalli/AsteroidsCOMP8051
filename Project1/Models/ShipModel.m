@@ -17,7 +17,7 @@
 }
 
 //Initiation method inherited from Model.m
-- (instancetype) initWithShader:(BaseEffect *) shader
+- (instancetype) initWithShader:(ShaderController *) shader
 {
     // hacky
     _playerDeath = [self preloadSound:@"playerDeath.wav"];

@@ -11,7 +11,7 @@
 @implementation ProjectileModel
 
 //Initiation method inherited from Model.m
-- (instancetype) initWithShader:(BaseEffect *) shader
+- (instancetype) initWithShader:(ShaderController *) shader
 {
     //Initialize cube with shader and vertex data.
     if(self = [super initWithName:"projectile"
@@ -30,7 +30,7 @@
 -(void)updateWithDelta:(NSTimeInterval)delta
 {
     self.timeAlive += delta;
-    if (self.timeAlive > .3)
+    if (self.timeAlive > .5)
     {
         self.destroy = true;
     }

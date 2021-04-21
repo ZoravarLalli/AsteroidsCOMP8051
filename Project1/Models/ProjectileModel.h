@@ -18,6 +18,6 @@
 @property bool destroy;
 @property NSTimeInterval timeAlive;
 
-- (instancetype) initWithShader :(BaseEffect *)shader;
+- (instancetype) initWithShader :(ShaderController *)shader;
 
 @end

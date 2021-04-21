@@ -1,7 +1,7 @@
-#import "BaseEffect.h"
+#import "ShaderController.h"
 #import "Vertex.h"
 
-@implementation BaseEffect {
+@implementation ShaderController {
     GLuint _programHandle;
     GLuint _modelViewMatrixUniform;
     GLuint _projectionMatrixUniform;
