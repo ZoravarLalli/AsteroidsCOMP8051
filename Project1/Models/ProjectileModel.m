@@ -54,7 +54,8 @@
     
     //Check for enemy collision
 
-    if(self.position.x + (3.2) >= _enemy.position.x
+    if(_enemy != nil
+       && self.position.x + (3.2) >= _enemy.position.x
        && self.position.x - (3.2) <= _enemy.position.x
        && self.position.y + (3) >= _enemy.position.y
        && self.position.y - (3) <= _enemy.position.y)
