@@ -476,13 +476,21 @@ const int ASTEROID_LIMIT = 25;
 - (void)addNewScore:(int) newScore{
     // If the current score is higher than any of the existing highscores, it will replace it.
     for (int i = 0; i < 5; i++){
-        // Beat highscore
         if(newScore > _highScores[i]){
-            _highScores[i] = newScore;
-            for(int j = i; j < 5; j++){
-                
+            _highScores[4] = newScore;
+            break;
+        }
+    }
+    
+    // Sort
+    for(int i = 1; i < 5; i++){
+        for(int j = i; j > 0; j--){
+            int before = _highScores[j-1];
+            int curr = _highScores[j];
+            if(before < curr){
+                _highScores[j] = before;
+                _highScores[j-1] = curr;
             }
-            break; // break because only want to add it once.
         }
     }
 }
