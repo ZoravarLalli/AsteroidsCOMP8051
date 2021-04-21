@@ -1,6 +1,6 @@
 # AsteroidsCOMP8051
 
-To download the game, either clone the repository or download the source zip from the latest [release.](https://github.com/ZoravarLalli/AsteroidsCOMP8051/releases)
+To download the game, either clone the repository from the [master branch](https://github.com/ZoravarLalli/AsteroidsCOMP8051/tree/master) or download the source zip from the latest [release.](https://github.com/ZoravarLalli/AsteroidsCOMP8051/releases)
 Open with the project with XCode and play with either your phone or emulator.
 
 Controls for the game are the on-screen buttons.
