@@ -346,8 +346,10 @@ const int ASTEROID_LIMIT = 25;
         [ast updateWithDelta:delta];
         if(ast.destroy){
             [self playShotImpact]; // Plays asteroid destruction sound
+            
+            
             currentScore += 1; // Increment score
-
+            
             if (!_ship.powered && ast.size > 1) {
                 AsteroidModel *newAsteroid = [[AsteroidModel alloc] initWithShader:_shader andSize:ast.size-1];
                 newAsteroid.xBound = xBound;
