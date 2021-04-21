@@ -66,6 +66,7 @@ const int ASTEROID_LIMIT = 25;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.view setExclusiveTouch:NO];
     
     // For saving between sessions
     prefs = [NSUserDefaults standardUserDefaults];
@@ -81,14 +82,13 @@ const int ASTEROID_LIMIT = 25;
     view.drawableDepthFormat = GLKViewDrawableDepthFormat16;
     
     //Setup for Gesture listeners
-    UIPanGestureRecognizer *panSingleGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleSinglePanGesture: )];
-    panSingleGesture.maximumNumberOfTouches = 1;
-    panSingleGesture.minimumNumberOfTouches = 1;
-    [self.view addGestureRecognizer:panSingleGesture];
+//    UIPanGestureRecognizer *panSingleGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleSinglePanGesture: )];
+//    panSingleGesture.minimumNumberOfTouches = 1;
+//    [self.view addGestureRecognizer:panSingleGesture];
     
     //Setup for buttons
     UIButton *fireButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    fireButton.frame = CGRectMake(view.frame.size.width - 85, view.frame.size.height-85,75,75);
+    fireButton.frame = CGRectMake(view.frame.size.width - 85, view.frame.size.height-160,75,75);
     [fireButton setImage:[UIImage imageNamed:@"attack_icon.png"] forState:UIControlStateNormal];
     [fireButton addTarget:self action:@selector(fireHandler:) forControlEvents:UIControlEventTouchDown];
     [fireButton setEnabled:YES];
@@ -103,6 +103,26 @@ const int ASTEROID_LIMIT = 25;
     [thrustButton setImage:[UIImage imageNamed:@"thrust_icon.png"] forState:UIControlStateNormal];
     [thrustButton setEnabled:YES];
     [self.view addSubview:thrustButton];
+    
+    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    leftButton.frame = CGRectMake(view.frame.size.width-160,view.frame.size.height-85,75,75);
+    [leftButton addTarget:self action:@selector(leftTouch:) forControlEvents:UIControlEventTouchDown];
+    [leftButton addTarget:self action:@selector(leftCancel:) forControlEvents:UIControlEventTouchUpInside];
+    [leftButton addTarget:self action:@selector(leftCancel:) forControlEvents:UIControlEventTouchUpOutside];
+    [leftButton addTarget:self action:@selector(leftCancel:) forControlEvents:UIControlEventTouchCancel];
+    [leftButton setImage:[UIImage imageNamed:@"left_icon.png"] forState:UIControlStateNormal];
+    [leftButton setEnabled:YES];
+    [self.view addSubview:leftButton];
+    
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    rightButton.frame = CGRectMake(view.frame.size.width-75,view.frame.size.height-85,75,75);
+    [rightButton addTarget:self action:@selector(rightTouch:) forControlEvents:UIControlEventTouchDown];
+    [rightButton addTarget:self action:@selector(rightCancel:) forControlEvents:UIControlEventTouchUpInside];
+    [rightButton addTarget:self action:@selector(rightCancel:) forControlEvents:UIControlEventTouchUpOutside];
+    [rightButton addTarget:self action:@selector(rightCancel:) forControlEvents:UIControlEventTouchCancel];
+    [rightButton setImage:[UIImage imageNamed:@"right_icon.png"] forState:UIControlStateNormal];
+    [rightButton setEnabled:YES];
+    [self.view addSubview:rightButton];
     
     UIImageView *livesBacking = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"text_backing.png"]];
     [livesBacking setFrame:CGRectMake(5, 25, 100, 25)];
@@ -345,16 +365,16 @@ const int ASTEROID_LIMIT = 25;
 }
 
 //Pan handler for rotating the ship
-- (void) handleSinglePanGesture:(UIPanGestureRecognizer *) sender
-{
-    if(sender.state == UIGestureRecognizerStateChanged)
-    {
-        CGPoint velocity = [sender velocityInView:sender.view];
-        float x = velocity.x/sender.view.frame.size.width;
-        float y = velocity.y/sender.view.frame.size.height;
-        [_ship rotate:(y + x)/10];
-    }
-}
+//- (void) handleSinglePanGesture:(UIPanGestureRecognizer *) sender
+//{
+//    if(sender.state == UIGestureRecognizerStateChanged)
+//    {
+//        CGPoint velocity = [sender velocityInView:sender.view];
+//        float x = velocity.x/sender.view.frame.size.width;
+//        float y = velocity.y/sender.view.frame.size.height;
+//        [_ship rotate:(y + x)/10];
+//    }
+//}
 
 //Handler for fire button
 - (void) fireHandler : (id) sender
@@ -387,6 +407,37 @@ const int ASTEROID_LIMIT = 25;
     _ship.thrust = false;
     NSLog(@"PAUSE THRUST");
 }
+
+// Handler for tocuhing left button
+- (void) leftTouch : (id) sender
+{
+    [_ship setRotateLeft:true];
+    NSLog(@"START LEFT");
+}
+
+//Handler for canceling left turn
+- (void) leftCancel : (id) sender
+{
+    [_ship setRotateLeft:false];
+    NSLog(@"PAUSE LEFT");
+}
+
+// Handler for tocuhing left button
+- (void) rightTouch : (id) sender
+{
+    [_ship setRotateRight:true];
+    NSLog(@"START RIGHT");
+}
+
+//Handler for canceling left turn
+- (void) rightCancel : (id) sender
+{
+    [_ship setRotateRight:false];
+    NSLog(@"PAUSE RIGHT");
+}
+
+
+
 
 - (void) resetGame : (id) sender
 {

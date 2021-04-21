@@ -13,6 +13,7 @@
 {
     float velocityPercent;
     AVAudioPlayer *_playerDeath;
+
 }
 
 //Initiation method inherited from Model.m
@@ -56,6 +57,20 @@
         self.scale = 0.25;
     }
     
+    // IF TURNING
+    if(_turningLeft)
+    {
+        self.rotationY += 0.2;
+        // Set forward vector
+        self.forward = GLKVector3Make(sinf(self.rotationY), -cosf(self.rotationY), 0);
+    }
+    
+    if(_turningRight)
+    {
+        self.rotationY -= 0.2;
+        // Set forward vector
+        self.forward = GLKVector3Make(sinf(self.rotationY), -cosf(self.rotationY), 0);
+    }
     
     //If the thrust button is active, increase velocity, else decrease it
     if(self.thrust)
@@ -66,6 +81,7 @@
     {
         if(velocityPercent > 0) velocityPercent -= 0.01;
     }
+    
     
     //If velocity is greater than 0, add a scaled forward vector to position
     if(velocityPercent > 0)
@@ -111,6 +127,17 @@
 -(void) thrustToggle
 {
     self.thrust = !self.thrust;
+}
+
+// Sets boolean to rotate the ship left
+-(void) setRotateLeft:(bool)toggle
+{
+    _turningLeft = toggle;
+}
+// Sets boolean to rotate the ship right
+-(void) setRotateRight:(bool)toggle
+{
+    _turningRight = toggle;
 }
 
 //Function to call when colliding with an asteroid

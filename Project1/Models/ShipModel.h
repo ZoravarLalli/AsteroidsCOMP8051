@@ -18,10 +18,13 @@
 @property float yBound;
 @property int lives;
 @property NSTimeInterval invincible;
+@property bool turningLeft;
+@property bool turningRight;
 
 - (instancetype) initWithShader :(BaseEffect *)shader;
 - (void) thrustToggle;
 - (void) rotate : (float) angle;
 - (void) resetPos;
-
+- (void) setRotateLeft: (bool) toggle;
+- (void) setRotateRight: (bool) toggle;
 @end
