@@ -13,6 +13,7 @@
 @property float xBound;
 @property float yBound;
 @property bool destroy;
+@property bool gameOverDestroy;
 @property NSTimeInterval timeToChange;
 
 - (instancetype) initWithShader :(BaseEffect *)shader;

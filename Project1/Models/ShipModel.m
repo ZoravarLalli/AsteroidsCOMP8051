@@ -108,7 +108,7 @@
     }
     
     
-    if (_invincible <= 0) {
+    if (_invincible <= 0 && _lives > 0) {
         //Check for asteroid collision
         for(AsteroidModel *ast in _asteroids)
         {

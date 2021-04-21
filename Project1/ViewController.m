@@ -383,6 +383,9 @@ const int ASTEROID_LIMIT = 25;
             enemy = nil;
             enemyTimer = 8 + arc4random_uniform(30) * 0.1;
         }
+        if (enemy.gameOverDestroy) {
+            enemy = nil;
+        }
     }
     
     
@@ -479,7 +482,7 @@ const int ASTEROID_LIMIT = 25;
         o.destroyWithChildren = true;
     }
     if (enemy!= nil) {
-        enemy.destroy = true;
+        enemy.gameOverDestroy = true;
     }
     
     [gameOverContainer setHidden:true];
