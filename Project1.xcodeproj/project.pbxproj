@@ -45,6 +45,7 @@
 		CC47E24126300F8E00D1F689 /* bg2.png in Resources */ = {isa = PBXBuildFile; fileRef = CC47E24026300F8E00D1F689 /* bg2.png */; };
 		CCE668F22630995A00E0E4E2 /* PowerupModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE668F02630995A00E0E4E2 /* PowerupModel.m */; };
 		CCE668F926309B0900E0E4E2 /* Star_03.png in Resources */ = {isa = PBXBuildFile; fileRef = CCE668F826309B0900E0E4E2 /* Star_03.png */; };
+		CCE668FC26309C2A00E0E4E2 /* Close_BTN.png in Resources */ = {isa = PBXBuildFile; fileRef = CCE668FB26309C2A00E0E4E2 /* Close_BTN.png */; };
 		CCE6A69925E7286800E63FCC /* FragmentShader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = CCE6A69825E7286800E63FCC /* FragmentShader.glsl */; };
 		CCE6A69C25E7288200E63FCC /* VertexShader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = CCE6A69B25E7288200E63FCC /* VertexShader.glsl */; };
 		CCE6A6A125E760A600E63FCC /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE6A6A025E760A600E63FCC /* Model.m */; };
@@ -104,6 +105,7 @@
 		CCE668F02630995A00E0E4E2 /* PowerupModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerupModel.m; sourceTree = "<group>"; };
 		CCE668F12630995A00E0E4E2 /* PowerupModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerupModel.h; sourceTree = "<group>"; };
 		CCE668F826309B0900E0E4E2 /* Star_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Star_03.png; sourceTree = "<group>"; };
+		CCE668FB26309C2A00E0E4E2 /* Close_BTN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Close_BTN.png; sourceTree = "<group>"; };
 		CCE6A69825E7286800E63FCC /* FragmentShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FragmentShader.glsl; sourceTree = "<group>"; };
 		CCE6A69B25E7288200E63FCC /* VertexShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = VertexShader.glsl; sourceTree = "<group>"; };
 		CCE6A69E25E728F000E63FCC /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 		CC47E221262FF56800D1F689 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				CCE668FB26309C2A00E0E4E2 /* Close_BTN.png */,
 				CC11E02E2626B79900BB75DB /* window.png */,
 				CC11E0252626B65300BB75DB /* attack_icon.png */,
 				CC11E0332626B8D600BB75DB /* text_backing.png */,
@@ -342,6 +345,7 @@
 				CCE6A69925E7286800E63FCC /* FragmentShader.glsl in Resources */,
 				CC11E0302626B79900BB75DB /* window.png in Resources */,
 				CC057FA525E71D37003331D2 /* Main.storyboard in Resources */,
+				CCE668FC26309C2A00E0E4E2 /* Close_BTN.png in Resources */,
 				CC47E23A26300C4600D1F689 /* menu_bg.png in Resources */,
 				AC90644D261A596300B87F48 /* 05_Chill.wav in Resources */,
 			);

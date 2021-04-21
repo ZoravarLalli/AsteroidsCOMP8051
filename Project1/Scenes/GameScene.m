@@ -155,11 +155,17 @@ const int ASTEROID_LIMIT = 25;
     [gameOverHeader setTextColor:[UIColor whiteColor]];
     [gameOverContainer addSubview:gameOverHeader];
     
-    UIButton *replayButton = [[UIButton alloc]initWithFrame:CGRectMake(gameOverContainer.frame.size.width/2-25,gameOverContainer.frame.size.height-65,50,50)];
+    UIButton *replayButton = [[UIButton alloc]initWithFrame:CGRectMake(gameOverContainer.frame.size.width/2+2.5,gameOverContainer.frame.size.height-65,50,50)];
     [replayButton setImage:[UIImage imageNamed:@"replay_icon.png"] forState:UIControlStateNormal];
     [replayButton addTarget:self action:@selector(resetGame:) forControlEvents:UIControlEventTouchDown];
     [replayButton setEnabled:true];
     [gameOverContainer addSubview:replayButton];
+    
+    UIButton *closeButton = [[UIButton alloc]initWithFrame:CGRectMake(gameOverContainer.frame.size.width/2-52.5,gameOverContainer.frame.size.height-65,50,50)];
+    [closeButton setImage:[UIImage imageNamed:@"Close_BTN.png"] forState:UIControlStateNormal];
+    [closeButton addTarget:self action:@selector(returnToMenu:) forControlEvents:UIControlEventTouchDown];
+
+    [closeButton setEnabled:true];    [gameOverContainer addSubview:closeButton];
     
     score = [[UILabel alloc] initWithFrame:CGRectMake(10, gameOverHeader.frame.size.height + 20, gameOverContainer.frame.size.width - 20, gameOverContainer.frame.size.height/2)];
     [score setText:@"High Scores:\r0\r0\r0\r0\r0"];
@@ -489,7 +495,10 @@ const int ASTEROID_LIMIT = 25;
     //NSLog(@"PAUSE RIGHT");
 }
 
-
+- (void) returnToMenu : (id) sender
+{
+    [_controller loadNewScene];
+}
 
 
 - (void) resetGame : (id) sender
