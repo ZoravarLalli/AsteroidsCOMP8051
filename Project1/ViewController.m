@@ -315,8 +315,7 @@ const int ASTEROID_LIMIT = 25;
 //Open GL update function
 - (void) update
 {
-    //Call ship's update
-    [_ship updateWithDelta:self.timeSinceLastUpdate];
+    
     
     //Call each projectile's update
     for(ProjectileModel *proj in [_projectiles reverseObjectEnumerator])
@@ -389,7 +388,8 @@ const int ASTEROID_LIMIT = 25;
     }
     
     
-    
+    //Call ship's update
+    [_ship updateWithDelta:self.timeSinceLastUpdate];
 
 
     
