@@ -113,12 +113,12 @@
 
     //Ambient lighting values.
     glUniform3f(_lightColorUniform, 1, 1, 1);
-    glUniform1f(_lightAmbientIntensityUniform, 0.1);
+    glUniform1f(_lightAmbientIntensityUniform, 0.2);
     
     //Diffuse lighting values.
-    GLKVector3 lightDirection = GLKVector3Normalize(GLKVector3Make(0, 1, -1));
+    GLKVector3 lightDirection = GLKVector3Normalize(GLKVector3Make(0, 0, -1));
     glUniform3f(_lightDirectionUniform, lightDirection.x, lightDirection.y, lightDirection.z);
-    glUniform1f(_lightDiffuseIntensityUniform, 0.7);
+    glUniform1f(_lightDiffuseIntensityUniform, 0.5);
     
     //Specular lighting values.
     glUniform1f(_matSpecularIntensityUniform, 2.0);

@@ -12,6 +12,7 @@
 #import "ProjectileModel.h"
 #import "AsteroidModel.h"
 #import "BackgroundModel.h"
+#import "EnemyModel.h"
 
 @interface ViewController ()
 
@@ -56,6 +57,9 @@ const int ASTEROID_LIMIT = 25;
     
     // For persisting data
     NSUserDefaults *prefs;
+    
+    
+    EnemyModel *enemy;
 }
 
 //Called when the view is loaded
@@ -84,14 +88,14 @@ const int ASTEROID_LIMIT = 25;
     
     //Setup for buttons
     UIButton *fireButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    fireButton.frame = CGRectMake(10, view.frame.size.height-60,50,50);
+    fireButton.frame = CGRectMake(view.frame.size.width - 85, view.frame.size.height-85,75,75);
     [fireButton setImage:[UIImage imageNamed:@"attack_icon.png"] forState:UIControlStateNormal];
     [fireButton addTarget:self action:@selector(fireHandler:) forControlEvents:UIControlEventTouchDown];
     [fireButton setEnabled:YES];
     [self.view addSubview:fireButton];
     
     UIButton *thrustButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    thrustButton.frame = CGRectMake(10,view.frame.size.height-130,50,50);
+    thrustButton.frame = CGRectMake(10,view.frame.size.height-85,75,75);
     [thrustButton addTarget:self action:@selector(thrustTouch:) forControlEvents:UIControlEventTouchDown];
     [thrustButton addTarget:self action:@selector(thrustCancel:) forControlEvents:UIControlEventTouchUpInside];
     [thrustButton addTarget:self action:@selector(thrustCancel:) forControlEvents:UIControlEventTouchUpOutside];
@@ -193,6 +197,8 @@ const int ASTEROID_LIMIT = 25;
     
     _background = [[BackgroundModel alloc] initWithShader:_shader];
     _background.scale = 20;
+    
+    enemy = [[EnemyModel alloc] initWithShader:_shader];
 }
 
 //Called to draw on each frame
@@ -252,6 +258,8 @@ const int ASTEROID_LIMIT = 25;
     {
         [ast renderWithParentModelViewMatrix:viewMatrix];
     }
+    
+    [enemy renderWithParentModelViewMatrix:viewMatrix];
 }
 
 //Open GL update function
@@ -307,6 +315,8 @@ const int ASTEROID_LIMIT = 25;
     
     //NSLog(@"proj: %d", [_projectiles count]);
     //NSLog(@"ship: %f , %f", _ship.position.x, _ship.position.y);
+    
+    [enemy updateWithDelta:self.timeSinceLastUpdate];
 }
 
 //Pan handler for rotating the ship
