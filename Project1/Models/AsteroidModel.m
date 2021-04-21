@@ -19,7 +19,7 @@
                       vertexCount:sizeof(vertices)/sizeof(vertices[0])])
     {
         //Set texture from Resource folder
-        [self loadTexture:@"reboot.jpg"];
+        [self loadTexture:@"AsteroidTex.png"];
         double randX = ((double)arc4random_uniform(51) - 25)/25;
         double randY = ((double)arc4random_uniform(51) - 25)/25;
         self.forward = GLKVector3Make(randX, randY, 0);
@@ -40,7 +40,7 @@
                           vertexCount:sizeof(vertices)/sizeof(vertices[0])])
         {
             //Set texture from Resource folder
-            [self loadTexture:@"reboot.jpg"];
+            [self loadTexture:@"AsteroidTex.png"];
             double randX = ((double)arc4random_uniform(51) - 25)/25;
             double randY = ((double)arc4random_uniform(51) - 25)/25;
             self.forward = GLKVector3Make(randX, randY, 0);

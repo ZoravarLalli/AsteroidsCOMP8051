@@ -36,6 +36,10 @@
 		CC2570C425EAFC1F00F6CB8C /* ShipModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CC2570C325EAFC1F00F6CB8C /* ShipModel.m */; };
 		CC47E1DE262F9EFA00D1F689 /* EnemyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CC47E1DD262F9EFA00D1F689 /* EnemyModel.m */; };
 		CC47E1E1262F9F4400D1F689 /* EnemyTex.png in Resources */ = {isa = PBXBuildFile; fileRef = CC47E1E0262F9F4400D1F689 /* EnemyTex.png */; };
+		CC47E1EA262FAF6200D1F689 /* ShipTex.png in Resources */ = {isa = PBXBuildFile; fileRef = CC47E1E8262FAF6200D1F689 /* ShipTex.png */; };
+		CC47E1EB262FAF6200D1F689 /* AsteroidTex.png in Resources */ = {isa = PBXBuildFile; fileRef = CC47E1E9262FAF6200D1F689 /* AsteroidTex.png */; };
+		CC47E218262FC2E200D1F689 /* ProjectileTexture.png in Resources */ = {isa = PBXBuildFile; fileRef = CC47E216262FC2E200D1F689 /* ProjectileTexture.png */; };
+		CC47E219262FC2E200D1F689 /* EnemyProjectileTex.png in Resources */ = {isa = PBXBuildFile; fileRef = CC47E217262FC2E200D1F689 /* EnemyProjectileTex.png */; };
 		CCE6A69925E7286800E63FCC /* FragmentShader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = CCE6A69825E7286800E63FCC /* FragmentShader.glsl */; };
 		CCE6A69C25E7288200E63FCC /* VertexShader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = CCE6A69B25E7288200E63FCC /* VertexShader.glsl */; };
 		CCE6A6A125E760A600E63FCC /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = CCE6A6A025E760A600E63FCC /* Model.m */; };
@@ -85,6 +89,10 @@
 		CC47E1DC262F9EFA00D1F689 /* EnemyModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EnemyModel.h; sourceTree = "<group>"; };
 		CC47E1DD262F9EFA00D1F689 /* EnemyModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EnemyModel.m; sourceTree = "<group>"; };
 		CC47E1E0262F9F4400D1F689 /* EnemyTex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EnemyTex.png; sourceTree = "<group>"; };
+		CC47E1E8262FAF6200D1F689 /* ShipTex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ShipTex.png; sourceTree = "<group>"; };
+		CC47E1E9262FAF6200D1F689 /* AsteroidTex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AsteroidTex.png; sourceTree = "<group>"; };
+		CC47E216262FC2E200D1F689 /* ProjectileTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ProjectileTexture.png; sourceTree = "<group>"; };
+		CC47E217262FC2E200D1F689 /* EnemyProjectileTex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EnemyProjectileTex.png; sourceTree = "<group>"; };
 		CCE6A69825E7286800E63FCC /* FragmentShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = FragmentShader.glsl; sourceTree = "<group>"; };
 		CCE6A69B25E7288200E63FCC /* VertexShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = VertexShader.glsl; sourceTree = "<group>"; };
 		CCE6A69E25E728F000E63FCC /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
@@ -161,6 +169,10 @@
 		CCE0E7A125ED878E00A34D97 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CC47E217262FC2E200D1F689 /* EnemyProjectileTex.png */,
+				CC47E216262FC2E200D1F689 /* ProjectileTexture.png */,
+				CC47E1E9262FAF6200D1F689 /* AsteroidTex.png */,
+				CC47E1E8262FAF6200D1F689 /* ShipTex.png */,
 				CC47E1E0262F9F4400D1F689 /* EnemyTex.png */,
 				CC11E02E2626B79900BB75DB /* window.png */,
 				CC11E0252626B65300BB75DB /* attack_icon.png */,
@@ -263,6 +275,7 @@
 			files = (
 				CC057FAA25E71D37003331D2 /* LaunchScreen.storyboard in Resources */,
 				CC11E0342626B8D600BB75DB /* text_backing.png in Resources */,
+				CC47E1EB262FAF6200D1F689 /* AsteroidTex.png in Resources */,
 				AC906453261A63BE00B87F48 /* asteroidImpact.wav in Resources */,
 				CC057FA725E71D37003331D2 /* Assets.xcassets in Resources */,
 				AC906450261A611C00B87F48 /* playerShotEdited.wav in Resources */,
@@ -275,7 +288,10 @@
 				CCE6A69C25E7288200E63FCC /* VertexShader.glsl in Resources */,
 				CC11E01D2626B44500BB75DB /* slice37.png in Resources */,
 				CCE6A6B625E7967800E63FCC /* logo.png in Resources */,
+				CC47E218262FC2E200D1F689 /* ProjectileTexture.png in Resources */,
 				CC47E1E1262F9F4400D1F689 /* EnemyTex.png in Resources */,
+				CC47E219262FC2E200D1F689 /* EnemyProjectileTex.png in Resources */,
+				CC47E1EA262FAF6200D1F689 /* ShipTex.png in Resources */,
 				CC11E02C2626B65300BB75DB /* attack_icon.png in Resources */,
 				CC11E01B2626B44500BB75DB /* Plate.png in Resources */,
 				CC0677EC25EE207800A01200 /* red.png in Resources */,
