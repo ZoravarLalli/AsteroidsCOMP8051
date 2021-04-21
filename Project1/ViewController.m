@@ -12,6 +12,7 @@
 #import "ProjectileModel.h"
 #import "AsteroidModel.h"
 #import "BackgroundModel.h"
+#import "EnemyModel.h"
 
 @interface ViewController ()
 
@@ -56,6 +57,9 @@ const int ASTEROID_LIMIT = 25;
     
     // For persisting data
     NSUserDefaults *prefs;
+    
+    
+    EnemyModel *enemy;
 }
 
 //Called when the view is loaded
@@ -193,6 +197,8 @@ const int ASTEROID_LIMIT = 25;
     
     _background = [[BackgroundModel alloc] initWithShader:_shader];
     _background.scale = 20;
+    
+    enemy = [[EnemyModel alloc] initWithShader:_shader];
 }
 
 //Called to draw on each frame
@@ -252,6 +258,8 @@ const int ASTEROID_LIMIT = 25;
     {
         [ast renderWithParentModelViewMatrix:viewMatrix];
     }
+    
+    [enemy renderWithParentModelViewMatrix:viewMatrix];
 }
 
 //Open GL update function
@@ -307,6 +315,8 @@ const int ASTEROID_LIMIT = 25;
     
     //NSLog(@"proj: %d", [_projectiles count]);
     //NSLog(@"ship: %f , %f", _ship.position.x, _ship.position.y);
+    
+    [enemy updateWithDelta:self.timeSinceLastUpdate];
 }
 
 //Pan handler for rotating the ship
