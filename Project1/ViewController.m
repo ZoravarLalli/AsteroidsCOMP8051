@@ -18,6 +18,7 @@ typedef enum
     GameScene *gameScene;
     MenuScene *menuScene;
     GameState state;
+    GLKView *view;
 }
 
 //Called when the view is loaded
@@ -26,7 +27,14 @@ typedef enum
     [super viewDidLoad];
     [self.view setExclusiveTouch:NO];
     
-    menuScene = [[MenuScene alloc] loadScene:(GLKView *)self.view parentController:self];
+    view = (GLKView *) self.view;
+    view.context = [[EAGLContext alloc]initWithAPI:kEAGLRenderingAPIOpenGLES2];
+    view.drawableDepthFormat = GLKViewDrawableDepthFormat16;
+    [EAGLContext setCurrentContext:view.context];
+    
+    menuScene = [[MenuScene alloc] init];
+    gameScene = [[GameScene alloc] init];
+    [self.view addSubview:[menuScene createUI:view controller:self]];
     state = MENU;
 }
 
@@ -40,8 +48,7 @@ typedef enum
 //Open GL update function
 - (void) update
 {
-    if(state == MENU) [menuScene updateScene:self.timeSinceLastUpdate];
-    else if(state == GAME) [gameScene updateScene:self.timeSinceLastUpdate];
+    if(state == GAME) [gameScene updateScene:self.timeSinceLastUpdate];
 }
 
 //Change the scene state, called from game scenes
@@ -50,12 +57,12 @@ typedef enum
     for(UIView *subView in self.view.subviews) [subView removeFromSuperview];
     if(state == MENU)
     {
-        gameScene = [[GameScene alloc] loadScene:(GLKView *)self.view parentController:self];
+        [self.view addSubview:[gameScene createUI:view controller:self]];
         state = GAME;
     }
     else if (state == GAME)
     {
-        menuScene = [[MenuScene alloc] loadScene:(GLKView *)self.view parentController:self];
+        [self.view addSubview:[menuScene createUI:view controller:self]];
         state = MENU;
     }
 }

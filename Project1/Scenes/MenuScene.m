@@ -12,26 +12,23 @@
 
 @implementation MenuScene
 {
+    ViewController *_controller;
     ShaderController *_shader; //Shader controller
     BackgroundModel *background; //Quad for the background
+    UIView *menuView;
+    float height;
+    float width;
 }
 
-- (instancetype) loadScene:(GLKView *)view parentController:(ViewController *)parent
+- (UIView *) createUI : (UIView *) parent controller : (ViewController *) controller
 {
-    if(self == [super loadScene:view parentController:parent])
-    {
-        //Create the UI, set the scene
-        [self createUI];
-        [self setupScene];
-    }
-    return self;
-}
-
-- (void) createUI
-{
+    menuView = [[UIView alloc]initWithFrame:parent.frame];
+    width = menuView.frame.size.width;
+    height = menuView.frame.size.height;
+    
     UIImageView *titleContainer = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"text_backing.png"]];
-    [titleContainer setFrame:CGRectMake(10, 25, self.sceneWidth - 20, 75)];
-    [self._sceneView addSubview:titleContainer];
+    [titleContainer setFrame:CGRectMake(10, 25, width - 20, 75)];
+    [menuView addSubview:titleContainer];
     
     UILabel *titleText = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, titleContainer.frame.size.width, titleContainer.frame.size.height)];
     [titleText setText:@"Asteroids 2.5D"];
@@ -40,11 +37,11 @@
     titleText.font = [UIFont fontWithName:@"Copperplate" size:32];
     [titleContainer addSubview:titleText];
     
-    UIButton *startButton = [[UIButton alloc] initWithFrame:CGRectMake(self.sceneWidth/2 - 50, self.sceneHeight - 60, 100, 50)];
+    UIButton *startButton = [[UIButton alloc] initWithFrame:CGRectMake(width/2 - 50, height - 60, 100, 50)];
     [startButton setImage:[UIImage imageNamed:@"text_backing.png"] forState:UIControlStateNormal];
     [startButton addTarget:self action:@selector(startGame:) forControlEvents:UIControlEventTouchDown];
     [startButton setEnabled:true];
-    [self._sceneView addSubview:startButton];
+    [menuView addSubview:startButton];
     
     UILabel *startButtonLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, startButton.frame.size.width, startButton.frame.size.height)];
     [startButtonLabel setText:@"Start"];
@@ -52,6 +49,12 @@
     [startButtonLabel setTextColor:[UIColor whiteColor]];
     startButtonLabel.font = [UIFont fontWithName:@"Copperplate" size:28];
     [startButton addSubview:startButtonLabel];
+    
+    self.view = menuView;
+    _controller = controller;
+    [self setupScene];
+    
+    return menuView;
 }
 
 - (void) setupScene
@@ -64,13 +67,13 @@
     
     //Initiate shader
     _shader = [[ShaderController alloc] initWithVertexShader:@"VertexShader.glsl" fragmentShader:@"FragmentShader.glsl"];
-    
+
     //Setup projection view
-    _shader.projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(85.0), self.sceneWidth/self.sceneHeight, 1, 150);
+    _shader.projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(85.0), width/height, 1, 150);
     
     //Set up background quad
     background = [[BackgroundModel alloc] initWithShader:_shader];
-    background.scale = 7.0f * (self.sceneHeight/self.sceneWidth);
+    background.scale = 7.0f * (height/width);
     [background loadTexture:@"bg2.png"];
 }
 
@@ -89,7 +92,7 @@
 
 - (void) startGame : (id) selector
 {
-    [self._parent loadNewScene];
+    [_controller loadNewScene];
 }
 
 @end

@@ -1,9 +1,3 @@
-//
-//  CubeModel.m
-//  Project1
-//
-//  Created by Kris Olsson on 2021-02-24.
-//
 
 #import "ShipModel.h"
 #import "AsteroidModel.h"
@@ -13,7 +7,7 @@
 {
     float velocityPercent;
     AVAudioPlayer *_playerDeath;
-
+    float powerupTime;
 }
 
 //Initiation method inherited from Model.m
@@ -38,6 +32,9 @@
         //Set initial velocity
         velocityPercent = 0.0;
         self.lives = 5;
+        //Don't start with powerup
+        self.powered = false;
+        powerupTime = 5.0f;
     }
     return self;
 }
@@ -131,6 +128,13 @@
             _enemy.destroy = true;
             [self asteroidHit];
         }
+    }
+    
+    if(self.powered && powerupTime > 0.0f) powerupTime -= delta;
+    else if(self.powered)
+    {
+        self.powered = false;
+        powerupTime = 5.0f;
     }
 }
 

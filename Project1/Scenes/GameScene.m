@@ -13,6 +13,8 @@
 #import "AsteroidModel.h"
 #import "BackgroundModel.h"
 #import "EnemyModel.h"
+#import "PowerupModel.h"
+
 
 @interface GameScene ()
 
@@ -34,6 +36,10 @@ const int ASTEROID_LIMIT = 25;
 
 @implementation GameScene
 {
+    UIView *menuView;
+    float height;
+    float width;
+    ViewController *_controller;
     ShaderController *_shader; //Shader controller
     ShipModel *_ship; //Ship model
     BackgroundModel *_background;
@@ -63,70 +69,57 @@ const int ASTEROID_LIMIT = 25;
     
     EnemyModel *enemy;
     NSTimeInterval enemyTimer;
-}
-
-
-- (instancetype) loadScene:(GLKView *)view parentController:(ViewController *)parent
-{
-    if(self == [super loadScene:view parentController:parent])
-    {
-        [self createUI];
-        
-        // For saving between sessions
-        prefs = [NSUserDefaults standardUserDefaults];
-        
-        // Preload the in game sound effects
-        _playerShot = [self preloadSound:@"playerShotEdited.wav"];
-        _asteroidImpact = [self preloadSound:@"asteroidImpact.wav"];
-        _rocketThrust = [self preloadSound:@"thrust.wav"];
     
-        [self setupScene];
-    }
-    return self;
+    PowerupModel *powerup;
+    float powerupTimer;
 }
 
-- (void) createUI
+- (UIView *) createUI : (UIView *) parent controller : (ViewController *) controller
 {
+    menuView = [[UIView alloc]initWithFrame:parent.frame];
+    width = menuView.frame.size.width;
+    height = menuView.frame.size.height;
+    
     //Set up firing button
     UIButton *fireButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    fireButton.frame = CGRectMake(self.sceneWidth - 85, self.sceneHeight-160,75,75);
+    fireButton.frame = CGRectMake(width - 85, height-160,75,75);
     [fireButton setImage:[UIImage imageNamed:@"attack_icon.png"] forState:UIControlStateNormal];
     [fireButton addTarget:self action:@selector(fireHandler:) forControlEvents:UIControlEventTouchDown];
     [fireButton setEnabled:YES];
-    [self._sceneView addSubview:fireButton];
+    [menuView addSubview:fireButton];
     
     //Set up thrust button
     UIButton *thrustButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    thrustButton.frame = CGRectMake(10,self.sceneHeight-85,75,75);
+    thrustButton.frame = CGRectMake(10,height-85,75,75);
     [thrustButton addTarget:self action:@selector(thrustTouch:) forControlEvents:UIControlEventTouchDown];
     [thrustButton addTarget:self action:@selector(thrustCancel:) forControlEvents:UIControlEventTouchUpInside];
     [thrustButton addTarget:self action:@selector(thrustCancel:) forControlEvents:UIControlEventTouchUpOutside];
     [thrustButton addTarget:self action:@selector(thrustCancel:) forControlEvents:UIControlEventTouchCancel];
     [thrustButton setImage:[UIImage imageNamed:@"thrust_icon.png"] forState:UIControlStateNormal];
     [thrustButton setEnabled:YES];
-    [self._sceneView addSubview:thrustButton];
+    [menuView addSubview:thrustButton];
     
     //Set up left turn button
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftButton.frame = CGRectMake(self.sceneWidth-160,self.sceneHeight-85,75,75);
+    leftButton.frame = CGRectMake(width-160,height-85,75,75);
     [leftButton addTarget:self action:@selector(leftTouch:) forControlEvents:UIControlEventTouchDown];
     [leftButton addTarget:self action:@selector(leftCancel:) forControlEvents:UIControlEventTouchUpInside];
     [leftButton addTarget:self action:@selector(leftCancel:) forControlEvents:UIControlEventTouchUpOutside];
     [leftButton addTarget:self action:@selector(leftCancel:) forControlEvents:UIControlEventTouchCancel];
     [leftButton setImage:[UIImage imageNamed:@"left_icon.png"] forState:UIControlStateNormal];
     [leftButton setEnabled:YES];
-    [self._sceneView addSubview:leftButton];
+    [menuView addSubview:leftButton];
     
     //Set up right turn button
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightButton.frame = CGRectMake(self.sceneWidth-75,self.sceneHeight-85,75,75);
+    rightButton.frame = CGRectMake(width-75,height-85,75,75);
     [rightButton addTarget:self action:@selector(rightTouch:) forControlEvents:UIControlEventTouchDown];
     [rightButton addTarget:self action:@selector(rightCancel:) forControlEvents:UIControlEventTouchUpInside];
     [rightButton addTarget:self action:@selector(rightCancel:) forControlEvents:UIControlEventTouchUpOutside];
     [rightButton addTarget:self action:@selector(rightCancel:) forControlEvents:UIControlEventTouchCancel];
     [rightButton setImage:[UIImage imageNamed:@"right_icon.png"] forState:UIControlStateNormal];
     [rightButton setEnabled:YES];
-    [self._sceneView addSubview:rightButton];
+    [menuView addSubview:rightButton];
     
     //Set up lives display
     UIImageView *livesBacking = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"text_backing.png"]];
@@ -136,7 +129,7 @@ const int ASTEROID_LIMIT = 25;
     livesleft.font = [UIFont fontWithName:@"Copperplate" size:18];
     [livesleft setTextColor:[UIColor whiteColor]];
     [livesBacking addSubview:livesleft];
-    [self._sceneView addSubview:livesBacking];
+    [menuView addSubview:livesBacking];
     
     //Set up score display
     UIImageView *scoreBacking = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"text_backing"]];
@@ -147,9 +140,9 @@ const int ASTEROID_LIMIT = 25;
 
     [ingameScore setTextColor:[UIColor whiteColor]];
     [scoreBacking addSubview:ingameScore];
-    [self._sceneView addSubview:scoreBacking];
+    [menuView addSubview:scoreBacking];
         
-    gameOverContainer = [[UIView alloc]initWithFrame:CGRectMake(self.sceneWidth/5, self.sceneHeight/5, self.sceneWidth - self.sceneWidth/2.5, self.sceneHeight * 0.4)];
+    gameOverContainer = [[UIView alloc]initWithFrame:CGRectMake(width/5, height/5, width - width/2.5, height * 0.4)];
     
     UIImageView *gameOverBG = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"window.png"]];
     [gameOverBG setFrame:CGRectMake(0, 0, gameOverContainer.frame.size.width, gameOverContainer.frame.size.height)];
@@ -177,12 +170,27 @@ const int ASTEROID_LIMIT = 25;
     [gameOverContainer addSubview:score];
     
     [gameOverContainer setHidden:true];
-    [self._sceneView addSubview:gameOverContainer];
+    [menuView addSubview:gameOverContainer];
+    
+    self.view = menuView;
+    _controller = controller;
+    [self setupScene];
+    
+    return menuView;
 }
 
 //Additional setup code
 - (void) setupScene
 {
+    
+    // For saving between sessions
+    prefs = [NSUserDefaults standardUserDefaults];
+    
+    // Preload the in game sound effects
+    _playerShot = [self preloadSound:@"playerShotEdited.wav"];
+    _asteroidImpact = [self preloadSound:@"asteroidImpact.wav"];
+    _rocketThrust = [self preloadSound:@"thrust.wav"];
+    
     // Start music
     [self playBackgroundMusic:@"05_Chill.wav"];
     
@@ -193,7 +201,7 @@ const int ASTEROID_LIMIT = 25;
     _ship = [[ShipModel alloc] initWithShader:_shader];
     
     //Setup projection view
-    _shader.projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(85.0), self.sceneWidth/self.sceneHeight, 1, 150);
+    _shader.projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(85.0), width/height, 1, 150);
     
     //Initialize projectile array
     _projectiles = [[NSMutableArray alloc] initWithCapacity:10];
@@ -212,8 +220,8 @@ const int ASTEROID_LIMIT = 25;
     currentScore = 0;
     
     //Set Bounds for screen looping
-    xBound = self.sceneWidth/20;
-    yBound = self.sceneHeight/20;
+    xBound = width/20;
+    yBound = height/20;
     
     //Initialize asteroid timer
     timeSinceLastAsteroid = 0.0;
@@ -222,6 +230,8 @@ const int ASTEROID_LIMIT = 25;
     _background.scale = 20;
     
     enemyTimer = 10 + arc4random_uniform(20) * 0.1;
+    
+    powerupTimer = 5.0f;
     
 }
 
@@ -307,29 +317,32 @@ const int ASTEROID_LIMIT = 25;
     }
     
     [enemy renderWithParentModelViewMatrix:viewMatrix];
+    
+    if(powerupTimer < 0.0f && powerup != nil && _ship.lives > 0)
+    {
+        [powerup renderWithParentModelViewMatrix:viewMatrix];
+    }
 }
 
 //Open GL update function
-- (void) updateScene : (NSTimeInterval) deltaTime
+- (void) updateScene : (NSTimeInterval) delta
 {
-    
-    
     //Call each projectile's update
     for(ProjectileModel *proj in [_projectiles reverseObjectEnumerator])
     {
-        [proj updateWithDelta:deltaTime];
+        [proj updateWithDelta:delta];
         if(proj.destroy) [_projectiles removeObject:proj];
     }
     
     //Call each asteroid's update
     for(AsteroidModel *ast in [_asteroids reverseObjectEnumerator])
     {
-        [ast updateWithDelta:deltaTime];
+        [ast updateWithDelta:delta];
         if(ast.destroy){
             [self playShotImpact]; // Plays asteroid destruction sound
             currentScore += 1; // Increment score
 
-            if (ast.size > 1) {
+            if (!_ship.powered && ast.size > 1) {
                 AsteroidModel *newAsteroid = [[AsteroidModel alloc] initWithShader:_shader andSize:ast.size-1];
                 newAsteroid.xBound = xBound;
                 newAsteroid.yBound = yBound;
@@ -346,8 +359,6 @@ const int ASTEROID_LIMIT = 25;
                 
                 [_asteroids addObject:newAsteroid2];
             }
-            
-            
             [_asteroids removeObject:ast];
         }
         else if(ast.destroyWithChildren) {
@@ -356,21 +367,21 @@ const int ASTEROID_LIMIT = 25;
     }
     
     //Increment asteroid timer and spawn
-    timeSinceLastAsteroid += deltaTime;
+    timeSinceLastAsteroid += delta;
     if(timeSinceLastAsteroid >= 5) [self spawnAsteroid];
     
     //NSLog(@"proj: %d", [_projectiles count]);
     //NSLog(@"ship: %f , %f", _ship.position.x, _ship.position.y);
     
     if (enemy == nil) {
-        enemyTimer -= deltaTime;
+        enemyTimer -= delta;
         if (enemyTimer <= 0) {
             [self spawnEnemy];
         }
     }
     
     if (enemy != nil) {
-        [enemy updateWithDelta:deltaTime];
+        [enemy updateWithDelta:delta];
         
         if (enemy.destroy) {
             [self playShotImpact]; // Plays asteroid destruction sound
@@ -384,13 +395,24 @@ const int ASTEROID_LIMIT = 25;
         }
     }
     
-    
     //Call ship's update
-    [_ship updateWithDelta:deltaTime];
+    [_ship updateWithDelta:delta];
 
-
-    
-    
+    powerupTimer -= delta;
+    if(powerup != nil)
+    {
+        [powerup updateWithDelta:delta];
+        if(powerup.destroy)
+        {
+            powerup = nil;
+            powerupTimer = 10.0f;
+        }
+    }
+    else if(powerup == nil && powerupTimer <= 0.0f)
+    {
+        [self spawnPowerup];
+        
+    }
 }
 
 //Pan handler for rotating the ship
@@ -417,8 +439,8 @@ const int ASTEROID_LIMIT = 25;
     newProjectile.position = _ship.position;
     newProjectile.asteroids = _asteroids;
     newProjectile.enemy = enemy;
-    newProjectile.xBound = xBound;
-    newProjectile.yBound = yBound;
+    newProjectile.xBound = self.view.frame.size.width/20;
+    newProjectile.yBound = self.view.frame.size.height/20;
     newProjectile.rotationY = _ship.rotationY;
     [_projectiles addObject:newProjectile];
 }
@@ -575,6 +597,39 @@ const int ASTEROID_LIMIT = 25;
     
     
 }
+
+
+- (void) spawnPowerup {
+    double randX, randY, distX, distY, distance;
+    
+    // loop until distance is far enough
+    do {
+        //get a random position
+        randX = ((double)arc4random_uniform(xBound) - xBound/2);
+        randY = ((double)arc4random_uniform(yBound) - yBound/2);
+        
+        // get distance between ship and new position
+        distX = fabs(randX - _ship.position.x);
+        distY = fabs(randY - _ship.position.y);
+        
+        // if distance is larger than half the screen,
+        // reduce the distance by the size of the entire screen to account for looping.
+        // no need to convert to abs again because it's squared after.
+        distX = distX < xBound ? distX : distX - (xBound * 2);
+        distY = distY < yBound ? distY : distY - (yBound * 2);
+    
+        // square both and root the result.
+        distance = sqrt(pow(distX, 2.0) + pow(distY, 2.0));
+    } while (distance < MIN_ENEMY_SPAWN_DISTANCE);
+    
+    powerup = [[PowerupModel alloc] initWithShader:_shader ship:_ship];
+    powerup.position = GLKVector3Make(randX, randY, 0);
+    powerup.xBound = xBound;
+    powerup.yBound = yBound;
+    
+    
+}
+
 
 
 // SOUND
