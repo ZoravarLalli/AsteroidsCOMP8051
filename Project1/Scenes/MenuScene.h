@@ -1,5 +1,6 @@
-
-#import "Scene.h"
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "ViewController.h"
 
 @interface MenuScene : NSObject
 @property UIView *view;

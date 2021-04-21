@@ -7,6 +7,7 @@
 
 @end
 
+//Enum for different scenes/game states
 typedef enum
 {
     MENU,
@@ -31,6 +32,8 @@ typedef enum
     view.context = [[EAGLContext alloc]initWithAPI:kEAGLRenderingAPIOpenGLES2];
     view.drawableDepthFormat = GLKViewDrawableDepthFormat16;
     [EAGLContext setCurrentContext:view.context];
+    
+    //Initialize both scenes, but load menu first
     menuScene = [[MenuScene alloc] init];
     gameScene = [[GameScene alloc] init];
     [self.view addSubview:[menuScene createUI:view controller:self]];
@@ -47,12 +50,14 @@ typedef enum
 //Open GL update function
 - (void) update
 {
+    //Menu doesn't have any update functionality, so only game is called.
     if(state == GAME) [gameScene updateScene:self.timeSinceLastUpdate];
 }
 
 //Change the scene state, called from game scenes
 - (void) loadNewScene
 {
+    //Remove UI subviews and load the views for the new scene
     for(UIView *subView in self.view.subviews) [subView removeFromSuperview];
     if(state == MENU)
     {

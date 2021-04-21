@@ -65,11 +65,10 @@ const int ASTEROID_LIMIT = 25;
     
     // For persisting data
     NSUserDefaults *prefs;
-    
-    
+    //Enemy variables
     EnemyModel *enemy;
     NSTimeInterval enemyTimer;
-    
+    //Powerup variables
     PowerupModel *powerup;
     float powerupTimer;
 }
@@ -141,7 +140,9 @@ const int ASTEROID_LIMIT = 25;
     [ingameScore setTextColor:[UIColor whiteColor]];
     [scoreBacking addSubview:ingameScore];
     [menuView addSubview:scoreBacking];
-        
+    
+    //Set up container for game over/high score elements.
+    //This container will be hidden until the player has lost all their lives
     gameOverContainer = [[UIView alloc]initWithFrame:CGRectMake(width/5, height/5, width - width/2.5, height * 0.4)];
     
     UIImageView *gameOverBG = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"window.png"]];
@@ -232,13 +233,14 @@ const int ASTEROID_LIMIT = 25;
     //Initialize asteroid timer
     timeSinceLastAsteroid = 0.0;
     
+    //Set up background image
     _background = [[BackgroundModel alloc] initWithShader:_shader];
     _background.scale = 20;
     
+    //Initial enemy and powerup timers
     enemyTimer = 10 + arc4random_uniform(20) * 0.1;
-    
     powerupTimer = 5.0f;
-    
+
 }
 
 //Called to draw on each frame
@@ -285,7 +287,6 @@ const int ASTEROID_LIMIT = 25;
         // Print to UILabel
         [score setText:[NSString stringWithFormat:@"High Scores: \r1st:%d\r2nd:%d\r3rd:%d\r4th:%d\r5th:%d", _highScores[0], _highScores[1], _highScores[2], _highScores[3], _highScores[4]]];
         
-        
         // Save highscores to the device to persist between play sessions
         // NSMutableArray can be used to save to NSUserDefaults
         NSMutableArray* saveObj = [[NSMutableArray alloc] initWithCapacity:5];
@@ -295,11 +296,7 @@ const int ASTEROID_LIMIT = 25;
         NSNumber* wScore3 = [NSNumber numberWithInt:_highScores[2]];
         NSNumber* wScore4 = [NSNumber numberWithInt:_highScores[3]];
         NSNumber* wScore5 = [NSNumber numberWithInt:_highScores[4]];
-//        NSNumber* wScore1 = [NSNumber numberWithInt:0];
-//        NSNumber* wScore2 = [NSNumber numberWithInt:0];
-//        NSNumber* wScore3 = [NSNumber numberWithInt:0];
-//        NSNumber* wScore4 = [NSNumber numberWithInt:0];
-//        NSNumber* wScore5 = [NSNumber numberWithInt:0];
+        
         // add nsNums to the saveObj
         [saveObj addObject:wScore1];
         [saveObj addObject:wScore2];
@@ -378,9 +375,6 @@ const int ASTEROID_LIMIT = 25;
     timeSinceLastAsteroid += delta;
     if(timeSinceLastAsteroid >= 5) [self spawnAsteroid];
     
-    //NSLog(@"proj: %d", [_projectiles count]);
-    //NSLog(@"ship: %f , %f", _ship.position.x, _ship.position.y);
-    
     if (enemy == nil) {
         enemyTimer -= delta;
         if (enemyTimer <= 0) {
@@ -406,6 +400,9 @@ const int ASTEROID_LIMIT = 25;
     //Call ship's update
     [_ship updateWithDelta:delta];
 
+    //Decrease powerip timer. If present, update the powerup
+    //If needs to be destroyed, destroy it and reset timer
+    //If powerup nil and timer depleted, spawn powerup
     powerupTimer -= delta;
     if(powerup != nil)
     {
@@ -419,21 +416,8 @@ const int ASTEROID_LIMIT = 25;
     else if(powerup == nil && powerupTimer <= 0.0f)
     {
         [self spawnPowerup];
-        
     }
 }
-
-//Pan handler for rotating the ship
-//- (void) handleSinglePanGesture:(UIPanGestureRecognizer *) sender
-//{
-//    if(sender.state == UIGestureRecognizerStateChanged)
-//    {
-//        CGPoint velocity = [sender velocityInView:sender.view];
-//        float x = velocity.x/sender.view.frame.size.width;
-//        float y = velocity.y/sender.view.frame.size.height;
-//        [_ship rotate:(y + x)/10];
-//    }
-//}
 
 //Handler for fire button
 - (void) fireHandler : (id) sender
@@ -458,7 +442,6 @@ const int ASTEROID_LIMIT = 25;
 {
     [self playThrust]; // Start rocket sound player
     [_ship thrustToggle];
-    //NSLog(@"START THRUST");
 }
 
 //Handler for canceling thrust
@@ -466,35 +449,30 @@ const int ASTEROID_LIMIT = 25;
 {
     [self pauseThrust]; // Pause rocket sound player
     _ship.thrust = false;
-    //NSLog(@"PAUSE THRUST");
 }
 
 // Handler for tocuhing left button
 - (void) leftTouch : (id) sender
 {
     [_ship setRotateLeft:true];
-    //NSLog(@"START LEFT");
 }
 
 //Handler for canceling left turn
 - (void) leftCancel : (id) sender
 {
     [_ship setRotateLeft:false];
-    //NSLog(@"PAUSE LEFT");
 }
 
 // Handler for tocuhing left button
 - (void) rightTouch : (id) sender
 {
     [_ship setRotateRight:true];
-    //NSLog(@"START RIGHT");
 }
 
 //Handler for canceling left turn
 - (void) rightCancel : (id) sender
 {
     [_ship setRotateRight:false];
-    //NSLog(@"PAUSE RIGHT");
 }
 
 - (void) returnToMenu : (id) sender
@@ -505,7 +483,6 @@ const int ASTEROID_LIMIT = 25;
 
 - (void) resetGame : (id) sender
 {
-    //NSLog(@"reset game");
     [_ship resetPos];
     
     for (AsteroidModel* o in _asteroids) {
@@ -536,7 +513,6 @@ const int ASTEROID_LIMIT = 25;
     
     
     if(asteroidCount >= ASTEROID_LIMIT) return;
-    //NSLog(@"%i",asteroidCount);
     AsteroidModel *newAsteroid = [[AsteroidModel alloc] initWithShader:_shader];
     newAsteroid.xBound = xBound;
     newAsteroid.yBound = yBound;
@@ -563,12 +539,8 @@ const int ASTEROID_LIMIT = 25;
         // square both and root the result.
         distance = sqrt(pow(distX, 2.0) + pow(distY, 2.0));
         
-        //NSLog(@"distance %f", distance);
-
     } while (distance < MIN_SPAWN_DISTANCE);
-    
-    //NSLog(@"asteroid: %f , %f", randX, randY);
-    
+        
     newAsteroid.position = GLKVector3Make(randX, randY, 0);
     [_asteroids addObject:newAsteroid];
 }
@@ -606,7 +578,6 @@ const int ASTEROID_LIMIT = 25;
     enemy.xBound = xBound;
     enemy.yBound = yBound;
     
-    
 }
 
 
@@ -637,8 +608,6 @@ const int ASTEROID_LIMIT = 25;
     powerup.position = GLKVector3Make(randX, randY, 0);
     powerup.xBound = xBound;
     powerup.yBound = yBound;
-    
-    
 }
 
 

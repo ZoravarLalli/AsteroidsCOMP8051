@@ -12,20 +12,22 @@
 
 @implementation MenuScene
 {
-    ViewController *_controller;
+    ViewController *_controller; //view controller
     ShaderController *_shader; //Shader controller
     BackgroundModel *background; //Quad for the background
-    UIView *menuView;
-    float height;
-    float width;
+    UIView *menuView; //View containing menu elements
+    float height; //view height
+    float width; //view width
 }
 
 - (UIView *) createUI : (UIView *) parent controller : (ViewController *) controller
 {
+    //Set up the menu view
     menuView = [[UIView alloc]initWithFrame:parent.frame];
     width = menuView.frame.size.width;
     height = menuView.frame.size.height;
     
+    //Create ui elements and add to menu view
     UIImageView *titleContainer = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"text_backing.png"]];
     [titleContainer setFrame:CGRectMake(10, 25, width - 20, 75)];
     [menuView addSubview:titleContainer];
@@ -53,7 +55,6 @@
     self.view = menuView;
     _controller = controller;
     [self setupScene];
-    
     return menuView;
 }
 
